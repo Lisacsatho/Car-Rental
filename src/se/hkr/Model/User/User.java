@@ -1,6 +1,8 @@
 package se.hkr.Model.User;
 
-public abstract class User {
+import se.hkr.Model.Model;
+
+public abstract class User implements Model {
 
     private String socialSecurityNo;
     private String firstName;
@@ -64,5 +66,11 @@ public abstract class User {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @Override
+    public boolean matches(String key) {
+        // TODO
+        return false;
     }
 }

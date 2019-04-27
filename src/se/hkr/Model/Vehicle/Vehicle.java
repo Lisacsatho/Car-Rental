@@ -1,8 +1,10 @@
 package se.hkr.Model.Vehicle;
 
+import se.hkr.Model.Model;
+
 import java.util.List;
 
-public abstract class Vehicle {
+public abstract class Vehicle implements Model {
 
     private int Id;
     private double basePrice;
@@ -78,5 +80,11 @@ public abstract class Vehicle {
 
     public void setPassengerSeats(int passengerSeats) {
         this.passengerSeats = passengerSeats;
+    }
+
+    @Override
+    public boolean matches(String key) {
+        // TODO
+        return false;
     }
 }

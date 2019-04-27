@@ -1,6 +1,8 @@
 package se.hkr.Model.Vehicle;
 
-public class VehicleOption {
+import se.hkr.Model.Model;
+
+public class VehicleOption implements Model {
     private int id;
     private String name;
     private  String description;
@@ -43,5 +45,11 @@ public class VehicleOption {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    @Override
+    public boolean matches(String key) {
+        // TODO
+        return false;
     }
 }
