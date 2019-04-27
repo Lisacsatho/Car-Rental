@@ -1,0 +1,117 @@
+/*
+    Title: CSS Theme for project course 2 
+    Author: Group 2
+*/
+/* dark-primary: #1c282d */
+/* light-primary: #dee7eb */
+/* key:  */
+/* accent: #ffd200 */
+/* ultra-dark: #0e1b20 */
+/* semi-light:  #7f9198 */
+/* menu-hover: #132329 */
+
+.drop-shadow {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 12, 0, 0, 0);
+}
+
+.dark-panel {
+    -fx-background-color: #1c282d;
+}
+
+.button {
+    -fx-border-radius: 0px;
+    -fx-background-radius: 0px;
+    -fx-background-color: #dee7eb;
+    -fx-border-color: transparent;
+    -fx-outline-color: transparent;
+    -fx-focus-color: #1c282d;
+}
+
+.text-field {
+    -fx-border-radius: 0px;
+    -fx-background-radius: 0px;
+    -fx-background-color: #dee7eb;
+    -fx-border-color: transparent;
+    -fx-outline-color: transparent;
+    -fx-focus-color: #1c282d;
+    -fx-prompt-text-fill: #7f9198;
+}
+
+.highlighted-button {
+    -fx-background-color: #ffd200;
+    -fx-text-fill: #0e1b20;
+}
+
+.dark-button {
+    -fx-background-color: #1c282d;
+    -fx-text-fill: #dee7eb;
+    -fx-focus-color: #1c282d;
+}
+
+.ultra-dark-button {
+    -fx-background-color: #0e1b20;
+    -fx-text-fill: #dee7eb;
+    -fx-focus-color: #1c282d;
+}
+
+.invisible-light-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #7f9198;
+    -fx-focus-color: transparent;
+    -fx-font-weight: bold;
+}
+
+.invisible-dark-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #0e1b20;
+    -fx-focus-color: transparent;
+}
+
+.ultra-dark-text-field {
+    -fx-background-color: #0e1b20;
+    -fx-text-fill: #dee7eb;
+}
+
+.dark-menu-bar {
+    -fx-background-color: rgba(14, 27, 32, 0.6);
+    -fx-padding: 1 1 1 1;
+}
+
+.dark-menu-bar .menu .context-menu {
+    -fx-padding: 0;
+}
+
+.dark-menu-bar .menu .label {
+    -fx-text-fill: #7f9198;
+}
+
+.dark-menu-bar .menu:hover, .dark-menu-bar .menu:focused, .dark-menu-bar .menu:showing {
+    -fx-background-color: #132329;
+}
+
+.dark-menu-bar .menu-item {
+    -fx-border-color: green;
+    -fx-background-color: green;
+}
+
+.dark-menu-bar .menu-item:focused, .dark-menu-bar .menu-item:showing {
+    -fx-border-color: purple;
+    -fx-background-color: purple;
+}
+
+.date-picker-display-node {
+    -fx-border-radius: 0px;
+}
+
+.date-picker, .date-picker .text-field {
+    -fx-background-color: #dee7eb;
+    -fx-text-fill: #1c282d;
+    -fx-border-radius: 0px;
+}
+
+.date-picker .arrow-button {
+    -fx-background-color: #b9bce4;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-border-radius: 0px;
+}
