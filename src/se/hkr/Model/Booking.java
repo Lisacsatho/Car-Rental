@@ -5,13 +5,21 @@ import se.hkr.Model.Vehicle.VehicleOption;
 import java.util.Date;
 import java.util.List;
 
-public class Booking {
+public class Booking implements Model {
     private int id;
     private Date startDate;
     private Date endDate;
     private double totalPrice;
 
     private List<VehicleOption> vehicleOptions;
+
+    public Booking(int id, Date startDate, Date endDate, double totalPrice) {
+        this.id = id;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.totalPrice = totalPrice;
+
+    }
 
     public int getId() {
         return id;
@@ -45,12 +53,11 @@ public class Booking {
         this.totalPrice = totalPrice;
     }
 
-    public Booking(int id, Date startDate, Date endDate, double totalPrice) {
-        this.id = id;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.totalPrice = totalPrice;
 
+    @Override
+    public boolean matches(String key) {
+        // TODO: Specify search algorithm
+        return false;
     }
 }
 
