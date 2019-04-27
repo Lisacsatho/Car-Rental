@@ -19,16 +19,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        /*Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root));
-        primaryStage.show();*/
-        try (VehicleDBHandler db = new CarDBHandler()) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            db.readAvailableVehicles(dateFormat.parse("2009-05-18"), dateFormat.parse("2019-05-29"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        primaryStage.show();
     }
 
 
