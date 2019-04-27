@@ -16,7 +16,7 @@ public class Employee extends User {
         if (salary > 0) {
             this.salary = salary;
         } else {
-            salary =0;
+            salary = 0;
         }
     }
 }

@@ -6,7 +6,7 @@ import java.util.List;
 
 public abstract class Vehicle implements Model {
 
-    private int Id;
+    private int id;
     private double basePrice;
     private String brand;
     private String model;
@@ -17,7 +17,7 @@ public abstract class Vehicle implements Model {
     private List<VehicleOption> vehicleOptions;
 
     public Vehicle(int id, double basePrice, String brand, String model, int modelYear, String description, int passengerSeats) {
-        Id = id;
+        this.id = id;
         this.basePrice = basePrice;
         this.brand = brand;
         this.model = model;
@@ -27,11 +27,11 @@ public abstract class Vehicle implements Model {
     }
 
     public int getId() {
-        return Id;
+        return id;
     }
 
     public void setId(int id) {
-        Id = id;
+        this.id = id;
     }
 
     public double getBasePrice() {

@@ -9,25 +9,23 @@ import java.util.List;
 public abstract class ModelDBHandler <T extends Model> implements Database {
     protected Statement statement;
 
-    public abstract void insert(T model);
-    public abstract void update(T model);
-    public abstract void delete(T model);
-    public abstract List<T> readAll();
-    public abstract T readByPrimaryKey(String key);
-
     public ModelDBHandler() {
         try {
             connect();
         } catch (Exception e) {
             throw new RuntimeException("Could not connect to database.", e);
-        } finally {
-            try {
-                close();
-            } catch (Exception e) {
-
-            }
         }
     }
+
+    public abstract void insert(T model);
+
+    public abstract void update(T model);
+
+    public abstract void delete(T model);
+
+    public abstract List<T> readAll();
+
+    public abstract T readByPrimaryKey(String key);
 
     @Override
     public void connect() throws SQLException {
