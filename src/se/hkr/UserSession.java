@@ -4,6 +4,7 @@ import se.hkr.Model.User.User;
 
 public class UserSession {
     private static UserSession ourInstance = new UserSession();
+    private User loggedInUser;
 
     public static UserSession getInstance() {
         return ourInstance;
@@ -14,8 +15,10 @@ public class UserSession {
     }
 
     public void logIn(User user) {
+         loggedInUser = user;
     }
 
     public void logOut() {
+        loggedInUser = null;
     }
 }
