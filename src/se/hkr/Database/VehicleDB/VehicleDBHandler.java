@@ -7,7 +7,9 @@ import se.hkr.Model.Vehicle.Vehicle;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public abstract class VehicleDBHandler <V extends Vehicle> extends ModelDBHandler<V> {
 
@@ -30,7 +32,7 @@ public abstract class VehicleDBHandler <V extends Vehicle> extends ModelDBHandle
                                                     "OR (startDate <= '%1$s' AND endDate >= '%2$s')",
                                                     dateFormat.format(startDate), dateFormat.format(endDate));
 
-            String query = String.format("SELECT model, brand FROM Vehicle WHERE id NOT IN (%s)", nestedQuery);
+            String query = String.format("SELECT * FROM Vehicle WHERE id NOT IN (%s)", nestedQuery);
             ResultSet set = statement.executeQuery(query);
 
             while (set.next()) {

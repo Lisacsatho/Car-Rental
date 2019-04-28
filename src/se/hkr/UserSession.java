@@ -1,3 +1,5 @@
+package se.hkr;
+
 import se.hkr.Model.User.User;
 
 public class UserSession {
@@ -9,7 +11,6 @@ public class UserSession {
 
     private UserSession() {
 
-        User loggedInUser;
     }
 
     public void logIn(User user) {

@@ -1,4 +1,4 @@
-import se.hkr.Model.Booking;
+package se.hkr;
 
 public class BookingSession {
     private static BookingSession ourInstance = new BookingSession();

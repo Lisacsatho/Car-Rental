@@ -1,3 +1,5 @@
+package se.hkr;
+
 import javafx.stage.Stage;
 import java.util.Stack;
 
