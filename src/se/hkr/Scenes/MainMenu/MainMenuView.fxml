@@ -14,7 +14,7 @@
    <children>
       <ImageView fitHeight="407.0" fitWidth="344.0" layoutX="271.0">
          <image>
-            <Image url="@splash.jpg" />
+            <Image url="@../../Assets/Images/splash.jpg" />
          </image>
       </ImageView>
       <AnchorPane layoutY="-2.0" prefHeight="409.0" prefWidth="301.0">
@@ -25,7 +25,7 @@
          <children>
             <ImageView fitHeight="198.0" fitWidth="252.0" layoutX="51.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@logo2.png" />
+                  <Image url="@../../Assets/Images/logo_dark.png" />
                </image>
             </ImageView>
             <TextField fx:id="txtFldUsername" layoutX="52.0" layoutY="176.0" prefHeight="37.0" prefWidth="204.0" promptText="Username" styleClass="ultra-dark-text-field">

@@ -20,6 +20,7 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root));
         primaryStage.show();*/
         try (CarDBHandler db = new CarDBHandler()) {
+            db.connect();
             System.out.println(db.readByPrimaryKey("1").getModel());
         } catch (Exception e) {
 

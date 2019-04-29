@@ -10,14 +10,6 @@ import java.util.List;
 public abstract class ModelDBHandler <T extends Model> implements Database {
     protected Statement statement;
 
-    public ModelDBHandler() {
-        try {
-            connect();
-        } catch (Exception e) {
-            throw new RuntimeException("Could not connect to database.", e);
-        }
-    }
-
     public abstract void insert(T model);
 
     public abstract void update(T model);

@@ -1,5 +1,6 @@
 package se.hkr.Database.VehicleDB;
 
+import se.hkr.Database.DatabaseConnection;
 import se.hkr.Model.Vehicle.Car;
 import se.hkr.Model.Vehicle.CarType;
 import se.hkr.Model.Vehicle.FuelType;
@@ -7,6 +8,7 @@ import se.hkr.Model.Vehicle.GearBox;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +33,7 @@ public class CarDBHandler extends VehicleDBHandler<Car>{
         List<Car> cars = new ArrayList<>();
         String query = String.format("SELECT * FROM AllCars");
         try {
+            Statement statement = DatabaseConnection.getInstance().getConnection().createStatement();
             ResultSet set = statement.executeQuery(query);
             cars = buildModels(set);
         } catch (Exception e) {
@@ -42,15 +45,16 @@ public class CarDBHandler extends VehicleDBHandler<Car>{
 
     @Override
     public Car readByPrimaryKey(String key) {
+        Car car = null;
         String query = String.format("SELECT * FROM AllCars WHERE vehicleId=%s LIMIT 1", key);
         try {
             ResultSet set = statement.executeQuery(query);
-            return buildModels(set).get(0);
+            car = buildModels(set).get(0);
         } catch (Exception e) {
             // TODO: Handle error
             e.printStackTrace();
         }
-        return null;
+        return car;
     }
 
 

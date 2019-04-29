@@ -13,7 +13,7 @@
    <children>
       <ImageView fitHeight="400.0" fitWidth="600.0">
          <image>
-            <Image url="@back1.png" />
+            <Image url="@../../Assets/Images/placeholder_background.png" />
          </image>
       </ImageView>
       <TextField fx:id="txtFldFirstName" layoutX="212.0" layoutY="50.0" promptText="First name" styleClass="drop-shadow">

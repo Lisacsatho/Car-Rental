@@ -22,6 +22,25 @@ public abstract class VehicleDBHandler <V extends Vehicle> extends ModelDBHandle
     }
 
     // Using prints to test out the SQL statement, should be returning objects
+    /*
+    *   SQL should look something like the following when done:
+    *   SELECT *
+        FROM
+            vehicle
+        WHERE
+            id NOT IN (SELECT
+                    vehicleId
+                FROM
+                    booking
+                        JOIN
+                    bookinghasvehicle ON booking.id = bookinghasvehicle.bookingId
+                WHERE
+                    (startDate BETWEEN 'start-date' AND 'end-date')
+                        OR (endDate BETWEEN 'start-date' AND 'end-date')
+                        OR (startDate <= 'start-date'
+                        AND endDate >= 'end-date'));
+    *
+    * */
     public void readAvailableVehicles(Date startDate, Date endDate) {
         List<Vehicle> vehicles = new ArrayList<>();
         try {

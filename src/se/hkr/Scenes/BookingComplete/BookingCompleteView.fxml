@@ -12,7 +12,7 @@
    <children>
       <ImageView fitHeight="400.0" fitWidth="600.0">
          <image>
-            <Image url="@yellow-and-black-corporate-art-background-vector-3158800.jpg" />
+            <Image url="@../../Assets/Images/placeholder_background_2.jpg" />
          </image>
       </ImageView>
       <TextField fx:id="txtFldBookingNr" layoutX="226.0" layoutY="89.0" promptText="Booking number" />
