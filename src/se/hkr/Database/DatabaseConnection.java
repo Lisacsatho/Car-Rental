@@ -8,10 +8,10 @@ public class DatabaseConnection implements Database {
     private static DatabaseConnection instance;
 
     private Connection connection;
-    private final String USERNAME = "root";
-    private final String PASSWORD = "root";
-    private final String IP = "127.0.0.1";
-    private final String DATABASE = "Prototype_2";
+    private final String USERNAME = "rentall";
+    private final String PASSWORD = "Xj0K9_Z_n331";
+    private final String IP = "den1.mysql2.gear.host";
+    private final String DATABASE = "RentAll";
     private final String ADDRESS = String.format("jdbc:mysql://%s/%s?user=%s&password=%s&serverTimezone=UTC",
                                                 IP, DATABASE, USERNAME, PASSWORD);
 

@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import se.hkr.Database.VehicleDB.CarDBHandler;
 import se.hkr.Database.VehicleDB.VehicleDBHandler;
+import se.hkr.Model.Vehicle.Car;
 
 import java.text.SimpleDateFormat;
 
@@ -18,11 +19,10 @@ public class Main extends Application {
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();*/
-        try (VehicleDBHandler db = new CarDBHandler()){
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            db.readAvailableVehicles(df.parse("2009-04-22"), df.parse("2010-04-26"));
+        try (CarDBHandler db = new CarDBHandler()) {
+            System.out.println(db.readByPrimaryKey("1").getModel());
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
     }
 

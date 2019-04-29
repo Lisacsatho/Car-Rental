@@ -31,4 +31,9 @@ public class MemberDBHandler extends UserDBHandler<Member> {
     public Member readByPrimaryKey(String key) {
         return null;
     }
+
+    @Override
+    public List<Member> buildModels(ResultSet set) {
+        return null;
+    }
 }

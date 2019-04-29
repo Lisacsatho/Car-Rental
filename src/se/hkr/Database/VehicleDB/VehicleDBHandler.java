@@ -23,6 +23,7 @@ public abstract class VehicleDBHandler <V extends Vehicle> extends ModelDBHandle
 
     // Using prints to test out the SQL statement, should be returning objects
     public void readAvailableVehicles(Date startDate, Date endDate) {
+        List<Vehicle> vehicles = new ArrayList<>();
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -36,7 +37,7 @@ public abstract class VehicleDBHandler <V extends Vehicle> extends ModelDBHandle
             ResultSet set = statement.executeQuery(query);
 
             while (set.next()) {
-                System.out.printf("%s, %s%n", set.getString("brand"), set.getString("model"));
+
             }
         } catch (SQLException e) {
             e.printStackTrace();

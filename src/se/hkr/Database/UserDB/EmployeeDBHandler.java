@@ -2,6 +2,7 @@ package se.hkr.Database.UserDB;
 
 import se.hkr.Model.User.Employee;
 
+import java.sql.ResultSet;
 import java.util.List;
 
 public class EmployeeDBHandler extends UserDBHandler<Employee> {
@@ -27,6 +28,11 @@ public class EmployeeDBHandler extends UserDBHandler<Employee> {
 
     @Override
     public Employee readByPrimaryKey(String key) {
+        return null;
+    }
+
+    @Override
+    public List<Employee> buildModels(ResultSet set) {
         return null;
     }
 }
