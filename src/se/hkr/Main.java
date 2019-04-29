@@ -1,15 +1,8 @@
 package se.hkr;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import se.hkr.Database.VehicleDB.CarDBHandler;
-import se.hkr.Database.VehicleDB.VehicleDBHandler;
-import se.hkr.Model.Vehicle.Car;
-
-import java.text.SimpleDateFormat;
 
 public class Main extends Application {
 
