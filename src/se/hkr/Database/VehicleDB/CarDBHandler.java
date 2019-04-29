@@ -8,7 +8,6 @@ import se.hkr.Model.Vehicle.GearBox;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class CarDBHandler extends VehicleDBHandler<Car>{
@@ -53,6 +52,8 @@ public class CarDBHandler extends VehicleDBHandler<Car>{
         }
         return null;
     }
+
+
 
     @Override
     public List<Car> buildModels(ResultSet set) {

@@ -10,6 +10,7 @@ import java.util.Stack;
 
 public class Navigator {
     private static Navigator ourInstance = new Navigator();
+    private static final String PATH_TO_SCENES = "Scenes/";
 
     private Stack<Scene> previousScenes;
     private Stage primaryStage;
@@ -33,7 +34,7 @@ public class Navigator {
 
     private void setScene(String scene) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(scene));
+            Parent root = FXMLLoader.load(getClass().getResource(PATH_TO_SCENES + scene));
             if (primaryStage != null) {
                 primaryStage.setScene(new Scene(root));
             }
