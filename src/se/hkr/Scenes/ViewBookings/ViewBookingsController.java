@@ -1,4 +1,6 @@
-package se.hkr.ReadController;
+package se.hkr.Scenes.ViewBookings;
+
+import se.hkr.Scenes.ReadController;
 
 public class ViewBookingsController implements ReadController {
 

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="402.0" prefWidth="604.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.EditMember.EditMemberController">
+   <children>
+      <ImageView fitHeight="410.0" fitWidth="613.0" layoutX="-3.0" layoutY="-1.0">
+         <image>
+            <Image url="@back1.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="txtFldFirstName" layoutX="212.0" layoutY="50.0" promptText="First name" styleClass="drop-shadow">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtFldLastName" layoutX="212.0" layoutY="90.0" promptText="Last name" styleClass="drop-shadow" />
+      <TextField fx:id="txtFldSsn" layoutX="212.0" layoutY="132.0" promptText="Social security number" styleClass="drop-shadow">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtFldPhone" layoutX="413.0" layoutY="132.0" promptText="Phone number" styleClass="drop-shadow" />
+      <TextField fx:id="txtFldAddress" layoutX="213.0" layoutY="171.0" prefHeight="25.0" prefWidth="350.0" promptText="Address" styleClass="drop-shadow">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtFldEmail" layoutX="413.0" layoutY="50.0" promptText="Email" styleClass="drop-shadow" />
+      <TextField fx:id="txtFldPassword" layoutX="413.0" layoutY="90.0" promptText="Password" styleClass="drop-shadow" />
+      <Label layoutX="375.0" layoutY="27.0" />
+      <TextField fx:id="txtFldZip" layoutX="212.0" layoutY="213.0" promptText="Zip" styleClass="drop-shadow" />
+      <TextField fx:id="txtFldCity" layoutX="413.0" layoutY="213.0" promptText="City" styleClass="drop-shadow" />
+      <Label layoutX="300.0" layoutY="16.0" text="Account information" textFill="#111111">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnSave" layoutX="512.0" layoutY="264.0" mnemonicParsing="false" onAction="#btnSavePressed" prefHeight="27.0" prefWidth="55.0" styleClass="drop-shadow" text="Save" />
+   </children>
+</AnchorPane>

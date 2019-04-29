@@ -1,4 +1,6 @@
-package se.hkr.ReadController;
+package se.hkr.Scenes.ChooseExtras;
+
+import se.hkr.Scenes.ReadController;
 
 public class ChooseExtrasController implements ReadController {
 
