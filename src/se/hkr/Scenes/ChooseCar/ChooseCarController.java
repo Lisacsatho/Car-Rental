@@ -1,4 +1,6 @@
-package se.hkr.ReadController;
+package se.hkr.Scenes.ChooseCar;
+
+import se.hkr.Scenes.ReadController;
 
 public class ChooseCarController implements ReadController {
 

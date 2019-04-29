@@ -1,4 +1,4 @@
-package se.hkr.Initializable;
+package se.hkr.Scenes.EditCar;
 
 import javafx.fxml.Initializable;
 

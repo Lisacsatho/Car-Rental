@@ -1,4 +1,4 @@
-package se.hkr.ReadController;
+package se.hkr.Scenes;
 
 public interface ReadController {
 

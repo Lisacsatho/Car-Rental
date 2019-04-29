@@ -1,4 +1,6 @@
-package se.hkr.ReadController;
+package se.hkr.Scenes.ViewCars;
+
+import se.hkr.Scenes.ReadController;
 
 public class ViewCarsController implements ReadController {
 
