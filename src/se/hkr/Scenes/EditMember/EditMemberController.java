@@ -21,7 +21,8 @@ public class EditMemberController implements Initializable {
             txtFldEmail,
             txtFldPassword,
             txtFldPhone,
-            txtFldCity;
+            txtFldCity,
+            txtFldDriverLicenseNumber;
 
     @FXML
 
