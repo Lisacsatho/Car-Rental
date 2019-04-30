@@ -65,4 +65,26 @@ public abstract class VehicleDBHandler <V extends Vehicle> extends ModelDBHandle
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void insert(V model) throws SQLException {
+        String insert = String.format("INSERT into VEHICLE (fuelType, gearBox, price, description, model, passengers )" +
+                "VALUES (%d, %d, %f, '%s', %s, %d )" ,
+                model.getFuelType().getId(),
+                model.getGearBox().getId(),
+                model.getBasePrice(),
+                model.getDescription(),
+                model.getModelName(),
+                model.getPassengerSeats()) ;
+    }
+
+    @Override
+    public void update(V model) throws SQLException {
+
+    }
+
+    @Override
+    public void delete(V model) throws SQLException {
+
+    }
 }
