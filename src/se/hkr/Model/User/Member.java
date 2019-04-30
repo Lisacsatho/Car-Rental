@@ -6,8 +6,8 @@ public class Member extends User {
     private int age;
 
 
-    public Member(String socialSecurityNo, String firstName, String lastName, String email, String phoneNumber, String address, String driverLicensNo) {
-        super(socialSecurityNo, firstName, lastName, email, phoneNumber, address);
+    public Member(String socialSecurityNo, String firstName, String lastName, String email, String phoneNumber, Address address, String password, String driverLicensNo) {
+        super(socialSecurityNo, firstName, lastName, email, phoneNumber, address, password);
         this.driverLicensNo = driverLicensNo;
     }
 

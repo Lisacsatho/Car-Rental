@@ -3,8 +3,8 @@ package se.hkr.Model.User;
 public class Employee extends User {
     private double salary;
 
-    public Employee(String socialSecurityNo, String firstName, String lastName, String email, String phoneNumber, String address, double salary) {
-        super(socialSecurityNo, firstName, lastName, email, phoneNumber, address);
+    public Employee(String socialSecurityNo, String firstName, String lastName, String email, String phoneNumber, Address address, String password, double salary) {
+        super(socialSecurityNo, firstName, lastName, email, phoneNumber, address, password);
         this.salary = salary;
     }
 

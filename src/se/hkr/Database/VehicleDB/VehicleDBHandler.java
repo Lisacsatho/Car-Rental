@@ -1,11 +1,13 @@
 package se.hkr.Database.VehicleDB;
 
+import javafx.stage.Stage;
 import se.hkr.Database.ModelDBHandler;
 import se.hkr.Model.Vehicle.Car;
 import se.hkr.Model.Vehicle.Vehicle;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,6 +46,7 @@ public abstract class VehicleDBHandler <V extends Vehicle> extends ModelDBHandle
     public void readAvailableVehicles(Date startDate, Date endDate) {
         List<Vehicle> vehicles = new ArrayList<>();
         try {
+            Statement statement = databaseConnection.getConnection().createStatement();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
             String nestedQuery = String.format("SELECT vehicleId FROM Booking_has_Vehicle WHERE" +

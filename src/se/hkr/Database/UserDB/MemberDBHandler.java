@@ -4,12 +4,21 @@ import se.hkr.Model.User.Member;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 public class MemberDBHandler extends UserDBHandler<Member> {
     @Override
-    public void insert(Member model) {
-        System.out.println("Inserted member!");
+    public void insert(Member model) throws SQLException {
+        super.insert(model);
+        String insert = String.format("INSERT INTO member VALUES('%s', '%s')",
+                                     model.getDriverLicensNo(),
+                                     model.getSocialSecurityNo());
+        try (Statement statement = databaseConnection.getConnection().createStatement()) {
+            statement.execute(insert);
+        } catch (Exception e) {
+            throw new SQLException(e);
+        }
     }
 
     @Override

@@ -32,8 +32,7 @@ public class CarDBHandler extends VehicleDBHandler<Car>{
     public List<Car> readAll() {
         List<Car> cars = new ArrayList<>();
         String query = String.format("SELECT * FROM AllCars");
-        try {
-            Statement statement = DatabaseConnection.getInstance().getConnection().createStatement();
+        try (Statement statement = databaseConnection.getConnection().createStatement()) {
             ResultSet set = statement.executeQuery(query);
             cars = buildModels(set);
         } catch (Exception e) {
@@ -47,7 +46,7 @@ public class CarDBHandler extends VehicleDBHandler<Car>{
     public Car readByPrimaryKey(String key) {
         Car car = null;
         String query = String.format("SELECT * FROM AllCars WHERE vehicleId=%s LIMIT 1", key);
-        try {
+        try (Statement statement = databaseConnection.getConnection().createStatement()){
             ResultSet set = statement.executeQuery(query);
             car = buildModels(set).get(0);
         } catch (Exception e) {
