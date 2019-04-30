@@ -9,15 +9,17 @@ public abstract class User implements Model {
     private String lastName;
     private String email;
     private String phoneNumber;
-    private String address;
+    private Address address;
+    private String password;
 
-    public User(String socialSecurityNo, String firstName, String lastName, String email, String phoneNumber, String address) {
+    public User(String socialSecurityNo, String firstName, String lastName, String email, String phoneNumber, Address address, String password) {
         this.socialSecurityNo = socialSecurityNo;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.address = address;
+        this.password = password;
     }
 
     public String getSocialSecurityNo() {
@@ -60,12 +62,20 @@ public abstract class User implements Model {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

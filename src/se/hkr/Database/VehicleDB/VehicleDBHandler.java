@@ -1,11 +1,13 @@
 package se.hkr.Database.VehicleDB;
 
+import javafx.stage.Stage;
 import se.hkr.Database.ModelDBHandler;
 import se.hkr.Model.Vehicle.Car;
 import se.hkr.Model.Vehicle.Vehicle;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,6 +46,7 @@ public abstract class VehicleDBHandler <V extends Vehicle> extends ModelDBHandle
     public void readAvailableVehicles(Date startDate, Date endDate) {
         List<Vehicle> vehicles = new ArrayList<>();
         try {
+            Statement statement = databaseConnection.getConnection().createStatement();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
             String nestedQuery = String.format("SELECT vehicleId FROM Booking_has_Vehicle WHERE" +
@@ -61,5 +64,27 @@ public abstract class VehicleDBHandler <V extends Vehicle> extends ModelDBHandle
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void insert(V model) throws SQLException {
+        String insert = String.format("INSERT into VEHICLE (fuelType, gearBox, price, description, model, passengers )" +
+                "VALUES (%d, %d, %f, '%s', %s, %d )" ,
+                model.getFuelType().getId(),
+                model.getGearBox().getId(),
+                model.getBasePrice(),
+                model.getDescription(),
+                model.getModelName(),
+                model.getPassengerSeats()) ;
+    }
+
+    @Override
+    public void update(V model) throws SQLException {
+
+    }
+
+    @Override
+    public void delete(V model) throws SQLException {
+
     }
 }

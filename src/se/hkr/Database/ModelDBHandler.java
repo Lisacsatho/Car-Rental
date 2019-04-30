@@ -8,13 +8,21 @@ import java.sql.Statement;
 import java.util.List;
 
 public abstract class ModelDBHandler <T extends Model> implements Database {
-    protected Statement statement;
+    protected DatabaseConnection databaseConnection;
 
-    public abstract void insert(T model);
+    /*
+    *   Inserts the object into the database and updates the model with
+    *   the proper id if needed.
+    * */
+    public abstract void insert(T model) throws SQLException;
 
-    public abstract void update(T model);
+    /*
+    *   Updates the information in the database to correspond to that
+    *   in the passed object.
+    * */
+    public abstract void update(T model) throws SQLException;
 
-    public abstract void delete(T model);
+    public abstract void delete(T model) throws SQLException;
 
     public abstract List<T> readAll();
 
@@ -28,13 +36,12 @@ public abstract class ModelDBHandler <T extends Model> implements Database {
 
     @Override
     public void connect() throws SQLException {
-        DatabaseConnection.getInstance().connect();
-        statement = DatabaseConnection.getInstance().getConnection().createStatement();
+        databaseConnection = new DatabaseConnection();
+        databaseConnection.connect();
     }
 
     @Override
     public void close() throws Exception {
-        DatabaseConnection.getInstance().close();
-        statement.close();
+        databaseConnection.close();
     }
 }

@@ -15,17 +15,6 @@ public class DatabaseConnection implements Database {
     private final String ADDRESS = String.format("jdbc:mysql://%s/%s?user=%s&password=%s&serverTimezone=UTC",
                                                 IP, DATABASE, USERNAME, PASSWORD);
 
-    private DatabaseConnection() {
-
-    }
-
-    public static DatabaseConnection getInstance() {
-        if (instance == null) {
-            instance = new DatabaseConnection();
-        }
-        return instance;
-    }
-
     @Override
     public void connect() throws SQLException {
         connection = DriverManager.getConnection(ADDRESS);
@@ -38,5 +27,6 @@ public class DatabaseConnection implements Database {
     @Override
     public void close() throws Exception {
         connection.close();
+        connection = null;
     }
 }
