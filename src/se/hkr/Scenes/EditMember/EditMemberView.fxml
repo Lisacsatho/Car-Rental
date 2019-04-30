@@ -8,12 +8,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="402.0" prefWidth="604.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.EditMember.EditMemberController">
    <children>
       <ImageView fitHeight="410.0" fitWidth="613.0" layoutX="-3.0" layoutY="-1.0">
          <image>
-            <Image url="@back1.png" />
+            <Image url="@../../Assets/Images/placeholder_background.png" />
          </image>
       </ImageView>
       <TextField fx:id="txtFldFirstName" layoutX="212.0" layoutY="50.0" promptText="First name" styleClass="drop-shadow">
