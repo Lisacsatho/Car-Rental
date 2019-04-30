@@ -24,7 +24,7 @@ public class RegisterController implements Initializable {
             txtFldPassword,
             txtFldPhone,
             txtFldCity,
-            txtFldDriverslicense;
+            txtFldDriversLicense;
     @FXML
     Button btnJoin;
 
@@ -41,7 +41,7 @@ public class RegisterController implements Initializable {
             if (Integer.parseInt(txtFldSsn.getText()) <= 13 && ae.getSource() == btnJoin) {
 
                 Member member = new Member(txtFldSsn.getText(), txtFldFirstName.getText(), txtFldLastName.getText(), txtFldEmail.getText(),
-                        txtFldPhone.getText(), txtFldAddress.getText(), txtFldDriverslicense.getText());
+                        txtFldPhone.getText(), txtFldAddress.getText(), txtFldPassword.getText(), txtFldDriversLicense.getText());
             }
         } catch (InputMismatchException x) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

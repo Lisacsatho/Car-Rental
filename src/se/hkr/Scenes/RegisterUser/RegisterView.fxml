@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.RegisterUser.RegisterController">
    <children>
       <ImageView fitHeight="409.0" fitWidth="608.0" layoutX="-1.0" layoutY="-1.0">
@@ -30,7 +29,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="txtFldDriverslicense" layoutX="334.0" layoutY="178.0" onAction="#registerUser" promptText="Driverlicense number" />
+      <TextField fx:id="txtFldDriversLicense" layoutX="334.0" layoutY="178.0" onAction="#registerUser" promptText="Driver license number" />
       <Button fx:id="btnJoin" layoutX="406.0" layoutY="273.0" mnemonicParsing="false" onAction="#registerUser" prefHeight="27.0" prefWidth="84.0" text="Join" />
    </children>
 </AnchorPane>
