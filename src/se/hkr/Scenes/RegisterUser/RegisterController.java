@@ -52,6 +52,8 @@ public class RegisterController implements Initializable {
 
                     System.out.println(e);
                 }
+
+
             }
         } catch (InputMismatchException x) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
