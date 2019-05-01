@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CarDBHandler extends VehicleDBHandler<Car>{
+
     @Override
     public void insert(Car model) {
 
