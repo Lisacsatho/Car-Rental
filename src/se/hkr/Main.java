@@ -1,6 +1,9 @@
 package se.hkr;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import se.hkr.Database.UserDB.MemberDBHandler;
 import se.hkr.Database.UserDB.UserDBHandler;
@@ -17,10 +20,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        /*Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("EditMemberView.fxml"));
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root));
-        primaryStage.show();*/
+        primaryStage.show();
         
     }
 
