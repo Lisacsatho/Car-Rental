@@ -75,7 +75,7 @@ public abstract class VehicleDBHandler <V extends Vehicle> extends ModelDBHandle
                 model.getBasePrice(),
                 model.getDescription(),
                 model.getModelName(),
-                model.getPassengerSeats()) ;
+                model.getPassengers()) ;
     }
 
     @Override

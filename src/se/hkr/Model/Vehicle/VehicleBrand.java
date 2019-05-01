@@ -31,4 +31,9 @@ public class VehicleBrand implements Model {
     public boolean matches(String key) {
         return false;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
