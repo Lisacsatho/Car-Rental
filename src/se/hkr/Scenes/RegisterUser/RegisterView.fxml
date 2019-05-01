@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.RegisterUser.RegisterController">
    <children>
       <ImageView fitHeight="409.0" fitWidth="608.0" layoutX="-1.0" layoutY="-1.0">
@@ -16,21 +15,21 @@
             <Image url="@../../Assets/Images/placeholder_background.png" />
          </image>
       </ImageView>
-      <TextField fx:id="txtFldPhone" layoutX="334.0" layoutY="124.0" onAction="#registerUser" promptText="Phone number" />
-      <TextField fx:id="txtFldSsn" layoutX="167.0" layoutY="124.0" onAction="#registerUser" promptText="Social security number" />
-      <TextField fx:id="txtFldPassword" layoutX="334.0" layoutY="97.0" onAction="#registerUser" promptText="Password" />
-      <TextField fx:id="txtFldLastName" layoutX="167.0" layoutY="97.0" onAction="#registerUser" promptText="Last name" />
-      <TextField fx:id="txtFldEmail" layoutX="334.0" layoutY="70.0" onAction="#registerUser" promptText="Email" />
       <TextField fx:id="txtFldFirstName" layoutX="167.0" layoutY="70.0" onAction="#registerUser" promptText="First name" />
-      <TextField fx:id="txtFldAddress" layoutX="167.0" layoutY="151.0" onAction="#registerUser" promptText="Address" />
+      <TextField fx:id="txtFldEmail" layoutX="334.0" layoutY="70.0" onAction="#registerUser" promptText="Email" />
+      <TextField fx:id="txtFldLastName" layoutX="167.0" layoutY="97.0" onAction="#registerUser" promptText="Last name" />
+      <TextField fx:id="txtFldPassword" layoutX="334.0" layoutY="97.0" onAction="#registerUser" promptText="Password" />
+      <TextField fx:id="txtFldSsn" layoutX="167.0" layoutY="124.0" onAction="#registerUser" promptText="Social security number" />
+      <TextField fx:id="txtFldPhone" layoutX="334.0" layoutY="124.0" onAction="#registerUser" promptText="Phone number" />
+      <TextField fx:id="txtFldStreet" layoutX="167.0" layoutY="151.0" onAction="#registerUser" promptText="Street" />
+      <TextField fx:id="txtFldState" layoutX="334.0" layoutY="151.0" onAction="#registerUser" promptText="State" />
       <TextField fx:id="txtFldZip" layoutX="167.0" layoutY="178.0" onAction="#registerUser" promptText="Zip" />
-      <TextField fx:id="txtFldCity" layoutX="334.0" layoutY="151.0" onAction="#registerUser" promptText="City" />
+      <TextField fx:id="txtFldDriversLicense" layoutX="334.0" layoutY="178.0" onAction="#registerUser" promptText="Driverlicense number" />
+      <Button fx:id="btnJoin" layoutX="406.0" layoutY="273.0" mnemonicParsing="false" onAction="#registerUser" prefHeight="27.0" prefWidth="84.0" text="Join" />
       <Label layoutX="197.0" layoutY="32.0" prefHeight="23.0" prefWidth="268.0" text="Fill in your information below:">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="txtFldDriverslicense" layoutX="334.0" layoutY="178.0" onAction="#registerUser" promptText="Driverlicense number" />
-      <Button fx:id="btnJoin" layoutX="406.0" layoutY="273.0" mnemonicParsing="false" onAction="#registerUser" prefHeight="27.0" prefWidth="84.0" text="Join" />
    </children>
 </AnchorPane>

@@ -6,6 +6,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import se.hkr.Database.UserDB.MemberDBHandler;
+import se.hkr.Model.User.Address;
 import se.hkr.Model.User.Member;
 
 import java.net.URL;
@@ -18,13 +20,13 @@ public class RegisterController implements Initializable {
     TextField txtFldFirstName,
             txtFldLastName,
             txtFldSsn,
-            txtFldAddress,
+            txtFldStreet,
             txtFldZip,
             txtFldEmail,
             txtFldPassword,
             txtFldPhone,
-            txtFldCity,
-            txtFldDriverslicense;
+            txtFldState,
+            txtFldDriversLicense;
     @FXML
     Button btnJoin;
 
@@ -38,15 +40,23 @@ public class RegisterController implements Initializable {
 
         try {
 
-            if (Integer.parseInt(txtFldSsn.getText()) <= 13 && ae.getSource() == btnJoin) {
+            if (txtFldSsn.getText().length() == 13 && (txtFldDriversLicense.getText().length() == 9 && ae.getSource() == btnJoin)) {
+
 
                 Member member = new Member(txtFldSsn.getText(), txtFldFirstName.getText(), txtFldLastName.getText(), txtFldEmail.getText(),
-                        txtFldPhone.getText(), txtFldAddress.getText(), txtFldDriverslicense.getText());
+                        txtFldPhone.getText(), new Address(txtFldStreet.getText(), txtFldZip.getText(), txtFldState.getText()), txtFldPassword.getText(), txtFldDriversLicense.getText());
+
+                try (MemberDBHandler memberDBHandler = new MemberDBHandler()) {
+                    memberDBHandler.insert(member);
+                } catch (Exception e) {
+
+                    System.out.println(e);
+                }
             }
         } catch (InputMismatchException x) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Input error!");
-            alert.setHeaderText("Your input was incorrect. Check your input.");
+            alert.setHeaderText("Your input was incorrect. Check your information.");
             alert.showAndWait();
         }
     }
