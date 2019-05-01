@@ -3,14 +3,66 @@ import se.hkr.Model.Vehicle.*;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CarDBHandler extends VehicleDBHandler<Car>{
-    @Override
-    public void insert(Car model) {
 
+    @Override
+    public List<? extends Vehicle> readAvailableVehicles(Date startDate, Date endDate) {
+        /*
+    *   SQL should look something like the following when done:
+        SELECT
+            *
+        FROM
+            AllCars
+        WHERE
+            id NOT IN (SELECT
+                    vehicleId
+                FROM
+                    bookinghasvehicle
+                        JOIN
+                    booking ON booking.id = bookinghasvehicle.bookingId
+                    WHERE
+                            (startDate BETWEEN '2019-04-26' AND '2019-04-30')
+                                OR (endDate BETWEEN '2019-04-26' AND '2019-04-30')
+                                OR (startDate <= '2019-04-26'
+                                AND endDate >= '2019-04-30'));
+    */
+        List<Car> cars = new ArrayList<>();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String subQuery = "SELECT vehicleId FROM bookinghasvehicle JOIN booking ON booking.id = bookinghasvehicle.bookingId WHERE (startDate BETWEEN ? AND ?) OR (endDate BETWEEN ? AND ?) OR (startDate <= ?) AND (endDate >= ?)";
+        String readAvailable = String.format("SELECT * FROM AllCars WHERE id NOT IN (%s)", subQuery);
+        try (PreparedStatement statement = connection.prepareStatement(readAvailable)) {
+            statement.setString(1, format.format(startDate));
+            statement.setString(2, format.format(endDate));
+            statement.setString(3, format.format(startDate));
+            statement.setString(4, format.format(endDate));
+            statement.setString(5, format.format(startDate));
+            statement.setString(6, format.format(endDate));
+            cars = buildModels(statement.executeQuery());
+        } catch (Exception e) {
+
+        }
+        return cars;
+    }
+
+    @Override
+    public void insert(Car model) throws SQLException {
+        super.insert(model);
+        String insert = "INSERT INTO car VALUES (?, ?, ?)";
+        try (PreparedStatement insertStatement = connection.prepareStatement(insert)) {
+            insertStatement.setInt(1, model.getId());
+            insertStatement.setInt(2, model.getSuitcases());
+            insertStatement.setInt(3, model.getCarType().getId());
+            insertStatement.execute();
+        } catch (Exception e) {
+            throw new SQLException(e);
+        }
     }
 
     @Override
