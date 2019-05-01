@@ -25,7 +25,7 @@ public abstract class UserDBHandler <U extends User> extends ModelDBHandler<U> {
     @Override
     public void insert(U model) throws SQLException {
         try (AddressDBHandler addressDB = new AddressDBHandler();
-             Statement statement = databaseConnection.getConnection().createStatement()) {
+             Statement statement = connection.createStatement()) {
             addressDB.connect();
             addressDB.insert(model.getAddress());
             String insert = String.format("INSERT INTO user VALUES ('%s', '%s', '%s', '%s', '%s', '%s', %d)",

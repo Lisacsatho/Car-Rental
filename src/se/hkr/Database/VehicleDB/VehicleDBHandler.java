@@ -46,7 +46,7 @@ public abstract class VehicleDBHandler <V extends Vehicle> extends ModelDBHandle
     public void readAvailableVehicles(Date startDate, Date endDate) {
         List<Vehicle> vehicles = new ArrayList<>();
         try {
-            Statement statement = databaseConnection.getConnection().createStatement();
+            Statement statement = connection.createStatement();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
             String nestedQuery = String.format("SELECT vehicleId FROM Booking_has_Vehicle WHERE" +

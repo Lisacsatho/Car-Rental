@@ -12,7 +12,7 @@ public abstract class Vehicle implements Model {
     private int passengerSeats;
     private FuelType fuelType;
     private GearBox gearBox;
-    private  String modelName;
+    private String modelName;
     private int modelyear;
     private VehicleBrand brand;
 
@@ -32,6 +32,18 @@ public abstract class Vehicle implements Model {
         this.modelyear = modelyear;
         this.brand = brand;
         this.vehicleOptions = vehicleOptions;
+    }
+
+    public Vehicle(int id, double basePrice, String description, int passengerSeats, FuelType fuelType, GearBox gearBox, String modelName, int modelyear, VehicleBrand brand) {
+        this.id = id;
+        this.basePrice = basePrice;
+        this.description = description;
+        this.passengerSeats = passengerSeats;
+        this.fuelType = fuelType;
+        this.gearBox = gearBox;
+        this.modelName = modelName;
+        this.modelyear = modelyear;
+        this.brand = brand;
     }
 
     public int getId() {
