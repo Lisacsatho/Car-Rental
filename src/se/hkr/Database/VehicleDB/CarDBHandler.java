@@ -3,14 +3,24 @@ import se.hkr.Model.Vehicle.*;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CarDBHandler extends VehicleDBHandler<Car>{
     @Override
-    public void insert(Car model) {
-
+    public void insert(Car model) throws SQLException {
+        super.insert(model);
+        String insert = "INSERT INTO car VALUES (?, ?, ?)";
+        try (PreparedStatement insertStatement = connection.prepareStatement(insert)) {
+            insertStatement.setInt(1, model.getId());
+            insertStatement.setInt(2, model.getSuitcases());
+            insertStatement.setInt(3, model.getCarType().getId());
+            insertStatement.execute();
+        } catch (Exception e) {
+            throw new SQLException(e);
+        }
     }
 
     @Override
