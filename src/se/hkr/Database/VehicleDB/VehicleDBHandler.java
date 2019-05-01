@@ -1,6 +1,4 @@
 package se.hkr.Database.VehicleDB;
-
-import javafx.stage.Stage;
 import se.hkr.Database.ModelDBHandler;
 import se.hkr.Model.Vehicle.Car;
 import se.hkr.Model.Vehicle.Vehicle;
@@ -8,8 +6,6 @@ import se.hkr.Model.Vehicle.Vehicle;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,15 +21,17 @@ public abstract class VehicleDBHandler <V extends Vehicle> extends ModelDBHandle
     }
 
     // Using prints to test out the SQL statement, should be returning objects
-    public List<? extends Vehicle> readAvailableVehicles(Date startDate, Date endDate) {
+    public static List<? extends Vehicle> readAvailableVehicles(Date startDate, Date endDate) throws SQLException {
         List<Vehicle> vehicles = new ArrayList<>();
         try (CarDBHandler dbHandler = new CarDBHandler()) {
-            vehicles.addAll(dbHandler.readAvailableVehicles(startDate, endDate));
+            vehicles.addAll(dbHandler.readAvailable(startDate, endDate));
         } catch (Exception e) {
-
+            throw new SQLException(e);
         }
         return vehicles;
     }
+
+    public abstract List<? extends Vehicle> readAvailable(Date startDate, Date endDate) throws SQLException;
 
     @Override
     public void insert(V model) throws SQLException {

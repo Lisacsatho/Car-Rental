@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.MainMenu.MainMenuController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.MainMenu.MainMenuController">
    <children>
       <ImageView fitHeight="407.0" fitWidth="344.0" layoutX="271.0">
          <image>
@@ -38,8 +38,8 @@
                   <Font name="System Italic" size="12.0" />
                </font>
             </TextField>
-            <Button fx:id="btnSignUp" layoutX="118.0" layoutY="276.0" mnemonicParsing="false" onAction="#btnSignUpPressed" prefHeight="27.0" prefWidth="70.0" styleClass="invisible-light-button" text="Sign up" />
-            <Button fx:id="btnLogin" layoutX="185.0" layoutY="276.0" mnemonicParsing="false" onAction="#btnLoginPressed" prefHeight="27.0" prefWidth="70.0" text="Log in">
+            <Button fx:id="btnSignUp" layoutX="119.0" layoutY="281.0" mnemonicParsing="false" onAction="#btnSignUpPressed" prefHeight="27.0" prefWidth="70.0" styleClass="invisible-light-button" text="Sign up" />
+            <Button fx:id="btnLogin" layoutX="185.0" layoutY="276.0" mnemonicParsing="false" onAction="#btnLoginPressed" prefHeight="37.0" prefWidth="70.0" text="Log in">
                <styleClass>
                   <String fx:value="drop-shadow" />
                   <String fx:value="button" />
@@ -54,6 +54,6 @@
             <Font name="Arial" size="15.0" />
          </font>
       </Label>
-      <Button fx:id="btnGo" layoutX="472.0" layoutY="278.0" mnemonicParsing="false" onAction="#btnGoPressed" prefHeight="27.0" prefWidth="70.0" styleClass="drop-shadow" text="Go!" />
+      <Button fx:id="btnGo" layoutX="478.0" layoutY="278.0" mnemonicParsing="false" onAction="#btnGoPressed" prefHeight="37.0" prefWidth="61.0" styleClass="drop-shadow" text="Go!" />
    </children>
 </AnchorPane>

@@ -13,26 +13,7 @@ import java.util.List;
 public class CarDBHandler extends VehicleDBHandler<Car>{
 
     @Override
-    public List<? extends Vehicle> readAvailableVehicles(Date startDate, Date endDate) {
-        /*
-    *   SQL should look something like the following when done:
-        SELECT
-            *
-        FROM
-            AllCars
-        WHERE
-            id NOT IN (SELECT
-                    vehicleId
-                FROM
-                    bookinghasvehicle
-                        JOIN
-                    booking ON booking.id = bookinghasvehicle.bookingId
-                    WHERE
-                            (startDate BETWEEN '2019-04-26' AND '2019-04-30')
-                                OR (endDate BETWEEN '2019-04-26' AND '2019-04-30')
-                                OR (startDate <= '2019-04-26'
-                                AND endDate >= '2019-04-30'));
-    */
+    public List<? extends Vehicle> readAvailable(Date startDate, Date endDate) throws SQLException {
         List<Car> cars = new ArrayList<>();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String subQuery = "SELECT vehicleId FROM bookinghasvehicle JOIN booking ON booking.id = bookinghasvehicle.bookingId WHERE (startDate BETWEEN ? AND ?) OR (endDate BETWEEN ? AND ?) OR (startDate <= ?) AND (endDate >= ?)";
@@ -46,7 +27,7 @@ public class CarDBHandler extends VehicleDBHandler<Car>{
             statement.setString(6, format.format(endDate));
             cars = buildModels(statement.executeQuery());
         } catch (Exception e) {
-
+            throw new SQLException(e);
         }
         return cars;
     }
