@@ -1,6 +1,7 @@
 package se.hkr.Database.VehicleDB;
 
 import se.hkr.Database.ModelDBHandler;
+import se.hkr.Model.Vehicle.Car;
 import se.hkr.Model.Vehicle.FuelType;
 
 import java.sql.ResultSet;
@@ -27,9 +28,17 @@ public class FuelTypeDBHandler extends ModelDBHandler<FuelType> {
 
     @Override
     public List<FuelType> readAll() {
-        return null;
-    }
+        List<FuelType> fuelType = new ArrayList<>();
+        String query = String.format("SELECT * FROM FuelType");
+        try (Statement statement = connection.createStatement()) {
+            ResultSet set = statement.executeQuery(query);
+            fuelType = buildModels(set);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        return fuelType;
+    }
     @Override
     public FuelType readByPrimaryKey(String key) throws SQLException {
         String read = String.format("SELECT * FROM fueltype WHERE id=%s LIMIT 1", key);
