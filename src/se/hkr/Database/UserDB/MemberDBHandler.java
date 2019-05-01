@@ -14,7 +14,7 @@ public class MemberDBHandler extends UserDBHandler<Member> {
         String insert = String.format("INSERT INTO member VALUES('%s', '%s')",
                                     model.getDriverLicensNo(),
                                     model.getSocialSecurityNo());
-        try (Statement statement = databaseConnection.getConnection().createStatement()) {
+        try (Statement statement = connection.createStatement()) {
             statement.execute(insert);
         } catch (Exception e) {
             throw new SQLException(e);

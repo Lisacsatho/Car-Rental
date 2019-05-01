@@ -2,13 +2,22 @@ package se.hkr.Database;
 
 import se.hkr.Model.Model;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
 public abstract class ModelDBHandler <T extends Model> implements Database {
-    protected DatabaseConnection databaseConnection;
+    protected Connection connection;
+
+    public ModelDBHandler() {
+        try {
+            connect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     /*
     *   Inserts the object into the database and updates the model with
@@ -24,24 +33,23 @@ public abstract class ModelDBHandler <T extends Model> implements Database {
 
     public abstract void delete(T model) throws SQLException;
 
-    public abstract List<T> readAll();
+    public abstract List<T> readAll() throws SQLException;
 
-    public abstract T readByPrimaryKey(String key);
+    public abstract T readByPrimaryKey(String key) throws SQLException;
 
     /*
     *   Responsible for creating objects of the subject
     *   to avoid repetition in db handlers.
     * */
-    public abstract List<T> buildModels(ResultSet set);
+    public abstract List<T> buildModels(ResultSet set) throws SQLException;
 
     @Override
     public void connect() throws SQLException {
-        databaseConnection = new DatabaseConnection();
-        databaseConnection.connect();
+        connection = DatabaseConnection.getInstance().getConnection();
     }
 
     @Override
     public void close() throws Exception {
-        databaseConnection.close();
+        DatabaseConnection.getInstance().releaseConnection(connection);
     }
 }
