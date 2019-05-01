@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="se.hkr.Scenes.ViewCars.ViewCarsView"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="734.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ViewCars.ViewCarsController">
+   <children>
+      <TableView fx:id="tblCars" layoutX="18.0" layoutY="61.0" prefHeight="316.0" prefWidth="700.0">
+        <columns>
+          <TableColumn fx:id="colBrand" prefWidth="75.0" text="Brand" />
+          <TableColumn fx:id="colModel" prefWidth="65.0" text="Model" />
+            <TableColumn fx:id="colModelYear" prefWidth="104.0" text="Model year" />
+            <TableColumn fx:id="colFuelType" prefWidth="89.0" text="Fuel type" />
+            <TableColumn fx:id="colGearBox" prefWidth="75.0" text="Gear box" />
+            <TableColumn fx:id="colPrice" prefWidth="95.0" text="Price from" />
+            <TableColumn fx:id="colPassengers" prefWidth="105.0" text="Passengers" />
+            <TableColumn fx:id="colSuitcases" prefWidth="91.0" text="Suitcases" />
+        </columns>
+      </TableView>
+      <Label layoutX="18.0" layoutY="23.0" text="All cars">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+   </children>
 </AnchorPane>

@@ -1,5 +1,8 @@
 package se.hkr.Model.Vehicle;
 
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import se.hkr.Model.Model;
 
 import java.util.List;
@@ -9,40 +12,48 @@ public abstract class Vehicle implements Model {
     private int id;
     private double basePrice;
     private String description;
-    private int passengerSeats;
+    private int passengers;
     private FuelType fuelType;
     private GearBox gearBox;
     private String modelName;
-    private int modelyear;
+    private int modelYear;
     private VehicleBrand brand;
 
     private List<VehicleOption> vehicleOptions;
 
-    public Vehicle(int id, double basePrice, String description,
-                   int passengerSeats, FuelType fuelType, GearBox gearBox,
-                   String modelName, int modelyear, VehicleBrand brand,
-                   List<VehicleOption> vehicleOptions) {
+    public Vehicle(int id, double basePrice, String description, int passengers, FuelType fuelType, GearBox gearBox, String modelName, int modelYear, VehicleBrand brand, List<VehicleOption> vehicleOptions) {
         this.id = id;
         this.basePrice = basePrice;
         this.description = description;
-        this.passengerSeats = passengerSeats;
+        this.passengers = passengers;
         this.fuelType = fuelType;
         this.gearBox = gearBox;
         this.modelName = modelName;
-        this.modelyear = modelyear;
+        this.modelYear = modelYear;
         this.brand = brand;
         this.vehicleOptions = vehicleOptions;
     }
 
-    public Vehicle(int id, double basePrice, String description, int passengerSeats, FuelType fuelType, GearBox gearBox, String modelName, int modelyear, VehicleBrand brand) {
+    public Vehicle(int id, double basePrice, String description, int passengers, FuelType fuelType, GearBox gearBox, String modelName, int modelYear, VehicleBrand brand) {
         this.id = id;
         this.basePrice = basePrice;
         this.description = description;
-        this.passengerSeats = passengerSeats;
+        this.passengers = passengers;
         this.fuelType = fuelType;
         this.gearBox = gearBox;
         this.modelName = modelName;
-        this.modelyear = modelyear;
+        this.modelYear = modelYear;
+        this.brand = brand;
+    }
+
+    public Vehicle(double basePrice, String description, int passengers, FuelType fuelType, GearBox gearBox, String modelName, int modelYear, VehicleBrand brand) {
+        this.basePrice = basePrice;
+        this.description = description;
+        this.passengers = passengers;
+        this.fuelType = fuelType;
+        this.gearBox = gearBox;
+        this.modelName = modelName;
+        this.modelYear = modelYear;
         this.brand = brand;
     }
 
@@ -70,12 +81,12 @@ public abstract class Vehicle implements Model {
         this.description = description;
     }
 
-    public int getPassengerSeats() {
-        return passengerSeats;
+    public int getPassengers() {
+        return passengers;
     }
 
-    public void setPassengerSeats(int passengerSeats) {
-        this.passengerSeats = passengerSeats;
+    public void setPassengers(int passengers) {
+        this.passengers = passengers;
     }
 
     public FuelType getFuelType() {
@@ -102,12 +113,12 @@ public abstract class Vehicle implements Model {
         this.modelName = modelName;
     }
 
-    public int getModelyear() {
-        return modelyear;
+    public int getModelYear() {
+        return modelYear;
     }
 
-    public void setModelyear(int modelyear) {
-        this.modelyear = modelyear;
+    public void setModelYear(int modelYear) {
+        this.modelYear = modelYear;
     }
 
     public VehicleBrand getBrand() {

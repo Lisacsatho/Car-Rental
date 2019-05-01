@@ -40,8 +40,8 @@ public class RegisterController implements Initializable {
 
             if (Integer.parseInt(txtFldSsn.getText()) <= 13 && ae.getSource() == btnJoin) {
 
-                Member member = new Member(txtFldSsn.getText(), txtFldFirstName.getText(), txtFldLastName.getText(), txtFldEmail.getText(),
-                        txtFldPhone.getText(), txtFldAddress.getText(), txtFldDriverslicense.getText());
+                //Member member = new Member(txtFldSsn.getText(), txtFldFirstName.getText(), txtFldLastName.getText(), txtFldEmail.getText(),
+                //        txtFldPhone.getText(), txtFldAddress.getText(), txtFldDriverslicense.getText());
             }
         } catch (InputMismatchException x) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
