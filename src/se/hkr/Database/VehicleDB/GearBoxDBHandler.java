@@ -1,6 +1,7 @@
 package se.hkr.Database.VehicleDB;
 
 import se.hkr.Database.ModelDBHandler;
+import se.hkr.Model.Vehicle.FuelType;
 import se.hkr.Model.Vehicle.GearBox;
 
 import java.sql.ResultSet;
@@ -27,7 +28,15 @@ public class GearBoxDBHandler extends ModelDBHandler<GearBox> {
 
     @Override
     public List<GearBox> readAll() throws SQLException {
-        return null;
+        List<GearBox> gearBoxes = new ArrayList<>();
+        String query = String.format("SELECT * FROM GearBox");
+        try (Statement statement = connection.createStatement()) {
+            ResultSet set = statement.executeQuery(query);
+            gearBoxes = buildModels(set);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return gearBoxes;
     }
 
     @Override

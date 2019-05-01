@@ -37,25 +37,14 @@ public class RegisterController implements Initializable {
     }
 
     public void registerUser(ActionEvent ae) {
-
-        try {
+        try (MemberDBHandler memberDBHandler = new MemberDBHandler()) {
 
             if (txtFldSsn.getText().length() == 13 && (txtFldDriversLicense.getText().length() == 9 && ae.getSource() == btnJoin)) {
-
-
                 Member member = new Member(txtFldSsn.getText(), txtFldFirstName.getText(), txtFldLastName.getText(), txtFldEmail.getText(),
-                        txtFldPhone.getText(), new Address(txtFldStreet.getText(), txtFldZip.getText(), txtFldState.getText()), txtFldPassword.getText(), txtFldDriversLicense.getText());
-
-                try (MemberDBHandler memberDBHandler = new MemberDBHandler()) {
-                    memberDBHandler.insert(member);
-                } catch (Exception e) {
-
-                    System.out.println(e);
-                }
-
-
+                                           txtFldPhone.getText(), new Address(txtFldStreet.getText(), txtFldZip.getText(), txtFldState.getText()), txtFldPassword.getText(), txtFldDriversLicense.getText());
+                memberDBHandler.insert(member);
             }
-        } catch (InputMismatchException x) {
+        } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Input error!");
             alert.setHeaderText("Your input was incorrect. Check your information.");

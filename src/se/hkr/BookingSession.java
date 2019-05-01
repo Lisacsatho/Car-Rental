@@ -20,6 +20,6 @@ public class BookingSession {
     }
 
     public void resetSession() {
-        booking = null;
+        booking = new Booking();
     }
 }

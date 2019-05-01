@@ -23,6 +23,10 @@ public class Navigator {
         previousScenes = new Stack<>();
     }
 
+    public void setPrimaryStage(Stage stage) {
+        this.primaryStage = stage;
+    }
+
     public void navigateTo(String scene) {
         previousScenes.push(primaryStage.getScene());
         setScene(scene);
@@ -36,7 +40,10 @@ public class Navigator {
         try {
             Parent root = FXMLLoader.load(getClass().getResource(PATH_TO_SCENES + scene));
             if (primaryStage != null) {
-                primaryStage.setScene(new Scene(root));
+                Scene nextScene = new Scene(root);
+                String cssTheme = getClass().getResource("Assets/theme.css").toExternalForm();
+                nextScene.getStylesheets().add(cssTheme);
+                primaryStage.setScene(nextScene);
             }
         } catch (IOException e) {
             // TODO: Figure out proper handling

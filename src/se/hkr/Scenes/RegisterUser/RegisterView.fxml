@@ -15,18 +15,18 @@
             <Image url="@../../Assets/Images/placeholder_background.png" />
          </image>
       </ImageView>
-      <TextField fx:id="txtFldFirstName" layoutX="167.0" layoutY="70.0" onAction="#registerUser" promptText="First name" />
-      <TextField fx:id="txtFldEmail" layoutX="334.0" layoutY="70.0" onAction="#registerUser" promptText="Email" />
-      <TextField fx:id="txtFldLastName" layoutX="167.0" layoutY="97.0" onAction="#registerUser" promptText="Last name" />
-      <TextField fx:id="txtFldPassword" layoutX="334.0" layoutY="97.0" onAction="#registerUser" promptText="Password" />
-      <TextField fx:id="txtFldSsn" layoutX="167.0" layoutY="124.0" onAction="#registerUser" promptText="Social security number" />
-      <TextField fx:id="txtFldPhone" layoutX="334.0" layoutY="124.0" onAction="#registerUser" promptText="Phone number" />
-      <TextField fx:id="txtFldStreet" layoutX="167.0" layoutY="151.0" onAction="#registerUser" promptText="Street" />
-      <TextField fx:id="txtFldState" layoutX="334.0" layoutY="151.0" onAction="#registerUser" promptText="State" />
-      <TextField fx:id="txtFldZip" layoutX="167.0" layoutY="178.0" onAction="#registerUser" promptText="Zip" />
-      <TextField fx:id="txtFldDriversLicense" layoutX="334.0" layoutY="178.0" onAction="#registerUser" promptText="Driverlicense number" />
-      <Button fx:id="btnJoin" layoutX="406.0" layoutY="273.0" mnemonicParsing="false" onAction="#registerUser" prefHeight="27.0" prefWidth="84.0" text="Join" />
-      <Label layoutX="197.0" layoutY="32.0" prefHeight="23.0" prefWidth="268.0" text="Fill in your information below:">
+      <TextField fx:id="txtFldFirstName" layoutX="214.0" layoutY="51.0" onAction="#registerUser" promptText="First name" styleClass="drop-shadow" />
+      <TextField fx:id="txtFldEmail" layoutX="388.0" layoutY="51.0" onAction="#registerUser" promptText="Email" styleClass="drop-shadow" />
+      <TextField fx:id="txtFldLastName" layoutX="214.0" layoutY="87.0" onAction="#registerUser" promptText="Last name" styleClass="drop-shadow" />
+      <TextField fx:id="txtFldPassword" layoutX="388.0" layoutY="87.0" onAction="#registerUser" promptText="Password" styleClass="drop-shadow" />
+      <TextField fx:id="txtFldSsn" layoutX="214.0" layoutY="125.0" onAction="#registerUser" promptText="Social security number" styleClass="drop-shadow" />
+      <TextField fx:id="txtFldPhone" layoutX="388.0" layoutY="125.0" onAction="#registerUser" promptText="Phone number" styleClass="drop-shadow" />
+      <TextField fx:id="txtFldStreet" layoutX="214.0" layoutY="164.0" onAction="#registerUser" prefHeight="25.0" prefWidth="325.0" promptText="Address" styleClass="drop-shadow" />
+      <TextField fx:id="txtFldState" layoutX="390.0" layoutY="204.0" onAction="#registerUser" promptText="State" styleClass="drop-shadow" />
+      <TextField fx:id="txtFldZip" layoutX="214.0" layoutY="204.0" onAction="#registerUser" promptText="Zip" styleClass="drop-shadow" />
+      <TextField fx:id="txtFldDriversLicense" layoutX="214.0" layoutY="246.0" onAction="#registerUser" promptText="Driverlicense number" styleClass="drop-shadow" />
+      <Button fx:id="btnJoin" layoutX="457.0" layoutY="246.0" mnemonicParsing="false" onAction="#registerUser" prefHeight="27.0" prefWidth="84.0" styleClass="drop-shadow" text="Join" />
+      <Label layoutX="254.0" layoutY="14.0" prefHeight="23.0" prefWidth="268.0" text="Fill in your information below:">
          <font>
             <Font size="18.0" />
          </font>
