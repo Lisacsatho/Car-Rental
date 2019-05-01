@@ -42,8 +42,6 @@ public class MainMenuController {
 
     public void btnGoPressed(ActionEvent ae){
 
-
-
     }
 
 

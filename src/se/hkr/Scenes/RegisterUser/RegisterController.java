@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 public class RegisterController implements Initializable {
 
     @FXML
-    TextField txtFldFirstName,
+    private TextField txtFldFirstName,
             txtFldLastName,
             txtFldSsn,
             txtFldStreet,
@@ -28,7 +28,7 @@ public class RegisterController implements Initializable {
             txtFldState,
             txtFldDriversLicense;
     @FXML
-    Button btnJoin;
+    private Button btnJoin;
 
     @Override
 
