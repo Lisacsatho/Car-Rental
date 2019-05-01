@@ -1,6 +1,7 @@
 package se.hkr.Database.VehicleDB;
 
 import se.hkr.Database.ModelDBHandler;
+import se.hkr.Model.Vehicle.FuelType;
 import se.hkr.Model.Vehicle.VehicleBrand;
 
 import java.sql.PreparedStatement;
@@ -28,7 +29,16 @@ public class VehicleBrandDBHandler extends ModelDBHandler<VehicleBrand> {
 
     @Override
     public List<VehicleBrand> readAll() throws SQLException {
-        return null;
+        List<VehicleBrand> vehicleBrands = new ArrayList<>();
+        String query = String.format("SELECT * FROM VehicleBrand");
+        try (Statement statement = connection.createStatement()) {
+            ResultSet set = statement.executeQuery(query);
+            vehicleBrands = buildModels(set);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return vehicleBrands;
     }
 
     @Override

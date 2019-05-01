@@ -7,21 +7,22 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.AddCar.AddCarController">
    <children>
       <Label layoutX="250.0" layoutY="27.0" text="AddCar">
          <font>
             <Font size="21.0" />
          </font></Label>
-      <Button layoutX="495.0" layoutY="344.0" mnemonicParsing="false" text="Save" />
-      <TextField fx:id="Model" layoutX="25.0" layoutY="67.0" promptText="Model" />
-      <TextField fx:id="Year" layoutX="25.0" layoutY="101.0" promptText="¨" text="Year" />
-      <ComboBox fx:id="Brand" layoutX="207.0" layoutY="67.0" prefWidth="150.0" promptText="Brand" />
-      <ComboBox fx:id="FuelType" layoutX="25.0" layoutY="137.0" prefHeight="27.0" prefWidth="167.0" promptText="FuelType" />
-      <ComboBox fx:id="GearBox" layoutX="207.0" layoutY="101.0" prefWidth="150.0" promptText="GearBox" />
-      <ComboBox fx:id="Passengers" layoutX="209.0" layoutY="173.0" prefHeight="27.0" prefWidth="150.0" promptText="Passengers" />
-      <ComboBox fx:id="CarType" layoutX="25.0" layoutY="173.0" prefHeight="27.0" prefWidth="167.0" promptText="CarType" />
-      <ComboBox fx:id="SuitCases" layoutX="207.0" layoutY="137.0" prefHeight="27.0" prefWidth="150.0" promptText="Suitcases" />
-      <Button layoutX="442.0" layoutY="344.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="41.0" text="Exit" />
+      <Button fx:id="buttonSave" layoutX="495.0" layoutY="344.0" mnemonicParsing="false" text="Save" />
+      <TextField fx:id="textModel" layoutX="25.0" layoutY="67.0" promptText="Model" />
+      <TextField fx:id="textYear" layoutX="25.0" layoutY="101.0" promptText="¨" text="Year" />
+      <ComboBox fx:id="comboBrand" layoutX="207.0" layoutY="67.0" prefWidth="150.0" promptText="Brand" />
+      <ComboBox fx:id="comboFuelType" layoutX="25.0" layoutY="137.0" prefHeight="27.0" prefWidth="167.0" promptText="FuelType" />
+      <ComboBox fx:id="comboGearBox" layoutX="207.0" layoutY="101.0" prefWidth="150.0" promptText="GearBox" />
+      <ComboBox fx:id="comboPassengers" layoutX="209.0" layoutY="173.0" prefHeight="27.0" prefWidth="150.0" promptText="Passengers" />
+      <ComboBox fx:id="comboCarType" layoutX="25.0" layoutY="173.0" prefHeight="27.0" prefWidth="167.0" promptText="CarType" />
+      <ComboBox fx:id="comboSuitcases" layoutX="207.0" layoutY="137.0" prefHeight="27.0" prefWidth="150.0" promptText="Suitcases" />
+      <Button fx:id="buttonExit" layoutX="442.0" layoutY="344.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="41.0" text="Exit" />
+      <TextField fx:id="textModel1" layoutX="25.0" layoutY="206.0" promptText="Model" />
    </children>
 </AnchorPane>

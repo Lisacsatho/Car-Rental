@@ -4,6 +4,7 @@ import se.hkr.Database.ModelDBHandler;
 import se.hkr.Model.Vehicle.Car;
 import se.hkr.Model.Vehicle.FuelType;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,7 +14,6 @@ import java.util.List;
 public class FuelTypeDBHandler extends ModelDBHandler<FuelType> {
     @Override
     public void insert(FuelType model) throws SQLException {
-
     }
 
     @Override

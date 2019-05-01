@@ -5,6 +5,7 @@ import se.hkr.Database.ModelDBHandler;
 import se.hkr.Model.Vehicle.Car;
 import se.hkr.Model.Vehicle.Vehicle;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -68,14 +69,28 @@ public abstract class VehicleDBHandler <V extends Vehicle> extends ModelDBHandle
 
     @Override
     public void insert(V model) throws SQLException {
-        String insert = String.format("INSERT into VEHICLE (fuelType, gearBox, price, description, model, passengers )" +
-                "VALUES (%d, %d, %f, '%s', %s, %d )" ,
-                model.getFuelType().getId(),
-                model.getGearBox().getId(),
-                model.getBasePrice(),
-                model.getDescription(),
-                model.getModelName(),
-                model.getPassengers()) ;
+        String insert = "INSERT INTO vehicle (fuelType, gearBox, price, description, modelName, modelYear, passengers, brand)" +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String getId = "SELECT LAST_INSERT_ID() as id";
+        try (PreparedStatement insertStatement = connection.prepareStatement(insert);
+            PreparedStatement getIdStatement = connection.prepareStatement(getId)) {
+            insertStatement.setInt(1, model.getFuelType().getId());
+            insertStatement.setInt(2, model.getGearBox().getId());
+            insertStatement.setDouble(3, model.getBasePrice());
+            insertStatement.setString(4, model.getDescription());
+            insertStatement.setString(5, model.getModelName());
+            insertStatement.setInt(6, model.getModelYear());
+            insertStatement.setInt(7, model.getPassengers());
+            insertStatement.setInt(8, model.getBrand().getId());
+            insertStatement.execute();
+            // Get the id inserted and set the models id to it
+            ResultSet set = getIdStatement.executeQuery();
+            while (set.next()) {
+                model.setId(set.getInt("id"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
