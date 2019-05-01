@@ -18,6 +18,9 @@ public class Booking implements Model {
         this.startDate = startDate;
         this.endDate = endDate;
         this.totalPrice = totalPrice;
+    }
+
+    public Booking() {
 
     }
 

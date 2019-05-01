@@ -23,6 +23,10 @@ public class Navigator {
         previousScenes = new Stack<>();
     }
 
+    public void setPrimaryStage(Stage stage) {
+        this.primaryStage = stage;
+    }
+
     public void navigateTo(String scene) {
         previousScenes.push(primaryStage.getScene());
         setScene(scene);

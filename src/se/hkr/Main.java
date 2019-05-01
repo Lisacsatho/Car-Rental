@@ -20,11 +20,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("Scenes/RegisterUser/RegisterView.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root));
+        Navigator.getInstance().setPrimaryStage(primaryStage);
+        Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");
         primaryStage.show();
-        
     }
 
     public static void main(String[] args) {

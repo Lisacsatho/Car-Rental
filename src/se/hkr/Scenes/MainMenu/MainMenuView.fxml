@@ -17,7 +17,7 @@
             <Image url="@../../Assets/Images/splash.jpg" />
          </image>
       </ImageView>
-      <AnchorPane layoutY="-2.0" prefHeight="409.0" prefWidth="301.0">
+      <AnchorPane layoutY="-2.0" prefHeight="409.0" prefWidth="301.0" style="-fx-background-color: #1c282d;">
          <styleClass>
             <String fx:value="dark-panel" />
             <String fx:value="drop-shadow" />
@@ -47,8 +47,8 @@
             </Button>
          </children>
       </AnchorPane>
-      <DatePicker layoutX="336.0" layoutY="176.0" prefHeight="37.0" prefWidth="204.0" promptText="Start date" showWeekNumbers="true" styleClass="drop-shadow" />
-      <DatePicker layoutX="336.0" layoutY="228.0" prefHeight="37.0" prefWidth="204.0" promptText="Return date" styleClass="drop-shadow" />
+      <DatePicker fx:id="datePicStart" layoutX="336.0" layoutY="176.0" prefHeight="37.0" prefWidth="204.0" promptText="Start date" showWeekNumbers="true" styleClass="drop-shadow" />
+      <DatePicker fx:id="datePicReturn" layoutX="336.0" layoutY="228.0" prefHeight="37.0" prefWidth="204.0" promptText="Return date" styleClass="drop-shadow" />
       <Label layoutX="337.0" layoutY="154.0" text="Cruise dates" textFill="WHITE">
          <font>
             <Font name="Arial" size="15.0" />
