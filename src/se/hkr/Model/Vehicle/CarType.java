@@ -1,6 +1,8 @@
 package se.hkr.Model.Vehicle;
 
-public class CarType {
+import se.hkr.Model.Model;
+
+public class CarType implements Model {
     private int id;
     private String name;
 
@@ -23,5 +25,10 @@ public class CarType {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean matches(String key) {
+        return false;
     }
 }

@@ -1,32 +1,96 @@
 package se.hkr.Database;
 
+import javax.sql.PooledConnectionBuilder;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 public class DatabaseConnection implements Database {
     private static DatabaseConnection instance;
 
-    private Connection connection;
+    //private Connection connection;
     private final String USERNAME = "rentall";
     private final String PASSWORD = "Xj0K9_Z_n331";
     private final String IP = "den1.mysql2.gear.host";
     private final String DATABASE = "RentAll";
     private final String ADDRESS = String.format("jdbc:mysql://%s/%s?user=%s&password=%s&serverTimezone=UTC",
                                                 IP, DATABASE, USERNAME, PASSWORD);
+    private Queue<Connection> connections;
+    private final int INITIAL_CONNECTIONS = 5;
+    private final int MAX_CONNECTIONS = 10;
+    private List<Connection> connectionsInUse;
 
-    @Override
-    public void connect() throws SQLException {
-        connection = DriverManager.getConnection(ADDRESS);
+    private DatabaseConnection() {
+        try {
+            connect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        connectionsInUse = new ArrayList<>();
     }
 
-    public Connection getConnection() {
-        return connection;
+    @Override
+    public void connect() throws Exception {
+        connections = new LinkedList<>();
+        for (int i = 0; i < INITIAL_CONNECTIONS; i++) {
+            try {
+                connections.offer(DriverManager.getConnection(ADDRESS));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
     public void close() throws Exception {
-        connection.close();
-        connection = null;
+        for (Connection connection : connections) {
+            connection.close();
+        }
+        for (Connection connection : connectionsInUse) {
+            connection.close();
+        }
+    }
+
+    private Connection createConnection() {
+        try {
+            return DriverManager.getConnection(ADDRESS);
+        } catch (SQLException e) {
+            // TODO: Proper handling
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static DatabaseConnection getInstance() {
+        if (instance == null) {
+            instance = new DatabaseConnection();
+        }
+        return instance;
+    }
+
+    public Connection getConnection() {
+        Connection connection = null;
+        if (connections.isEmpty()) {
+            try {
+                connection = DriverManager.getConnection(ADDRESS);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            connection = connections.poll();
+        }
+        connectionsInUse.add(connection);
+        return connection;
+    }
+
+    public void releaseConnection(Connection connection) {
+        if (connectionsInUse.size() + connections.size() <= MAX_CONNECTIONS) {
+            connections.add(connection);
+        }
+        connectionsInUse.remove(connection);
     }
 }

@@ -15,7 +15,7 @@ public class AddressDBHandler extends ModelDBHandler<Address> {
                                     model.getZip(),
                                     model.getStreet(),
                                     model.getState());
-        try (Statement statement = databaseConnection.getConnection().createStatement()) {
+        try (Statement statement = connection.createStatement()) {
             statement.execute(insert);
             String getId = "SELECT LAST_INSERT_ID() AS id";
             ResultSet set = statement.executeQuery(getId);
