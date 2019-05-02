@@ -27,20 +27,15 @@ public class MemberDBHandler extends UserDBHandler<Member> {
     }
 
     @Override
-    public Member authenticate(String email, String password) {
-        byte[] hash = HashUtils.hash(password);
-        StringBuilder hashedPassword = new StringBuilder();
-        for (byte b : hash) {
-            hashedPassword.append(b);
-        }
+    public boolean authenticateUser(String email, String hashedPassword) {
         String query = "SELECT * FROM User JOIN Member ON user.socialSecurityNo = member.socialSecurityNo WHERE email=? AND password=?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, email);
-            statement.setString(2, hashedPassword.toString());
+            statement.setString(2, hashedPassword);
             ResultSet set = statement.executeQuery();
-            return buildModels(set).get(0);
+            return !buildModels(set).isEmpty();
         } catch (Exception e) {
-            return null;
+            return false;
         }
     }
 
@@ -61,6 +56,20 @@ public class MemberDBHandler extends UserDBHandler<Member> {
 
     @Override
     public Member readByPrimaryKey(String key) {
+        return null;
+    }
+
+    @Override
+    protected Member readByEmail(String email) throws SQLException {
+        String query = "SELECT * FROM User JOIN Member ON user.socialSecurityNo=member.socialSecurityNo WHERE email=? LIMIT 1";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, email);
+            ResultSet set = statement.executeQuery();
+            List<Member> members = buildModels(set);
+            if (!members.isEmpty()) {
+                return members.get(0);
+            }
+        }
         return null;
     }
 

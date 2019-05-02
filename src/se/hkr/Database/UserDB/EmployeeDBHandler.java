@@ -1,10 +1,7 @@
 package se.hkr.Database.UserDB;
 
 import se.hkr.HashUtils;
-import se.hkr.Model.User.Address;
-import se.hkr.Model.User.Employee;
-import se.hkr.Model.User.Manager;
-import se.hkr.Model.User.User;
+import se.hkr.Model.User.*;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,20 +16,15 @@ public class EmployeeDBHandler extends UserDBHandler<Employee> {
     }
 
     @Override
-    public User authenticate(String email, String password) {
-        byte[] hash = HashUtils.hash(password);
-        StringBuilder hashedPassword = new StringBuilder();
-        for (byte b : hash) {
-            hashedPassword.append(b);
-        }
+    public boolean authenticateUser(String email, String hashedPassword) {
         String query = "SELECT * FROM User JOIN Employee ON user.socialSecurityNo = employee.socialSecurityNo WHERE email=? AND password=?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, email);
             statement.setString(2, hashedPassword.toString());
             ResultSet set = statement.executeQuery();
-            return buildModels(set).get(0);
+            return !buildModels(set).isEmpty();
         } catch (Exception e) {
-            return null;
+            return false;
         }
     }
 
@@ -53,6 +45,20 @@ public class EmployeeDBHandler extends UserDBHandler<Employee> {
 
     @Override
     public Employee readByPrimaryKey(String key) {
+        return null;
+    }
+
+    @Override
+    protected Employee readByEmail(String email) throws SQLException {
+        String query = "SELECT * FROM User JOIN Employee ON user.socialSecurityNo=employee.socialSecurityNo WHERE email=? LIMIT 1";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, email);
+            ResultSet set = statement.executeQuery();
+            List<Employee> employees = buildModels(set);
+            if (!employees.isEmpty()) {
+                return employees.get(0);
+            }
+        }
         return null;
     }
 

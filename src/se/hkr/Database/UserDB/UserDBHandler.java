@@ -6,10 +6,13 @@ import se.hkr.Model.User.Employee;
 import se.hkr.Model.User.Member;
 import se.hkr.Model.User.User;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 
 public abstract class UserDBHandler <U extends User> extends ModelDBHandler<U> {
 
@@ -21,7 +24,28 @@ public abstract class UserDBHandler <U extends User> extends ModelDBHandler<U> {
         }
     }
 
-    public abstract User authenticate(String email, String password);
+    public static User authenticate(String email, String password) throws SQLException {
+        byte[] hash = HashUtils.hash(password);
+        StringBuilder hashedPassword = new StringBuilder();
+        for (byte b : hash) {
+            hashedPassword.append(b);
+        }
+        try (MemberDBHandler memberDBHandler = new MemberDBHandler();
+             EmployeeDBHandler employeeDBHandler = new EmployeeDBHandler()) {
+            if (memberDBHandler.authenticateUser(email, hashedPassword.toString())) {
+                return memberDBHandler.readByEmail(email);
+            } else if (employeeDBHandler.authenticateUser(email, hashedPassword.toString())) {
+                return employeeDBHandler.readByEmail(email);
+            }
+        } catch (Exception e) {
+            throw new SQLException(e);
+        }
+        return null;
+    }
+
+    protected abstract boolean authenticateUser(String email, String hashedPassword);
+
+    protected abstract U readByEmail(String email) throws SQLException;
 
     @Override
     public void insert(U model) throws SQLException {

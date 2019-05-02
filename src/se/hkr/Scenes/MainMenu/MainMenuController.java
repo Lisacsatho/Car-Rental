@@ -13,10 +13,13 @@ import javafx.stage.Stage;
 import se.hkr.BookingSession;
 import se.hkr.Database.UserDB.EmployeeDBHandler;
 import se.hkr.Database.UserDB.MemberDBHandler;
+import se.hkr.Database.UserDB.UserDBHandler;
+import se.hkr.Database.VehicleDB.VehicleDBHandler;
 import se.hkr.Model.User.User;
 import se.hkr.Navigator;
 import se.hkr.UserSession;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -49,29 +52,17 @@ public class MainMenuController {
     }
 
     public void btnLoginPressed(ActionEvent ae) {
-        if (login() != null) {
-            Navigator.getInstance().navigateToPanel();
-        } else {
-            alert("No user found.");
-        }
-    }
-
-    private User login() {
         String email = txtFldUsername.getText();
         String password = txtFldPassword.getText();
-
-        User user = null;
-        try (MemberDBHandler memberDBHandler = new MemberDBHandler();
-             EmployeeDBHandler employeeDBHandler = new EmployeeDBHandler()){
-            user = memberDBHandler.authenticate(email, password);
-            user = (user == null) ? employeeDBHandler.authenticate(email, password) : user;
+        try {
+            User user = UserDBHandler.authenticate(email, password);
             if (user != null) {
                 UserSession.getInstance().logIn(user);
+                Navigator.getInstance().navigateToPanel();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            alert("No user found.");
         }
-        return user;
     }
 
     public void btnGoPressed(ActionEvent ae) {
