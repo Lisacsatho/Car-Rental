@@ -2,6 +2,13 @@ package se.hkr;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import se.hkr.Database.UserDB.EmployeeDBHandler;
+import se.hkr.Database.UserDB.MemberDBHandler;
+import se.hkr.Database.UserDB.UserDBHandler;
+import se.hkr.Model.User.Employee;
+import se.hkr.Model.User.User;
+
+import java.nio.charset.StandardCharsets;
 
 public class Main extends Application {
 

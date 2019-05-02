@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import se.hkr.Database.UserDB.MemberDBHandler;
+import se.hkr.HashUtils;
 import se.hkr.Model.User.Address;
 import se.hkr.Model.User.Member;
 
@@ -17,7 +18,7 @@ import java.util.ResourceBundle;
 public class RegisterController implements Initializable {
 
     @FXML
-    TextField txtFldFirstName,
+    private TextField txtFldFirstName,
             txtFldLastName,
             txtFldSsn,
             txtFldStreet,
@@ -28,7 +29,7 @@ public class RegisterController implements Initializable {
             txtFldState,
             txtFldDriversLicense;
     @FXML
-    Button btnJoin;
+    private Button btnJoin;
 
     @Override
 
@@ -39,12 +40,14 @@ public class RegisterController implements Initializable {
     public void registerUser(ActionEvent ae) {
         try (MemberDBHandler memberDBHandler = new MemberDBHandler()) {
 
-            if (txtFldSsn.getText().length() == 13 && (txtFldDriversLicense.getText().length() == 9 && ae.getSource() == btnJoin)) {
+            //if (txtFldSsn.getText().length() == 13 && (txtFldDriversLicense.getText().length() == 9 && ae.getSource() == btnJoin)) {
                 Member member = new Member(txtFldSsn.getText(), txtFldFirstName.getText(), txtFldLastName.getText(), txtFldEmail.getText(),
-                                           txtFldPhone.getText(), new Address(txtFldStreet.getText(), txtFldZip.getText(), txtFldState.getText()), txtFldPassword.getText(), txtFldDriversLicense.getText());
+                                           txtFldPhone.getText(), new Address(txtFldStreet.getText(), txtFldZip.getText(), txtFldState.getText()), HashUtils.hash(txtFldPassword.getText()), txtFldDriversLicense.getText());
                 memberDBHandler.insert(member);
-            }
+                System.out.println("Member inserted!");
+            //}
         } catch (Exception e) {
+            e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Input error!");
             alert.setHeaderText("Your input was incorrect. Check your information.");

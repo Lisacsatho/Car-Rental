@@ -11,7 +11,11 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import se.hkr.BookingSession;
+import se.hkr.Database.UserDB.EmployeeDBHandler;
+import se.hkr.Database.UserDB.MemberDBHandler;
+import se.hkr.Model.User.User;
 import se.hkr.Navigator;
+import se.hkr.UserSession;
 
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
@@ -21,21 +25,19 @@ import java.util.Date;
 public class MainMenuController {
 
     @FXML
-    TextField txtFldUsername,
-            txtFldPassword;
+    private TextField txtFldUsername,
+                      txtFldPassword;
 
     @FXML
-    Button btnSignUp,
+    private Button btnSignUp,
             btnLogin,
             btnGo;
 
     @FXML
-    DatePicker datePicStart,
+    private DatePicker datePicStart,
             datePicReturn;
 
-
-    public void btnSignUpPressed(ActionEvent ae){
-
+    public void btnSignUpPressed(ActionEvent ae) {
         try {
             if (ae.getSource() == btnSignUp) {
                 Stage stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
@@ -43,25 +45,38 @@ public class MainMenuController {
             }
         } catch (Exception x) {
 
-
         }
-
-
     }
 
-    public void btnLoginPressed(ActionEvent ae){
-
-
+    public void btnLoginPressed(ActionEvent ae) {
+        if (login() != null) {
+            Navigator.getInstance().navigateToPanel();
+        } else {
+            alert("No user found.");
+        }
     }
 
-    public void btnGoPressed(ActionEvent ae){
+    private User login() {
+        String email = txtFldUsername.getText();
+        String password = txtFldPassword.getText();
 
-        if (ae.getSource()==btnGo){
+        User user = null;
+        try (MemberDBHandler memberDBHandler = new MemberDBHandler();
+             EmployeeDBHandler employeeDBHandler = new EmployeeDBHandler()){
+            user = memberDBHandler.authenticate(email, password);
+            user = (user == null) ? employeeDBHandler.authenticate(email, password) : user;
+            if (user != null) {
+                UserSession.getInstance().logIn(user);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
 
-
-
+    public void btnGoPressed(ActionEvent ae) {
+        if (ae.getSource() == btnGo) {
             try {
-
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 Date startDate = format.parse(datePicStart.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
                 Date endDate = format.parse(datePicReturn.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
@@ -70,24 +85,20 @@ public class MainMenuController {
                 BookingSession.getInstance().getBooking().setStartDate(startDate);
                 BookingSession.getInstance().getBooking().setEndDate(endDate);
 
-
-
                 Navigator.getInstance().navigateTo("ChooseCar/ChooseCarView.fxml");
-            }
-            catch (Exception x){
+            } catch (Exception x) {
                 x.printStackTrace();
-
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Input error!");
-                alert.setHeaderText("Choose both starting date and returning date.");
-                alert.showAndWait();
+                alert("Choose both starting date and returning date.");
             }
         }
-
-        }
-
-
-
     }
+
+    private void alert(String prompt) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Alert");
+        alert.setHeaderText(prompt);
+        alert.showAndWait();
+    }
+}
 
 

@@ -11,6 +11,8 @@ import java.util.Stack;
 public class Navigator {
     private static Navigator ourInstance = new Navigator();
     private static final String PATH_TO_SCENES = "Scenes/";
+    private final String MEMBER_PANEL = "RegisterUser/RegisterView.fxml";
+    private final String EMPLOYEE_PANEL = "AddCar/AddCarView.fxml";
 
     private Stack<Scene> previousScenes;
     private Stage primaryStage;
@@ -21,6 +23,16 @@ public class Navigator {
 
     private Navigator() {
         previousScenes = new Stack<>();
+    }
+
+    public void navigateToPanel() {
+        assert(UserSession.getInstance().isLoggedIn());
+
+        if (UserSession.getInstance().isMember()) {
+            navigateTo(MEMBER_PANEL);
+        } else if (UserSession.getInstance().isEmployee()) {
+            navigateTo(EMPLOYEE_PANEL);
+        }
     }
 
     public void setPrimaryStage(Stage stage) {

@@ -10,9 +10,9 @@ public abstract class User implements Model {
     private String email;
     private String phoneNumber;
     private Address address;
-    private String password;
+    private byte[] password;
 
-    public User(String socialSecurityNo, String firstName, String lastName, String email, String phoneNumber, Address address, String password) {
+    public User(String socialSecurityNo, String firstName, String lastName, String email, String phoneNumber, Address address, byte[] password) {
         this.socialSecurityNo = socialSecurityNo;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -20,6 +20,15 @@ public abstract class User implements Model {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.password = password;
+    }
+
+    public User(String socialSecurityNo, String firstName, String lastName, String email, String phoneNumber, Address address) {
+        this.socialSecurityNo = socialSecurityNo;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
     }
 
     public String getSocialSecurityNo() {
@@ -70,11 +79,11 @@ public abstract class User implements Model {
         this.address = address;
     }
 
-    public String getPassword() {
+    public byte[] getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(byte[] password) {
         this.password = password;
     }
 
