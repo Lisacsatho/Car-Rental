@@ -2,6 +2,8 @@ package se.hkr.Scenes.ViewCars;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -70,7 +72,6 @@ public class ViewCarsController implements ReadController, Initializable {
             colSuitcases.setCellValueFactory(
                     new PropertyValueFactory<Car, Integer>("suitcases")
             );
-            tblCars.setItems(data);
 
             ObservableList<FuelType> fuelTypes = FXCollections.observableArrayList(fuelTypeDBHandler.readAll());
             comboFuelType.setItems(fuelTypes);
@@ -84,6 +85,24 @@ public class ViewCarsController implements ReadController, Initializable {
             ObservableList<VehicleBrand> vehicleBrands = FXCollections.observableArrayList(vehicleBrandDBHandler.readAll());
             comboBrand.setItems(vehicleBrands);
 
+            FilteredList<Car> filteredData = new FilteredList<>(data, c -> true);
+            comboBrand.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                filteredData.setPredicate(car -> filterCars(car));
+            });
+            comboCarType.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                filteredData.setPredicate(car -> filterCars(car));
+            });
+            comboFuelType.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                filteredData.setPredicate(car -> filterCars(car));
+            });
+            comboGearBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                filteredData.setPredicate(car -> filterCars(car));
+            });
+
+            SortedList<Car> sortedData = new SortedList<>(filteredData);
+            sortedData.comparatorProperty().bind(tblCars.comparatorProperty());
+            tblCars.setItems(sortedData);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -92,7 +111,30 @@ public class ViewCarsController implements ReadController, Initializable {
     @Override
     public void filter() {
 
+    }
 
+    private boolean filterCars(Car car) {
+        if (!comboGearBox.getSelectionModel().isEmpty()) {
+            if (car.getGearBox().getId() != ((GearBox)comboGearBox.getSelectionModel().getSelectedItem()).getId()) {
+                return false;
+            }
+        }
+        if (!comboFuelType.getSelectionModel().isEmpty()) {
+            if (car.getFuelType().getId() != ((FuelType) comboFuelType.getSelectionModel().getSelectedItem()).getId()) {
+                return false;
+            }
+        }
+        if (!comboCarType.getSelectionModel().isEmpty()) {
+            if (car.getCarType().getId() != ((CarType) comboCarType.getSelectionModel().getSelectedItem()).getId()) {
+                return false;
+            }
+        }
+        if (!comboBrand.getSelectionModel().isEmpty()) {
+            if (car.getBrand().getId() != ((VehicleBrand) comboBrand.getSelectionModel().getSelectedItem()).getId()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
