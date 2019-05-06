@@ -32,7 +32,6 @@ public class RegisterController implements Initializable {
     private Button btnJoin;
 
     @Override
-
     public void initialize(URL location, ResourceBundle resources) {
 
     }

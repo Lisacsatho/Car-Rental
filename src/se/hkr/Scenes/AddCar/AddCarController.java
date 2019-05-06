@@ -1,35 +1,38 @@
 package se.hkr.Scenes.AddCar;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
-import se.hkr.Database.VehicleDB.CarTypeDBHandler;
-import se.hkr.Database.VehicleDB.FuelTypeDBHandler;
-import se.hkr.Database.VehicleDB.GearBoxDBHandler;
-import se.hkr.Database.VehicleDB.VehicleBrandDBHandler;
-import se.hkr.Model.Vehicle.CarType;
-import se.hkr.Model.Vehicle.FuelType;
-import se.hkr.Model.Vehicle.GearBox;
-import se.hkr.Model.Vehicle.VehicleBrand;
-
+import javafx.scene.control.*;
+import se.hkr.Database.VehicleDB.*;
+import se.hkr.Model.Vehicle.*;
+import se.hkr.Navigator;
+import java.io.CharArrayReader;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class AddCarController implements Initializable {
 
     @FXML
-    private Button buttonExit, buttonSave;
+    private TextArea
+            textDescription;
 
     @FXML
-    private TextField textModel, textYear, textPrice;
+    private Button
+            buttonExit,
+            buttonSave;
 
     @FXML
-    private ComboBox comboFuelType,
+    private TextField
+            textModel,
+            textYear,
+            textPrice;
+
+    @FXML
+    private ComboBox
+            comboFuelType,
             comboBrand,
             comboGearBox,
             comboPassengers,
@@ -66,12 +69,75 @@ public class AddCarController implements Initializable {
             e.printStackTrace();
         }
     }
+    @FXML
+    private void buttonAddPressed (ActionEvent ae) {
+        if(validate()) {
+           try (CarDBHandler carDBHandler = new CarDBHandler()) {
+               Car car = new Car(Double.parseDouble(textPrice.getText()),textDescription.getText(),((Integer) comboPassengers.getSelectionModel().getSelectedItem()).intValue(),
+                                (FuelType) comboFuelType.getSelectionModel().getSelectedItem(), (GearBox) comboGearBox.getSelectionModel().getSelectedItem(), textModel.getText(),
+                                Integer.parseInt(textYear.getText()),(VehicleBrand) comboBrand.getSelectionModel().getSelectedItem(), ((Integer)comboSuitcases.getSelectionModel().getSelectedItem()).intValue(),
+                                (CarType)comboCarType.getSelectionModel().getSelectedItem());
 
-    private void buttonAddPressed (ActionEvent e) {
+               carDBHandler.insert(car);
+               alert("Car was added to the system.");
+               Navigator.getInstance().navigateTo("AddCar/AddCarController.fxml");
+           } catch (SQLException e) {
+                alert("There was a problem while inserting the car into the database, please try again later.");
+           } catch (Exception e) {
 
+           }
+        }
+    }
+    private boolean validate () {
+        if(comboFuelType.getSelectionModel().isEmpty()) {
+            alert("Please select a fuel type");
+            return false;
+        }
+        if(comboBrand.getSelectionModel().isEmpty()) {
+            alert("Please select a brand");
+            return false;
+        }
+        if (comboGearBox.getSelectionModel().isEmpty()) {
+            alert("Please select a gear box");
+            return false;
+        }
+        if(comboPassengers.getSelectionModel().isEmpty()) {
+            alert("Please select amount of passengers");
+            return false;
+        }
+        if(comboSuitcases.getSelectionModel().isEmpty()) {
+            alert("Please select amount of suitcases");
+            return false;
+        }
+        if(comboCarType.getSelectionModel().isEmpty()) {
+            alert("Please select a car type");
+            return false;
+        }
+        if(textModel.getText().isEmpty()){
+            alert("Please specify a model");
+            return false;
+        }
+        if (textYear.getText().isEmpty()){
+            alert("Please specify a model year");
+            return false;
+        }
+        if (textPrice.getText().isEmpty()) {
+            alert("Please specify the price");
+            return false;
+        }
+        return true;
     }
 
+    @FXML
+    private void buttonExitPressed(ActionEvent ae) {
+        Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");
+    }
 
+    private void alert(String prompt) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Alert");
+        alert.setHeaderText(prompt);
+        alert.showAndWait();
+    }
 }
-
 
