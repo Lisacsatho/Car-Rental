@@ -17,10 +17,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        /*Navigator.getInstance().setPrimaryStage(primaryStage);
+        Navigator.getInstance().setPrimaryStage(primaryStage);
         Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");
 
-        primaryStage.show();*/
+        primaryStage.show();
         System.out.println(HashUtils.hashPassword("dogs"));
     }
 
