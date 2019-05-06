@@ -21,7 +21,7 @@ public class Main extends Application {
         Navigator.getInstance().navigateTo("RegisterUser/RegisterView.fxml");
 
         Navigator.getInstance().navigateTo("ViewCars/ViewCarsView.fxml");
-        Navigator.getInstance().navigateTo("AddCar/AddCarView.fxml");
+
 
         
         primaryStage.show();

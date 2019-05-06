@@ -80,7 +80,7 @@ public class AddCarController implements Initializable {
 
                carDBHandler.insert(car);
                alert("Car was added to the system.");
-               Navigator.getInstance().navigateTo("AddCar/AddCarController.fxml");
+               Navigator.getInstance().navigateToPanel();
            } catch (SQLException e) {
                 alert("There was a problem while inserting the car into the database, please try again later.");
            } catch (Exception e) {
