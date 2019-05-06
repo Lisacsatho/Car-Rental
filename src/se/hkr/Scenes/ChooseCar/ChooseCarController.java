@@ -49,7 +49,7 @@ public class ChooseCarController implements ReadController, Initializable {
 
     public void textAreaCarListUpdated(){
 
-        Period.between()
+        //Period.between()//
 
     }
 
