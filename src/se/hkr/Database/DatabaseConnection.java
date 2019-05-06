@@ -4,6 +4,7 @@ import javax.sql.PooledConnectionBuilder;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,7 +45,6 @@ public class DatabaseConnection implements Database {
             }
         }
     }
-
     @Override
     public void close() throws Exception {
         for (Connection connection : connections) {

@@ -1,10 +1,7 @@
 package se.hkr.Scenes.RegisterUser;
-
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import se.hkr.Database.UserDB.MemberDBHandler;
 import se.hkr.HashUtils;
@@ -13,7 +10,6 @@ import se.hkr.Model.User.Member;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegisterController implements Initializable {
@@ -29,8 +25,6 @@ public class RegisterController implements Initializable {
             txtFldPhone,
             txtFldState,
             txtFldDriversLicense;
-    @FXML
-    private Button btnJoin;
 
     @Override
 
@@ -38,7 +32,7 @@ public class RegisterController implements Initializable {
 
     }
 
-    public void registerUser(ActionEvent ae) {
+    public void registerUser() {
         try (MemberDBHandler memberDBHandler = new MemberDBHandler()) {
 
             if (Pattern.matches("[0-9][0-9][0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]", txtFldSsn.getText())) {
@@ -46,13 +40,15 @@ public class RegisterController implements Initializable {
                         txtFldPhone.getText(), new Address(txtFldStreet.getText(), txtFldZip.getText(), txtFldState.getText()), HashUtils.hashPassword(txtFldPassword.getText()), txtFldDriversLicense.getText());
                 memberDBHandler.insert(member);
                 System.out.println("Member inserted!");
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Input error!");
+                alert.setHeaderText("Your input was incorrect. Check your information.\nSsn should be in format: YYMMDD-XXXX");
+                alert.showAndWait();
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Input error!");
-            alert.setHeaderText("Your input was incorrect. Check your information.");
-            alert.showAndWait();
+
         }
     }
 }
