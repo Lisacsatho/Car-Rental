@@ -20,6 +20,8 @@ public class Main extends Application {
         Navigator.getInstance().setPrimaryStage(primaryStage);
         Navigator.getInstance().navigateTo("ViewCars/ViewCarsView.fxml");
 
+
+
         primaryStage.show();
         System.out.println(HashUtils.hashPassword("dogs"));
     }
