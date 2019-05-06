@@ -19,7 +19,8 @@ import java.util.regex.Pattern;
 public class RegisterController implements Initializable {
 
     @FXML
-    private TextField txtFldFirstName,
+    private TextField
+            txtFldFirstName,
             txtFldLastName,
             txtFldSsn,
             txtFldStreet,
