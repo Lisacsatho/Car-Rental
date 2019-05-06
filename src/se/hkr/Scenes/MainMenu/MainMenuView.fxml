@@ -4,13 +4,14 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.MainMenu.MainMenuController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.MainMenu.MainMenuController">
    <children>
       <ImageView fitHeight="407.0" fitWidth="344.0" layoutX="271.0">
          <image>
@@ -33,11 +34,6 @@
                   <Font name="System Italic" size="12.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtFldPassword" layoutX="52.0" layoutY="228.0" prefHeight="37.0" prefWidth="204.0" promptText="Password" styleClass="ultra-dark-text-field">
-               <font>
-                  <Font name="System Italic" size="12.0" />
-               </font>
-            </TextField>
             <Button fx:id="btnSignUp" layoutX="119.0" layoutY="281.0" mnemonicParsing="false" onAction="#btnSignUpPressed" prefHeight="27.0" prefWidth="70.0" styleClass="invisible-light-button" text="Sign up" />
             <Button fx:id="btnLogin" layoutX="185.0" layoutY="276.0" mnemonicParsing="false" onAction="#btnLoginPressed" prefHeight="37.0" prefWidth="70.0" text="Log in">
                <styleClass>
@@ -45,6 +41,11 @@
                   <String fx:value="button" />
                </styleClass>
             </Button>
+            <PasswordField fx:id="txtFldPassword" layoutX="51.0" layoutY="225.0" prefHeight="37.0" prefWidth="204.0" promptText="Password" styleClass="ultra-dark-text-field">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </PasswordField>
          </children>
       </AnchorPane>
       <DatePicker fx:id="datePicStart" layoutX="336.0" layoutY="176.0" prefHeight="37.0" prefWidth="204.0" promptText="Start date" showWeekNumbers="true" styleClass="drop-shadow" />

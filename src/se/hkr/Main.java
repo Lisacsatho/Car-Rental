@@ -18,7 +18,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Navigator.getInstance().setPrimaryStage(primaryStage);
-        Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");
+        Navigator.getInstance().navigateTo("ViewCars/ViewCarsView.fxml");
 
         primaryStage.show();
         System.out.println(HashUtils.hashPassword("dogs"));
