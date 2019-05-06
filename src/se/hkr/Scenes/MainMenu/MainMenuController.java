@@ -68,7 +68,6 @@ public class MainMenuController {
     }
 
     public void btnGoPressed(ActionEvent ae) {
-        if (ae.getSource() == btnGo) {
             try {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 Date startDate = format.parse(datePicStart.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
@@ -79,11 +78,11 @@ public class MainMenuController {
                 BookingSession.getInstance().getBooking().setEndDate(endDate);
 
                 Navigator.getInstance().navigateTo("ChooseCar/ChooseCarView.fxml");
+                System.out.println("Hey");
             } catch (Exception x) {
                 x.printStackTrace();
                 alert("Choose both starting date and returning date.");
             }
-        }
     }
 
     private void alert(String prompt) {
