@@ -58,6 +58,7 @@ public class Navigator {
                 primaryStage.setScene(nextScene);
             }
         } catch (IOException e) {
+            e.printStackTrace();
             // TODO: Figure out proper handling
         }
     }
