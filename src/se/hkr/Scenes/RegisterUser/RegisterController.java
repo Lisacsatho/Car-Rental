@@ -27,7 +27,6 @@ public class RegisterController implements Initializable {
             txtFldDriversLicense;
 
     @Override
-
     public void initialize(URL location, ResourceBundle resources) {
 
     }
