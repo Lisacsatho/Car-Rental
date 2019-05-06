@@ -12,8 +12,9 @@ import se.hkr.Model.User.Address;
 import se.hkr.Model.User.Member;
 
 import java.net.URL;
-import java.util.InputMismatchException;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegisterController implements Initializable {
 
@@ -40,12 +41,12 @@ public class RegisterController implements Initializable {
     public void registerUser(ActionEvent ae) {
         try (MemberDBHandler memberDBHandler = new MemberDBHandler()) {
 
-            //if (txtFldSsn.getText().length() == 13 && (txtFldDriversLicense.getText().length() == 9 && ae.getSource() == btnJoin)) {
+            if (Pattern.matches("[0-9][0-9][0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]", txtFldSsn.getText())) {
                 Member member = new Member(txtFldSsn.getText(), txtFldFirstName.getText(), txtFldLastName.getText(), txtFldEmail.getText(),
-                                           txtFldPhone.getText(), new Address(txtFldStreet.getText(), txtFldZip.getText(), txtFldState.getText()), HashUtils.hashPassword(txtFldPassword.getText()), txtFldDriversLicense.getText());
+                        txtFldPhone.getText(), new Address(txtFldStreet.getText(), txtFldZip.getText(), txtFldState.getText()), HashUtils.hashPassword(txtFldPassword.getText()), txtFldDriversLicense.getText());
                 memberDBHandler.insert(member);
                 System.out.println("Member inserted!");
-            //}
+            }
         } catch (Exception e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
