@@ -5,14 +5,9 @@ import se.hkr.HashUtils;
 import se.hkr.Model.User.Employee;
 import se.hkr.Model.User.Member;
 import se.hkr.Model.User.User;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
+
 
 public abstract class UserDBHandler <U extends User> extends ModelDBHandler<U> {
 

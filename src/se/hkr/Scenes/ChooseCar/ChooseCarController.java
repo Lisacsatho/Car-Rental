@@ -5,26 +5,29 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import se.hkr.BookingSession;
 import se.hkr.Database.VehicleDB.VehicleDBHandler;
-import se.hkr.Scenes.MainMenu.MainMenuController;
+import se.hkr.Model.Booking;
+import se.hkr.Model.Vehicle.Car;
+import se.hkr.Model.Vehicle.Vehicle;
 import se.hkr.Scenes.ReadController;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 public class ChooseCarController implements ReadController, Initializable {
 
     @FXML
-    private TableView tblCars;
+    TableView tblCars;
 
     @FXML
-    private TableColumn
-            colBrand,
+    TableColumn colBrand,
             colModel,
             colFuelType,
             colGearBox,
@@ -32,8 +35,11 @@ public class ChooseCarController implements ReadController, Initializable {
             colPassengers,
             colSuitcases;
 
-
-
+    @FXML
+    ComboBox comboBrand,
+            comboCarType,
+            comboGearBox,
+            comboPassengers;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -47,9 +53,16 @@ public class ChooseCarController implements ReadController, Initializable {
         }
     }
 
-    public void textAreaCarListUpdated(){
+    public void showTableInformation () {
+        try {
 
-        //Period.between()//
+            List<Vehicle> vehicles = (List<Vehicle>) VehicleDBHandler.readAvailableVehicles(BookingSession.getInstance().getBooking().getStartDate(), BookingSession.getInstance().getBooking().getEndDate());
+
+
+        } catch (Exception x) {
+
+            x.printStackTrace();
+        }
 
     }
 
