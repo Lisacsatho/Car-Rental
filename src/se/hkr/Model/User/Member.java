@@ -6,7 +6,7 @@ public class Member extends User {
     private int age;
 
 
-    public Member(String socialSecurityNo, String firstName, String lastName, String email, String phoneNumber, Address address, byte[] password, String driverLicensNo) {
+    public Member(String socialSecurityNo, String firstName, String lastName, String email, String phoneNumber, Address address, String password, String driverLicensNo) {
         super(socialSecurityNo, firstName, lastName, email, phoneNumber, address, password);
         this.driverLicensNo = driverLicensNo;
     }

@@ -16,18 +16,12 @@ import java.nio.charset.StandardCharsets;
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
-
-
-        Parent root = FXMLLoader.load(getClass().getResource("Scenes/MainMenu/MainMenuView.fxml"));
-
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root));
-
-        Navigator.getInstance().setPrimaryStage(primaryStage);
+    public void start(Stage primaryStage) throws Exception {
+        /*Navigator.getInstance().setPrimaryStage(primaryStage);
         Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");
 
-        primaryStage.show();
+        primaryStage.show();*/
+        System.out.println(HashUtils.hashPassword("dogs"));
     }
 
     public static void main(String[] args) {

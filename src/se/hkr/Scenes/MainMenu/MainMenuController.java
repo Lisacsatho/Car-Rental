@@ -59,6 +59,8 @@ public class MainMenuController {
             if (user != null) {
                 UserSession.getInstance().logIn(user);
                 Navigator.getInstance().navigateToPanel();
+            } else {
+                alert("No user found.");
             }
         } catch (SQLException e) {
             alert("No user found.");

@@ -1,5 +1,7 @@
 package se.hkr;
 
+import se.hkr.Assets.BCrypt;
+
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -25,5 +27,10 @@ public class HashUtils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static String hashPassword(String password) {
+        String salt = "$2a$10$KRRn8SnhAL5SR7jQs0oWaO";
+        return BCrypt.hashpw(password, salt);
     }
 }

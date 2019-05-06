@@ -25,16 +25,12 @@ public abstract class UserDBHandler <U extends User> extends ModelDBHandler<U> {
     }
 
     public static User authenticate(String email, String password) throws SQLException {
-        byte[] hash = HashUtils.hash(password);
-        StringBuilder hashedPassword = new StringBuilder();
-        for (byte b : hash) {
-            hashedPassword.append(b);
-        }
+        String hashedPassword = HashUtils.hashPassword(password);
         try (MemberDBHandler memberDBHandler = new MemberDBHandler();
              EmployeeDBHandler employeeDBHandler = new EmployeeDBHandler()) {
-            if (memberDBHandler.authenticateUser(email, hashedPassword.toString())) {
+            if (memberDBHandler.authenticateUser(email, hashedPassword)) {
                 return memberDBHandler.readByEmail(email);
-            } else if (employeeDBHandler.authenticateUser(email, hashedPassword.toString())) {
+            } else if (employeeDBHandler.authenticateUser(email, hashedPassword)) {
                 return employeeDBHandler.readByEmail(email);
             }
         } catch (Exception e) {
@@ -54,17 +50,13 @@ public abstract class UserDBHandler <U extends User> extends ModelDBHandler<U> {
             addressDB.connect();
             addressDB.insert(model.getAddress());
 
-            StringBuilder hashedPassword = new StringBuilder();
-            for (byte b : model.getPassword()) {
-                hashedPassword.append(b);
-            }
             String insert = String.format("INSERT INTO user VALUES ('%s', '%s', '%s', '%s', '%s', '%s', %d)",
                                          model.getSocialSecurityNo(),
                                          model.getFirstName(),
                                          model.getLastName(),
                                          model.getPhoneNumber(),
                                          model.getEmail(),
-                                         hashedPassword.toString(),
+                                         model.getPassword(),
                                          model.getAddress().getId());
             statement.execute(insert);
         } catch (Exception e) {

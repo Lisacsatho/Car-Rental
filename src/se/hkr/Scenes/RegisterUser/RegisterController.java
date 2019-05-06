@@ -42,7 +42,7 @@ public class RegisterController implements Initializable {
 
             //if (txtFldSsn.getText().length() == 13 && (txtFldDriversLicense.getText().length() == 9 && ae.getSource() == btnJoin)) {
                 Member member = new Member(txtFldSsn.getText(), txtFldFirstName.getText(), txtFldLastName.getText(), txtFldEmail.getText(),
-                                           txtFldPhone.getText(), new Address(txtFldStreet.getText(), txtFldZip.getText(), txtFldState.getText()), HashUtils.hash(txtFldPassword.getText()), txtFldDriversLicense.getText());
+                                           txtFldPhone.getText(), new Address(txtFldStreet.getText(), txtFldZip.getText(), txtFldState.getText()), HashUtils.hashPassword(txtFldPassword.getText()), txtFldDriversLicense.getText());
                 memberDBHandler.insert(member);
                 System.out.println("Member inserted!");
             //}
