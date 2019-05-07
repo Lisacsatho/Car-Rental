@@ -39,6 +39,6 @@
             <TableColumn prefWidth="82.0" text="Model" />
         </columns>
       </TableView>
-      <Button fx:id="book" layoutX="51.0" layoutY="302.0" mnemonicParsing="false" onAction="#bookPressed" text="Book" />
+      <Button fx:id="btnBook" layoutX="51.0" layoutY="302.0" mnemonicParsing="false" onAction="#bookPressed" text="Book" />
    </children>
 </AnchorPane>

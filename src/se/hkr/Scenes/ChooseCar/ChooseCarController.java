@@ -12,6 +12,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import se.hkr.BookingSession;
 import se.hkr.Database.VehicleDB.VehicleDBHandler;
+import se.hkr.Model.Booking;
+import se.hkr.Model.Model;
 import se.hkr.Model.Vehicle.Car;
 import se.hkr.Model.Vehicle.Vehicle;
 import se.hkr.Scenes.ReadController;
@@ -26,14 +28,13 @@ import java.util.ResourceBundle;
 public class ChooseCarController implements ReadController, Initializable {
 
     @FXML
-    TableView tblCars;
+    private TableView <Car> tblCars;
 
     @FXML
+    private Button btnBook;
 
-    private Button book;
-
-    TableColumn colBrand,
-
+    @FXML
+    private TableColumn colBrand,
             colModel,
             colFuelType,
             colGearBox,
@@ -41,9 +42,8 @@ public class ChooseCarController implements ReadController, Initializable {
             colPassengers,
             colSuitcases;
 
-
     @FXML
-    ComboBox comboBrand,
+     private ComboBox comboBrand,
             comboCarType,
             comboGearBox,
             comboPassengers;
@@ -56,7 +56,7 @@ public class ChooseCarController implements ReadController, Initializable {
         Date endDate = BookingSession.getInstance().getBooking().getEndDate();
 
         try {
-            ObservableList<Vehicle> data = FXCollections.observableArrayList(VehicleDBHandler.readAvailableVehicles(startDate, endDate));
+            ObservableList<Car> data = FXCollections.observableArrayList((List<Car>)VehicleDBHandler.readAvailableVehicles(startDate, endDate));
             colBrand.setCellValueFactory(
                     new PropertyValueFactory<Car, String>("brand")
             );
@@ -82,20 +82,14 @@ public class ChooseCarController implements ReadController, Initializable {
     }
 
 
-    public void bookPressed (ActionEvent event) {}
-
-    public void showTableInformation () {
+    public void bookPressed() {
+        Car car = tblCars.getSelectionModel().getSelectedItem();
         try {
+            if (!tblCars.getSelectionModel().isEmpty()) {
 
-            List<Vehicle> vehicles = (List<Vehicle>) VehicleDBHandler.readAvailableVehicles(BookingSession.getInstance().getBooking().getStartDate(), BookingSession.getInstance().getBooking().getEndDate());
-
-
-        } catch (Exception x) {
-
-            x.printStackTrace();
-        }
-
-
+                System.out.println(car.getModelName());
+            }
+        } catch (Exception x) {x.printStackTrace();}
     }
 
     @Override
