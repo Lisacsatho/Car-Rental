@@ -72,7 +72,6 @@ public class MainMenuController {
 
             Date today = new Date();
             if (startDate.after(today) && endDate.after(startDate)) {
-
                 BookingSession.getInstance().resetSession();
                 BookingSession.getInstance().getBooking().setStartDate(startDate);
                 BookingSession.getInstance().getBooking().setEndDate(endDate);
