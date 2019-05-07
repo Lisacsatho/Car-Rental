@@ -29,7 +29,7 @@ public class MainMenuController {
 
     @FXML
     private TextField txtFldUsername,
-                      txtFldPassword;
+            txtFldPassword;
 
     @FXML
     private Button btnSignUp,
@@ -68,21 +68,25 @@ public class MainMenuController {
     }
 
     public void btnGoPressed(ActionEvent ae) {
-            try {
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                Date startDate = format.parse(datePicStart.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-                Date endDate = format.parse(datePicReturn.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date startDate = format.parse(datePicStart.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            Date endDate = format.parse(datePicReturn.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
+            Date today = new Date();
+            if (startDate.after(today) && endDate.after(startDate)) {
 
                 BookingSession.getInstance().resetSession();
                 BookingSession.getInstance().getBooking().setStartDate(startDate);
                 BookingSession.getInstance().getBooking().setEndDate(endDate);
-
                 Navigator.getInstance().navigateTo("ChooseCar/ChooseCarView.fxml");
-                System.out.println("Hey");
-            } catch (Exception x) {
-                x.printStackTrace();
-                alert("Choose both starting date and returning date.");
+            } else {
+                alert("Please select valid start and ending dates.");
             }
+        } catch (Exception x) {
+            x.printStackTrace();
+            alert("Choose both starting date and returning date.");
+        }
     }
 
     private void alert(String prompt) {

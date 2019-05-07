@@ -33,6 +33,8 @@ public class ChooseCarController implements ReadController, Initializable {
     @FXML
     private Button btnBook;
 
+    private Button book;
+
     @FXML
     private TableColumn colBrand,
             colModel,

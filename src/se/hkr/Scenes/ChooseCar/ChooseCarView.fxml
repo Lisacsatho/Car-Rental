@@ -39,6 +39,10 @@
             <TableColumn prefWidth="82.0" text="Model" />
         </columns>
       </TableView>
+<<<<<<< HEAD
       <Button fx:id="btnBook" layoutX="51.0" layoutY="302.0" mnemonicParsing="false" onAction="#bookPressed" text="Book" />
+=======
+      <Button fx:id="book" layoutX="215.0" layoutY="339.0" mnemonicParsing="false" onAction="#bookPressed" prefHeight="25.0" prefWidth="348.0" styleClass="drop-shadow" text="Book" />
+>>>>>>> Hakan
    </children>
 </AnchorPane>
