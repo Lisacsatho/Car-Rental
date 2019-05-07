@@ -2,20 +2,16 @@ package se.hkr.Scenes.ChooseCar;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import se.hkr.BookingSession;
 import se.hkr.Database.VehicleDB.VehicleDBHandler;
-import se.hkr.Model.Booking;
-import se.hkr.Model.Model;
 import se.hkr.Model.Vehicle.Car;
-import se.hkr.Model.Vehicle.Vehicle;
 import se.hkr.Scenes.ReadController;
 
 import java.net.URL;
@@ -23,15 +19,16 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 
 public class ChooseCarController implements ReadController, Initializable {
 
-    @FXML
-    private TableView <Car> tblCars;
+    private ObservableList<Car> data;
+    private ObservableList<Car> bookedCars;
 
     @FXML
-    private Button btnBook;
+    private TableView<Car> tblCars, tblBookedCars;
 
     @FXML
     private TableColumn colBrand,
@@ -40,10 +37,13 @@ public class ChooseCarController implements ReadController, Initializable {
             colGearBox,
             colPrice,
             colPassengers,
-            colSuitcases;
-
+            colSuitcases,
+            colBookingBrand,
+            colBookingModel;
     @FXML
-     private ComboBox comboBrand,
+    private TextField carPrices;
+    @FXML
+    private ComboBox comboBrand,
             comboCarType,
             comboGearBox,
             comboPassengers;
@@ -56,7 +56,8 @@ public class ChooseCarController implements ReadController, Initializable {
         Date endDate = BookingSession.getInstance().getBooking().getEndDate();
 
         try {
-            ObservableList<Car> data = FXCollections.observableArrayList((List<Car>)VehicleDBHandler.readAvailableVehicles(startDate, endDate));
+            data = FXCollections.observableArrayList((List<Car>) VehicleDBHandler.readAvailableVehicles(startDate, endDate));
+            bookedCars = FXCollections.observableArrayList();
             colBrand.setCellValueFactory(
                     new PropertyValueFactory<Car, String>("brand")
             );
@@ -73,7 +74,12 @@ public class ChooseCarController implements ReadController, Initializable {
 
             colSuitcases.setCellValueFactory(new PropertyValueFactory<Car, String>("suitcases"));
 
+            colBookingBrand.setCellValueFactory(new PropertyValueFactory<Car, String>("brand"));
+
+            colBookingModel.setCellValueFactory(new PropertyValueFactory<Car, String>("modelName"));
+
             tblCars.setItems(data);
+            tblBookedCars.setItems(bookedCars);
 
         } catch (SQLException e) {
             // Placeholder
@@ -84,12 +90,51 @@ public class ChooseCarController implements ReadController, Initializable {
 
     public void bookPressed() {
         Car car = tblCars.getSelectionModel().getSelectedItem();
+
         try {
             if (!tblCars.getSelectionModel().isEmpty()) {
-
-                System.out.println(car.getModelName());
+                data.remove(car);
+                bookedCars.add(car);
+                calculateTotalPrice();
             }
-        } catch (Exception x) {x.printStackTrace();}
+        } catch (Exception x) {
+            x.printStackTrace();
+        }
+    }
+
+    public void removeBookedCar() {
+
+        Car car = tblBookedCars.getSelectionModel().getSelectedItem();
+
+        try {
+
+            if (!tblCars.getSelectionModel().isEmpty()) {
+                bookedCars.remove(car);
+                data.add(car);
+                calculateTotalPrice();
+            }
+
+        } catch (Exception x) {
+            x.printStackTrace();
+        }
+    }
+
+    public void calculateTotalPrice() {
+
+        try {
+            Date startDate = BookingSession.getInstance().getBooking().getStartDate();
+            Date endDate = BookingSession.getInstance().getBooking().getEndDate();
+            long diff = endDate.getTime() - startDate.getTime();
+            long days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+            double basePrices = 0.0;
+            for (Car car : bookedCars) {
+                basePrices += car.getBasePrice();
+            }
+            carPrices.setText("$" + Double.toString(basePrices * days));
+        } catch (Exception x) {
+            x.printStackTrace();
+        }
+
     }
 
     @Override

@@ -32,13 +32,13 @@ public class MainMenuController {
                       txtFldPassword;
 
     @FXML
-    private Button btnSignUp,
-            btnLogin,
-            btnGo;
+    private Button  btnSignUp,
+                    btnLogin,
+                    btnGo;
 
     @FXML
-    private DatePicker datePicStart,
-            datePicReturn;
+    private DatePicker  datePicStart,
+                        datePicReturn;
 
     public void btnSignUpPressed(ActionEvent ae) {
         try {
@@ -78,7 +78,6 @@ public class MainMenuController {
                 BookingSession.getInstance().getBooking().setEndDate(endDate);
 
                 Navigator.getInstance().navigateTo("ChooseCar/ChooseCarView.fxml");
-                System.out.println("Hey");
             } catch (Exception x) {
                 x.printStackTrace();
                 alert("Choose both starting date and returning date.");

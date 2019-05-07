@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -12,7 +13,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ChooseCar.ChooseCarController">
    <children>
-      <ImageView fitHeight="400.0" fitWidth="600.0">
+      <ImageView fitHeight="400.0" fitWidth="889.0" layoutX="6.0">
          <image>
             <Image url="@../../Assets/Images/placeholder_background.png" />
          </image>
@@ -39,6 +40,19 @@
             <TableColumn prefWidth="82.0" text="Model" />
         </columns>
       </TableView>
-      <Button fx:id="btnBook" layoutX="51.0" layoutY="302.0" mnemonicParsing="false" onAction="#bookPressed" text="Book" />
+      <Button fx:id="btnBook" layoutX="51.0" layoutY="302.0" mnemonicParsing="false" onAction="#bookPressed" text="Book Car" />
+      <TableView fx:id="tblBookedCars" layoutX="668.0" layoutY="49.0" prefHeight="279.0" prefWidth="150.0">
+        <columns>
+          <TableColumn fx:id="colBookingBrand" text="Brand" />
+          <TableColumn fx:id="colBookingModel" prefWidth="70.0" text="Model" />
+        </columns>
+      </TableView>
+      <Button fx:id="btnRemoveBkdCar" layoutX="825.0" layoutY="302.0" mnemonicParsing="false" onAction="#removeBookedCar" prefHeight="27.0" prefWidth="70.0" text="Remove" />
+      <TextField fx:id="carPrices" layoutX="672.0" layoutY="344.0" prefHeight="27.0" prefWidth="150.0" />
+      <Label layoutX="568.0" layoutY="346.0" prefHeight="23.0" prefWidth="104.0" text="Total price: ">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
