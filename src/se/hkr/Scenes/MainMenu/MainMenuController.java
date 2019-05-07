@@ -11,10 +11,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import se.hkr.BookingSession;
-import se.hkr.Database.UserDB.EmployeeDBHandler;
-import se.hkr.Database.UserDB.MemberDBHandler;
 import se.hkr.Database.UserDB.UserDBHandler;
-import se.hkr.Database.VehicleDB.VehicleDBHandler;
 import se.hkr.Model.User.User;
 import se.hkr.Navigator;
 import se.hkr.UserSession;
@@ -29,16 +26,16 @@ public class MainMenuController {
 
     @FXML
     private TextField txtFldUsername,
-                      txtFldPassword;
+            txtFldPassword;
 
     @FXML
-    private Button  btnSignUp,
-                    btnLogin,
-                    btnGo;
+    private Button btnSignUp,
+            btnLogin,
+            btnGo;
 
     @FXML
-    private DatePicker  datePicStart,
-                        datePicReturn;
+    private DatePicker datePicStart,
+            datePicReturn;
 
     public void btnSignUpPressed(ActionEvent ae) {
         try {
@@ -68,20 +65,27 @@ public class MainMenuController {
     }
 
     public void btnGoPressed(ActionEvent ae) {
-            try {
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                Date startDate = format.parse(datePicStart.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-                Date endDate = format.parse(datePicReturn.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date startDate = format.parse(datePicStart.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            Date endDate = format.parse(datePicReturn.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
+            Date today = new Date();
+            if (startDate.after(today) && endDate.after(startDate)) {
 
                 BookingSession.getInstance().resetSession();
                 BookingSession.getInstance().getBooking().setStartDate(startDate);
                 BookingSession.getInstance().getBooking().setEndDate(endDate);
-
                 Navigator.getInstance().navigateTo("ChooseCar/ChooseCarView.fxml");
-            } catch (Exception x) {
-                x.printStackTrace();
-                alert("Choose both starting date and returning date.");
+
+            } else {
+                alert("Please select valid start and ending dates.");
+
             }
+        } catch (Exception x) {
+            x.printStackTrace();
+            alert("Choose both starting date and returning date.");
+        }
     }
 
     private void alert(String prompt) {

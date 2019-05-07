@@ -30,6 +30,7 @@ public class ChooseCarController implements ReadController, Initializable {
     @FXML
     private TableView<Car> tblCars, tblBookedCars;
 
+
     @FXML
     private TableColumn colBrand,
             colModel,
