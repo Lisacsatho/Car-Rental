@@ -79,7 +79,9 @@ public class ChooseCarController implements ReadController, Initializable {
             colBookingModel.setCellValueFactory(new PropertyValueFactory<Car, String>("modelName"));
 
             tblCars.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                showCarInformation(newValue);
+                if (newValue != null) {
+                    showCarInformation(newValue);
+                }
             });
 
             tblCars.setItems(data);
@@ -95,7 +97,7 @@ public class ChooseCarController implements ReadController, Initializable {
         Car car = tblCars.getSelectionModel().getSelectedItem();
 
         try {
-            if (!tblCars.getSelectionModel().isEmpty()) {
+            if (tblCars.getSelectionModel().getSelectedItem() != null) {
                 data.remove(car);
                 bookedCars.add(car);
                 calculateTotalPrice();
@@ -111,7 +113,7 @@ public class ChooseCarController implements ReadController, Initializable {
 
         try {
 
-            if (!tblCars.getSelectionModel().isEmpty()) {
+            if (tblCars.getSelectionModel().getSelectedItem() != null) {
                 bookedCars.remove(car);
                 data.add(car);
                 calculateTotalPrice();
