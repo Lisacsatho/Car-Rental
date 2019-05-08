@@ -5,10 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import se.hkr.BookingSession;
 import se.hkr.Database.VehicleDB.VehicleDBHandler;
@@ -48,12 +45,20 @@ public class ChooseCarController implements ReadController, Initializable {
             colBookingModel;
     @FXML
     private TextField carPrices;
+
     @FXML
     private ComboBox comboBrand,
             comboCarType,
             comboGearBox,
             comboPassengers;
 
+    @FXML
+    private Label lblGearBox,
+                  lblFuelType,
+                  lblPassengers,
+                  lblSuitcases,
+                  lblDescription,
+                  lblCarName;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -84,9 +89,12 @@ public class ChooseCarController implements ReadController, Initializable {
 
             colBookingModel.setCellValueFactory(new PropertyValueFactory<Car, String>("modelName"));
 
+            tblCars.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                showCarInformation(newValue);
+            });
+
             tblCars.setItems(data);
             tblBookedCars.setItems(bookedCars);
-
         } catch (SQLException e) {
             // Placeholder
             System.out.println("Database interaction failed, please try again later.");
@@ -140,7 +148,22 @@ public class ChooseCarController implements ReadController, Initializable {
         } catch (Exception x) {
             x.printStackTrace();
         }
+    }
 
+    private void showCarInformation(Vehicle vehicle) {
+        final String GEARBOX_PREFIX = "Gear box: ";
+        final String FUELTYPE_PREFIX  = "Fuel type box: ";
+        final String PASSENGERS_PREFIX = "Passengers: ";
+        final String SUITCASES_PREFIX = "Suitcases: ";
+
+        lblCarName.setText(String.format("%s %s", vehicle.getBrand(), vehicle.getModelName()));
+        lblGearBox.setText(GEARBOX_PREFIX + vehicle.getGearBox());
+        lblFuelType.setText(FUELTYPE_PREFIX + vehicle.getFuelType());
+        lblPassengers.setText(PASSENGERS_PREFIX + vehicle.getPassengers());
+        lblDescription.setText(vehicle.getDescription());
+        if (vehicle instanceof Car) {
+            lblSuitcases.setText(SUITCASES_PREFIX + ((Car) vehicle).getSuitcases());
+        }
     }
 
     @FXML
@@ -151,6 +174,12 @@ public class ChooseCarController implements ReadController, Initializable {
         } else {
             Dialogue.alert("Please choose at least one car to book.");
         }
+    }
+
+    @FXML
+    private void buttonCancelBookingPressed(ActionEvent event) {
+        BookingSession.getInstance().resetSession();
+        Navigator.getInstance().goBack();
     }
 
     @Override
