@@ -13,18 +13,18 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="885.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ChooseCar.ChooseCarController">
     <children>
-        <ImageView fitHeight="400.0" fitWidth="889.0" layoutX="6.0">
+        <ImageView fitHeight="400.0" fitWidth="895.0">
             <image>
                 <Image url="@../../Assets/Images/placeholder_background.png" />
             </image>
         </ImageView>
-        <Label layoutX="249.0" layoutY="14.0" text="Available cars for your selected dates.">
+        <Label layoutX="411.0" layoutY="14.0" text="Available cars for your selected dates.">
             <font>
                 <Font size="17.0" />
             </font>
         </Label>
         <ComboBox fx:id="comboBrand" layoutX="215.0" layoutY="266.0" prefWidth="150.0" promptText="Brand" />
-        <ComboBox fx:id="comboCarType" layoutX="411.0" layoutY="266.0" prefWidth="150.0" promptText="Veihcle type" />
+        <ComboBox fx:id="comboCarType" layoutX="411.0" layoutY="266.0" prefWidth="150.0" promptText="Vehicle type" />
         <ComboBox fx:id="comboGearBox" layoutX="215.0" layoutY="302.0" prefWidth="150.0" promptText="Gearbox" />
         <ComboBox fx:id="comboPassengers" layoutX="411.0" layoutY="302.0" prefWidth="150.0" promptText="Passengers" />
         <TableView fx:id="tblCars" layoutX="15.0" layoutY="49.0" prefHeight="200.0" prefWidth="570.0">
@@ -42,7 +42,7 @@
         </TableView>
 
 
-        <TableView fx:id="tblBookedCars" layoutX="668.0" layoutY="49.0" prefHeight="279.0" prefWidth="150.0">
+        <TableView fx:id="tblBookedCars" layoutX="658.0" layoutY="49.0" prefHeight="279.0" prefWidth="150.0">
             <columns>
                 <TableColumn fx:id="colBookingBrand" text="Brand" />
                 <TableColumn fx:id="colBookingModel" prefWidth="70.0" text="Model" />
@@ -55,7 +55,6 @@
                 <Font size="18.0" />
             </font>
         </Label>
-
 
         <Button fx:id="btnBook" layoutX="51.0" layoutY="302.0" mnemonicParsing="false" onAction="#bookPressed" text="Book" />
 

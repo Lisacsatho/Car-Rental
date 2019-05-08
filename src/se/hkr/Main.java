@@ -13,19 +13,10 @@ public class Main extends Application {
     * */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        //Navigator.getInstance().setPrimaryStage(primaryStage);
+        Navigator.getInstance().setPrimaryStage(primaryStage);
 
-        //Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");
-
-        try (CarDBHandler carDBHandler = new CarDBHandler()) {
-            Car car = carDBHandler.readByPrimaryKey("1");
-            System.out.println(car.getVehicleOptions().get(0).getName());
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Shit");
-        }
-
-        //primaryStage.show();
+        Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");
+        primaryStage.show();
     }
 
     public static void main(String[] args) {

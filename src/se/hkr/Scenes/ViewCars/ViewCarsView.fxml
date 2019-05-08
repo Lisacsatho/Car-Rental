@@ -4,12 +4,19 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="523.0" prefWidth="732.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ViewCars.ViewCarsController">
    <children>
-      <TableView fx:id="tblCars" layoutX="16.0" layoutY="164.0" prefHeight="316.0" prefWidth="700.0">
+      <ImageView fitHeight="523.0" fitWidth="732.0">
+         <image>
+            <Image url="@../../Assets/Images/placeholder_background.png" />
+         </image>
+      </ImageView>
+      <TableView fx:id="tblCars" layoutX="16.0" layoutY="118.0" prefHeight="387.0" prefWidth="700.0">
         <columns>
           <TableColumn fx:id="colBrand" prefWidth="75.0" text="Brand" />
           <TableColumn fx:id="colModel" prefWidth="65.0" text="Model" />
@@ -21,14 +28,14 @@
             <TableColumn fx:id="colSuitcases" prefWidth="91.0" text="Suitcases" />
         </columns>
       </TableView>
-      <Label layoutX="18.0" layoutY="23.0" text="All cars">
+      <Label layoutX="305.0" layoutY="14.0" text="All cars to disposal. ">
          <font>
             <Font size="26.0" />
          </font>
       </Label>
       <ComboBox fx:id="comboBrand" layoutX="18.0" layoutY="66.0" prefWidth="150.0" promptText="Brand" />
-      <ComboBox fx:id="comboFuelType" layoutX="183.0" layoutY="66.0" prefWidth="150.0" promptText="Fuel type" />
-      <ComboBox fx:id="comboGearBox" layoutX="340.0" layoutY="66.0" prefWidth="150.0" promptText="Gear box" />
-      <ComboBox fx:id="comboCarType" layoutX="496.0" layoutY="66.0" prefWidth="150.0" promptText="Car type" />
+      <ComboBox fx:id="comboFuelType" layoutX="205.0" layoutY="66.0" prefWidth="150.0" promptText="Fuel type" />
+      <ComboBox fx:id="comboGearBox" layoutX="376.0" layoutY="66.0" prefWidth="150.0" promptText="Gear box" />
+      <ComboBox fx:id="comboCarType" layoutX="560.0" layoutY="66.0" prefWidth="150.0" promptText="Car type" />
    </children>
 </AnchorPane>
