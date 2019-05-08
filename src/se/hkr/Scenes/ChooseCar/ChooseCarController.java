@@ -36,11 +36,7 @@ public class ChooseCarController implements ReadController, Initializable {
     @FXML
     private TableColumn colBrand,
             colModel,
-            colFuelType,
-            colGearBox,
             colPrice,
-            colPassengers,
-            colSuitcases,
             colBookingBrand,
             colBookingModel;
     @FXML
@@ -75,15 +71,8 @@ public class ChooseCarController implements ReadController, Initializable {
             colModel.setCellValueFactory(
                     new PropertyValueFactory<Car, String>("modelName")
             );
-            colFuelType.setCellValueFactory(new PropertyValueFactory<Car, String>("fuelType"));
-
-            colGearBox.setCellValueFactory(new PropertyValueFactory<Car, String>("gearBox"));
 
             colPrice.setCellValueFactory(new PropertyValueFactory<Car, String>("basePrice"));
-
-            colPassengers.setCellValueFactory(new PropertyValueFactory<Car, String>("passengers"));
-
-            colSuitcases.setCellValueFactory(new PropertyValueFactory<Car, String>("suitcases"));
 
             colBookingBrand.setCellValueFactory(new PropertyValueFactory<Car, String>("brand"));
 
