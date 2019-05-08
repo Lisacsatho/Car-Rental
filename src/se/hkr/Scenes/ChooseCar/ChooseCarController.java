@@ -108,17 +108,13 @@ public class ChooseCarController implements ReadController, Initializable {
     }
 
     public void removeBookedCar() {
-
-        Car car = tblBookedCars.getSelectionModel().getSelectedItem();
-
         try {
-
-            if (tblCars.getSelectionModel().getSelectedItem() != null) {
+            if (tblBookedCars.getSelectionModel().getSelectedItem() != null) {
+                Car car = tblBookedCars.getSelectionModel().getSelectedItem();
                 bookedCars.remove(car);
                 data.add(car);
                 calculateTotalPrice();
             }
-
         } catch (Exception x) {
             x.printStackTrace();
         }
