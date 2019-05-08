@@ -1,21 +1,23 @@
 package se.hkr;
 
 import javafx.application.Application;
-
 import javafx.stage.Stage;
 
 
 public class Main extends Application {
-
+    /*
+     *   Viktigt meddelande till allmänheten: Använd Facade-klassen Dialogue för att visa Alerts numera.
+     * */
     @Override
     public void start(Stage primaryStage) throws Exception {
         Navigator.getInstance().setPrimaryStage(primaryStage);
 
         Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");
+
 //        Navigator.getInstance().navigateTo("AddCar/AddCarView.fxml");
 //        Navigator.getInstance().navigateTo("ViewCars/ViewCarsView.fxml");
 
-
+        
         primaryStage.show();
     }
 

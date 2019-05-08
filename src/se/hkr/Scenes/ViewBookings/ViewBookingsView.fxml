@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="se.hkr.Scenes.ViewBookings.ViewBookingsView"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ViewBookings.ViewBookingsController">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="600.0">
+         <image>
+            <Image url="@../../Assets/Images/placeholder_background.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="252.0" layoutY="14.0" text="Your booking history.">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="txtAreaBookingHistory" layoutX="226.0" layoutY="63.0" prefHeight="275.0" prefWidth="295.0" />
+      <ComboBox fx:id="comboJumpTo" layoutX="225.0" layoutY="352.0" prefWidth="150.0" promptText="Jump to" />
+   </children>
 </AnchorPane>
