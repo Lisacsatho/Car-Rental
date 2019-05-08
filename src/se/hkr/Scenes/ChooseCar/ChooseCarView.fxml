@@ -1,63 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ChooseCar.ChooseCarController">
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ChooseCar.ChooseCarController">
     <children>
         <ImageView fitHeight="400.0" fitWidth="889.0" layoutX="6.0">
             <image>
-                <Image url="@../../Assets/Images/placeholder_background.png"/>
+                <Image url="@../../Assets/Images/placeholder_background.png" />
             </image>
         </ImageView>
         <Label layoutX="249.0" layoutY="14.0" text="Available cars for your selected dates.">
             <font>
-                <Font size="17.0"/>
+                <Font size="17.0" />
             </font>
         </Label>
-        <ComboBox fx:id="comboBrand" layoutX="215.0" layoutY="266.0" prefWidth="150.0" promptText="Brand"/>
-        <ComboBox fx:id="comboCarType" layoutX="411.0" layoutY="266.0" prefWidth="150.0" promptText="Veihcle type"/>
-        <ComboBox fx:id="comboGearBox" layoutX="215.0" layoutY="302.0" prefWidth="150.0" promptText="Gearbox"/>
-        <ComboBox fx:id="comboPassengers" layoutX="411.0" layoutY="302.0" prefWidth="150.0" promptText="Passengers"/>
+        <ComboBox fx:id="comboBrand" layoutX="215.0" layoutY="266.0" prefWidth="150.0" promptText="Brand" />
+        <ComboBox fx:id="comboCarType" layoutX="411.0" layoutY="266.0" prefWidth="150.0" promptText="Veihcle type" />
+        <ComboBox fx:id="comboGearBox" layoutX="215.0" layoutY="302.0" prefWidth="150.0" promptText="Gearbox" />
+        <ComboBox fx:id="comboPassengers" layoutX="411.0" layoutY="302.0" prefWidth="150.0" promptText="Passengers" />
         <TableView fx:id="tblCars" layoutX="15.0" layoutY="49.0" prefHeight="200.0" prefWidth="570.0">
             <columns>
-                <TableColumn fx:id="colBrand" prefWidth="75.0" text="Brand"/>
-                <TableColumn fx:id="colModel" prefWidth="82.0" text="Model"/>
-                <TableColumn fx:id="colFuelType" prefWidth="82.0" text="Fuel type"/>
-                <TableColumn fx:id="colGearBox" prefWidth="82.0" text="Gearbox"/>
-                <TableColumn fx:id="colPassengers" prefWidth="82.0" text="Passengers"/>
-                <TableColumn fx:id="colSuitcases" prefWidth="82.0" text="Suitcases"/>
-                <TableColumn fx:id="colPrice" prefWidth="82.0" text="Price from"/>
-                <TableColumn prefWidth="82.0" text="Model"/>
-                <TableColumn prefWidth="82.0" text="Model"/>
+                <TableColumn fx:id="colBrand" prefWidth="75.0" text="Brand" />
+                <TableColumn fx:id="colModel" prefWidth="82.0" text="Model" />
+                <TableColumn fx:id="colFuelType" prefWidth="82.0" text="Fuel type" />
+                <TableColumn fx:id="colGearBox" prefWidth="82.0" text="Gearbox" />
+                <TableColumn fx:id="colPassengers" prefWidth="82.0" text="Passengers" />
+                <TableColumn fx:id="colSuitcases" prefWidth="82.0" text="Suitcases" />
+                <TableColumn fx:id="colPrice" prefWidth="82.0" text="Price from" />
+                <TableColumn prefWidth="82.0" text="Model" />
+                <TableColumn prefWidth="82.0" text="Model" />
             </columns>
         </TableView>
 
 
         <TableView fx:id="tblBookedCars" layoutX="668.0" layoutY="49.0" prefHeight="279.0" prefWidth="150.0">
             <columns>
-                <TableColumn fx:id="colBookingBrand" text="Brand"/>
-                <TableColumn fx:id="colBookingModel" prefWidth="70.0" text="Model"/>
+                <TableColumn fx:id="colBookingBrand" text="Brand" />
+                <TableColumn fx:id="colBookingModel" prefWidth="70.0" text="Model" />
             </columns>
         </TableView>
-        <Button fx:id="btnRemoveBkdCar" layoutX="825.0" layoutY="302.0" mnemonicParsing="false"
-                onAction="#removeBookedCar" prefHeight="27.0" prefWidth="70.0" text="Remove"/>
-        <TextField fx:id="carPrices" layoutX="672.0" layoutY="344.0" prefHeight="27.0" prefWidth="150.0"/>
+        <Button fx:id="btnRemoveBkdCar" layoutX="825.0" layoutY="302.0" mnemonicParsing="false" onAction="#removeBookedCar" prefHeight="27.0" prefWidth="70.0" text="Remove" />
+        <TextField fx:id="carPrices" layoutX="672.0" layoutY="344.0" prefHeight="27.0" prefWidth="150.0" />
         <Label layoutX="568.0" layoutY="346.0" prefHeight="23.0" prefWidth="104.0" text="Total price: ">
             <font>
-                <Font size="18.0"/>
+                <Font size="18.0" />
             </font>
         </Label>
 
-
-        <Button fx:id="btnBook" layoutX="51.0" layoutY="302.0" mnemonicParsing="false" onAction="#bookPressed"
-                text="Book"/>
-
-        <Button fx:id="book" layoutX="215.0" layoutY="339.0" mnemonicParsing="false" onAction="#bookPressed"
-                prefHeight="25.0" prefWidth="348.0" styleClass="drop-shadow" text="Book"/>
+        <Button fx:id="book" layoutX="215.0" layoutY="339.0" mnemonicParsing="false" onAction="#bookPressed" prefHeight="25.0" prefWidth="348.0" styleClass="drop-shadow" text="Book" />
 
     </children>
 </AnchorPane>

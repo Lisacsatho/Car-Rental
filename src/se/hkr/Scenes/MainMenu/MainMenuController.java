@@ -38,14 +38,8 @@ public class MainMenuController {
             datePicReturn;
 
     public void btnSignUpPressed(ActionEvent ae) {
-        try {
-            if (ae.getSource() == btnSignUp) {
-                Stage stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
-                stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("EditMemberView.fxml"))));
-            }
-        } catch (Exception x) {
 
-        }
+        Navigator.getInstance().navigateTo("RegisterUser/RegisterView.fxml");
     }
 
     public void btnLoginPressed(ActionEvent ae) {
@@ -82,7 +76,7 @@ public class MainMenuController {
 
             }
         } catch (Exception x) {
-            x.printStackTrace();
+//            x.printStackTrace();
             alert("Choose both starting date and returning date.");
         }
     }
