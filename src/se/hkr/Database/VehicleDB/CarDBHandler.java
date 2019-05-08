@@ -1,4 +1,5 @@
 package se.hkr.Database.VehicleDB;
+import se.hkr.Model.Booking;
 import se.hkr.Model.Vehicle.*;
 
 import java.sql.PreparedStatement;
@@ -11,7 +12,6 @@ import java.util.Date;
 import java.util.List;
 
 public class CarDBHandler extends VehicleDBHandler<Car>{
-
     @Override
     public List<? extends Vehicle> readAvailable(Date startDate, Date endDate) throws SQLException {
         List<Car> cars = new ArrayList<>();
@@ -30,6 +30,11 @@ public class CarDBHandler extends VehicleDBHandler<Car>{
             throw new SQLException(e);
         }
         return cars;
+    }
+
+    @Override
+    public List<Car> readForBookingSpecific(Booking booking) {
+        return null;
     }
 
     @Override
@@ -92,14 +97,18 @@ public class CarDBHandler extends VehicleDBHandler<Car>{
         try (FuelTypeDBHandler fuelTypeDBHandler = new FuelTypeDBHandler();
              GearBoxDBHandler gearBoxDBHandler = new GearBoxDBHandler();
              CarTypeDBHandler carTypeDBHandler = new CarTypeDBHandler();
-             VehicleBrandDBHandler vehicleBrandDBHandler = new VehicleBrandDBHandler()) {
-            while(set.next()) { ;
+             VehicleBrandDBHandler vehicleBrandDBHandler = new VehicleBrandDBHandler();
+             VehicleOptionDBHandler vehicleOptionDBHandler = new VehicleOptionDBHandler()) {
+            while(set.next()) {
                 FuelType fuelType = fuelTypeDBHandler.readByPrimaryKey(Integer.toString(set.getInt("fuelType")));
                 GearBox gearBox = gearBoxDBHandler.readByPrimaryKey(Integer.toString(set.getInt("gearBox")));
                 CarType carType = carTypeDBHandler.readByPrimaryKey(Integer.toString(set.getInt("carType")));
                 VehicleBrand vehicleBrand = vehicleBrandDBHandler.readByPrimaryKey(Integer.toString(set.getInt("brand")));
 
-                cars.add(new Car(set.getInt("id"), set.getDouble("price"), set.getString("description"), set.getInt("passengers"), fuelType, gearBox, set.getString("modelName"), set.getInt("modelYear"), vehicleBrand, set.getInt("suitcases"), carType));
+                Car car = new Car(set.getInt("id"), set.getDouble("price"), set.getString("description"), set.getInt("passengers"), fuelType, gearBox, set.getString("modelName"), set.getInt("modelYear"), vehicleBrand, set.getInt("suitcases"), carType);
+                List<VehicleOption> vehicleOptions = vehicleOptionDBHandler.readForVehicle(car);
+                car.setVehicleOptions(vehicleOptions);
+                cars.add(car);
             }
         } catch (Exception e) {
             // TODO: Handle exception appropriately

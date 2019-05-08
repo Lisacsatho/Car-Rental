@@ -2,6 +2,7 @@ package se.hkr.Scenes.ChooseCar;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -11,11 +12,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import se.hkr.BookingSession;
 import se.hkr.Database.VehicleDB.VehicleDBHandler;
+import se.hkr.Dialogue;
 import se.hkr.Model.Vehicle.Car;
+import se.hkr.Model.Vehicle.Vehicle;
+import se.hkr.Navigator;
 import se.hkr.Scenes.ReadController;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -136,6 +141,16 @@ public class ChooseCarController implements ReadController, Initializable {
             x.printStackTrace();
         }
 
+    }
+
+    @FXML
+    private void buttonNextPressed(ActionEvent event) {
+        if (!bookedCars.isEmpty()) {
+            BookingSession.getInstance().getBooking().setVehicles(new ArrayList<>(bookedCars));
+            Navigator.getInstance().navigateTo("ChooseExtras/ChooseExtrasView.fxml");
+        } else {
+            Dialogue.alert("Please choose at least one car to book.");
+        }
     }
 
     @Override

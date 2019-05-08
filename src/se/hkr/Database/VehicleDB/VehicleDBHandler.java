@@ -1,5 +1,6 @@
 package se.hkr.Database.VehicleDB;
 import se.hkr.Database.ModelDBHandler;
+import se.hkr.Model.Booking;
 import se.hkr.Model.Vehicle.Car;
 import se.hkr.Model.Vehicle.Vehicle;
 
@@ -20,7 +21,6 @@ public abstract class VehicleDBHandler <V extends Vehicle> extends ModelDBHandle
         }
     }
 
-    // Using prints to test out the SQL statement, should be returning objects
     public static List<? extends Vehicle> readAvailableVehicles(Date startDate, Date endDate) throws SQLException {
         List<Vehicle> vehicles = new ArrayList<>();
         try (CarDBHandler dbHandler = new CarDBHandler()) {
@@ -32,6 +32,19 @@ public abstract class VehicleDBHandler <V extends Vehicle> extends ModelDBHandle
     }
 
     public abstract List<? extends Vehicle> readAvailable(Date startDate, Date endDate) throws SQLException;
+
+    public static List<Vehicle> readForBooking(Booking booking) throws SQLException {
+        List<Vehicle> vehicles = new ArrayList<>();
+        try (CarDBHandler carDBHandler = new CarDBHandler()) {
+            vehicles.addAll(carDBHandler.readForBooking(booking));
+        } catch (Exception e) {
+            throw new SQLException("Trouble reading vehicles for booking.", e);
+        }
+        return vehicles;
+    }
+
+    // come up with a better name for abstract method.
+    public abstract List<V> readForBookingSpecific(Booking booking);
 
     @Override
     public void insert(V model) throws SQLException {
