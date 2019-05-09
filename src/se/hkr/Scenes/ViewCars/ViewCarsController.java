@@ -17,20 +17,18 @@ import se.hkr.Scenes.ReadController;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ViewCarsController implements ReadController, Initializable {
+public class ViewCarsController implements ReadController<Vehicle>, Initializable {
     @FXML
-    private ComboBox
-                    comboFuelType,
-                    comboGearBox,
-                    comboBrand,
-                    comboCarType;
+    private ComboBox comboFuelType,
+                     comboGearBox,
+                     comboBrand,
+                     comboCarType;
 
     @FXML
     private TableView tblCars;
 
     @FXML
-    private TableColumn
-                        colBrand,
+    private TableColumn colBrand,
                         colModel,
                         colModelYear,
                         colFuelType,
@@ -87,16 +85,16 @@ public class ViewCarsController implements ReadController, Initializable {
 
             FilteredList<Car> filteredData = new FilteredList<>(data, c -> true);
             comboBrand.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                filteredData.setPredicate(car -> filterCars(car));
+                filteredData.setPredicate(car -> filter(car));
             });
             comboCarType.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                filteredData.setPredicate(car -> filterCars(car));
+                filteredData.setPredicate(car -> filter(car));
             });
             comboFuelType.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                filteredData.setPredicate(car -> filterCars(car));
+                filteredData.setPredicate(car -> filter(car));
             });
             comboGearBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                filteredData.setPredicate(car -> filterCars(car));
+                filteredData.setPredicate(car -> filter(car));
             });
 
             SortedList<Car> sortedData = new SortedList<>(filteredData);
@@ -109,28 +107,26 @@ public class ViewCarsController implements ReadController, Initializable {
     }
 
     @Override
-    public void filter() {
-
-    }
-
-    private boolean filterCars(Car car) {
+    public boolean filter(Vehicle model) {
         if (!comboGearBox.getSelectionModel().isEmpty()) {
-            if (car.getGearBox().getId() != ((GearBox)comboGearBox.getSelectionModel().getSelectedItem()).getId()) {
+            if (model.getGearBox().getId() != ((GearBox)comboGearBox.getSelectionModel().getSelectedItem()).getId()) {
                 return false;
             }
         }
         if (!comboFuelType.getSelectionModel().isEmpty()) {
-            if (car.getFuelType().getId() != ((FuelType) comboFuelType.getSelectionModel().getSelectedItem()).getId()) {
+            if (model.getFuelType().getId() != ((FuelType) comboFuelType.getSelectionModel().getSelectedItem()).getId()) {
                 return false;
             }
         }
         if (!comboCarType.getSelectionModel().isEmpty()) {
-            if (car.getCarType().getId() != ((CarType) comboCarType.getSelectionModel().getSelectedItem()).getId()) {
-                return false;
+            if (model instanceof Car) {
+                if (((Car) model).getCarType().getId() != ((CarType) comboCarType.getSelectionModel().getSelectedItem()).getId()) {
+                    return false;
+                }
             }
         }
         if (!comboBrand.getSelectionModel().isEmpty()) {
-            if (car.getBrand().getId() != ((VehicleBrand) comboBrand.getSelectionModel().getSelectedItem()).getId()) {
+            if (model.getBrand().getId() != ((VehicleBrand) comboBrand.getSelectionModel().getSelectedItem()).getId()) {
                 return false;
             }
         }

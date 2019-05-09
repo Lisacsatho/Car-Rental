@@ -12,30 +12,25 @@ import java.util.ResourceBundle;
 public class EditMemberController implements Initializable {
 
     @FXML
-
-    TextField txtFldFirstName,
-            txtFldLastName,
-            txtFldSsn,
-            txtFldAddress,
-            txtFldZip,
-            txtFldEmail,
-            txtFldPassword,
-            txtFldPhone,
-            txtFldCity;
+    private TextField txtFldFirstName,
+                      txtFldLastName,
+                      txtFldSsn,
+                      txtFldAddress,
+                      txtFldZip,
+                      txtFldEmail,
+                      txtFldPassword,
+                      txtFldPhone,
+                      txtFldCity;
 
     @FXML
-
-    Button btnSave;
-
+    private Button btnSave;
 
     public void btnSavePressed(ActionEvent ae){
-
 
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
 
     }
 }

@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
 
-public class ChooseCarController implements ReadController, Initializable {
+public class ChooseCarController implements ReadController<Vehicle>, Initializable {
 
     private ObservableList<Car> data;
     private ObservableList<Car> bookedCars;
@@ -161,8 +161,8 @@ public class ChooseCarController implements ReadController, Initializable {
     }
 
     @Override
-    public void filter() {
-
+    public boolean filter(Vehicle model) {
+        return false;
     }
 
     @Override

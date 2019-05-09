@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 public class BookingCompleteController implements Initializable {
 
     @FXML
-    TextField txtFldBookingNr;
+    private TextField txtFldBookingNr;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

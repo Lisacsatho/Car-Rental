@@ -8,13 +8,13 @@ import se.hkr.Database.BookingDBHandler;
 import se.hkr.Model.Booking;
 import se.hkr.Scenes.ReadController;
 
-public class ViewBookingsController implements ReadController {
+public class ViewBookingsController implements ReadController<Booking> {
 
     @FXML
-    TextArea txtAreaBookingHistory;
+    private TextArea txtAreaBookingHistory;
 
     @FXML
-    ComboBox comboJumpTo;
+    private ComboBox comboJumpTo;
 
 
     /*private void setTxtAreaBookingHistory() {
@@ -36,8 +36,8 @@ public class ViewBookingsController implements ReadController {
 
 
     @Override
-    public void filter() {
-
+    public boolean filter(Booking model) {
+        return false;
     }
 
     @Override

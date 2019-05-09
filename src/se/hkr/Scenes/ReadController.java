@@ -1,8 +1,10 @@
 package se.hkr.Scenes;
 
-public interface ReadController {
+import se.hkr.Model.Model;
 
-    void filter();
+public interface ReadController<T extends Model> {
+
+    boolean filter(T model);
 
     void search();
 }
