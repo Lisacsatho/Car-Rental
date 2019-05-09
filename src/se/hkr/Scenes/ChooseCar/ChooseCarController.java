@@ -30,23 +30,23 @@ public class ChooseCarController implements ReadController, Initializable {
     private ObservableList<Car> bookedCars;
 
     @FXML
-    private TableView<Car> tblCars, tblBookedCars;
-
+    private TableView<Car> tblCars,
+                           tblBookedCars;
 
     @FXML
     private TableColumn colBrand,
-            colModel,
-            colPrice,
-            colBookingBrand,
-            colBookingModel;
+                        colModel,
+                        colPrice,
+                        colBookingBrand,
+                        colBookingModel;
     @FXML
     private TextField carPrices;
 
     @FXML
     private ComboBox comboBrand,
-            comboCarType,
-            comboGearBox,
-            comboPassengers;
+                     comboCarType,
+                     comboGearBox,
+                     comboPassengers;
 
     @FXML
     private Label lblGearBox,
@@ -65,17 +65,11 @@ public class ChooseCarController implements ReadController, Initializable {
         try {
             data = FXCollections.observableArrayList((List<Car>) VehicleDBHandler.readAvailableVehicles(startDate, endDate));
             bookedCars = FXCollections.observableArrayList();
-            colBrand.setCellValueFactory(
-                    new PropertyValueFactory<Car, String>("brand")
-            );
-            colModel.setCellValueFactory(
-                    new PropertyValueFactory<Car, String>("modelName")
-            );
 
+            colBrand.setCellValueFactory(new PropertyValueFactory<Car, String>("brand"));
+            colModel.setCellValueFactory(new PropertyValueFactory<Car, String>("modelName"));
             colPrice.setCellValueFactory(new PropertyValueFactory<Car, String>("basePrice"));
-
             colBookingBrand.setCellValueFactory(new PropertyValueFactory<Car, String>("brand"));
-
             colBookingModel.setCellValueFactory(new PropertyValueFactory<Car, String>("modelName"));
 
             tblCars.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -92,10 +86,8 @@ public class ChooseCarController implements ReadController, Initializable {
         }
     }
 
-
     public void bookPressed() {
         Car car = tblCars.getSelectionModel().getSelectedItem();
-
         try {
             if (tblCars.getSelectionModel().getSelectedItem() != null) {
                 data.remove(car);
@@ -121,7 +113,6 @@ public class ChooseCarController implements ReadController, Initializable {
     }
 
     public void calculateTotalPrice() {
-
         try {
             Date startDate = BookingSession.getInstance().getBooking().getStartDate();
             Date endDate = BookingSession.getInstance().getBooking().getEndDate();
