@@ -18,6 +18,10 @@
     -fx-background-color: #1c282d;
 }
 
+.ultra-dark-panel {
+    -fx-background-color: #0e1b20;
+}
+
 .button {
     -fx-border-radius: 0px;
     -fx-background-radius: 0px;
@@ -47,6 +51,15 @@
     -fx-text-fill: #dee7eb;
     -fx-focus-color: #1c282d;
 }
+
+.danger-button {
+    -fx-background-color: #c0392b;
+    -fx-text-fill: #dee7eb;
+}
+
+.positive-button {
+    -fx-background-color: #27ae60;
+}   -fx-text-fill: #dee7eb;  
 
 .ultra-dark-button {
     -fx-background-color: #0e1b20;

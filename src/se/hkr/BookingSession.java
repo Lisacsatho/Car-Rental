@@ -22,4 +22,11 @@ public class BookingSession {
     public void resetSession() {
         booking = new Booking();
     }
+
+    @Override
+    public String toString() {
+        return "Here is your booking: " + booking;
+    }
 }
+
+
