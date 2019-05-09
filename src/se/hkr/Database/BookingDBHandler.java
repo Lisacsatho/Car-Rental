@@ -68,4 +68,19 @@ public class BookingDBHandler extends ModelDBHandler<Booking> {
         }
         return bookings;
     }
+
+    @Override
+    public Booking readForBooking(String key) throws SQLException {
+        String query = "SELECT * FROM booking WHERE id=?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, Integer.parseInt(key));
+            ResultSet set = statement.executeQuery();
+            if (!buildModels(set).isEmpty()) {
+                return buildModels(set).get(0);
+            }
+        } catch (Exception e) {
+            throw new SQLException("Trouble fetching booking from database.", e);
+        }
+        return null;
+    }
 }
