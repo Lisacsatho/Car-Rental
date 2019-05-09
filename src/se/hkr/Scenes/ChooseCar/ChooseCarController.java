@@ -92,7 +92,7 @@ public class ChooseCarController implements ReadController, Initializable {
             if (tblCars.getSelectionModel().getSelectedItem() != null) {
                 data.remove(car);
                 bookedCars.add(car);
-                calculateTotalPrice();
+                carPrices.setText("$" + calculateTotalPrice());
             }
         } catch (Exception x) {
             x.printStackTrace();
@@ -105,14 +105,14 @@ public class ChooseCarController implements ReadController, Initializable {
                 Car car = tblBookedCars.getSelectionModel().getSelectedItem();
                 bookedCars.remove(car);
                 data.add(car);
-                calculateTotalPrice();
+                carPrices.setText("$" + calculateTotalPrice());
             }
         } catch (Exception x) {
             x.printStackTrace();
         }
     }
 
-    public void calculateTotalPrice() {
+    public double calculateTotalPrice() {
         try {
             Date startDate = BookingSession.getInstance().getBooking().getStartDate();
             Date endDate = BookingSession.getInstance().getBooking().getEndDate();
@@ -122,10 +122,11 @@ public class ChooseCarController implements ReadController, Initializable {
             for (Car car : bookedCars) {
                 basePrices += car.getBasePrice();
             }
-            carPrices.setText("$" + Double.toString(basePrices * days));
+            return basePrices * days;
         } catch (Exception x) {
-            x.printStackTrace();
+            Dialogue.alert("Something went wrong, please try again.");
         }
+        return 0.0;
     }
 
     private void showCarInformation(Vehicle vehicle) {
@@ -148,6 +149,7 @@ public class ChooseCarController implements ReadController, Initializable {
     private void buttonNextPressed(ActionEvent event) {
         if (!bookedCars.isEmpty()) {
             BookingSession.getInstance().getBooking().setVehicles(new ArrayList<>(bookedCars));
+            BookingSession.getInstance().getBooking().setTotalPrice(calculateTotalPrice());
             Navigator.getInstance().navigateTo("ChooseExtras/ChooseExtrasView.fxml");
         } else {
             Dialogue.alert("Please choose at least one car to book.");
