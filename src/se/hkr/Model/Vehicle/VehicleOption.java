@@ -5,7 +5,7 @@ import se.hkr.Model.Model;
 public class VehicleOption implements Model {
     private int id;
     private String name;
-    private  String description;
+    private String description;
     private double price;
 
     public VehicleOption(int id, String name, String description, double price) {
