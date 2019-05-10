@@ -37,6 +37,9 @@ public abstract class ModelDBHandler <T extends Model> implements Database {
 
     public abstract T readByPrimaryKey(String key) throws SQLException;
 
+    public abstract T readForBooking(String key) throws SQLException;
+
+
     /*
     *   Responsible for creating objects of the subject
     *   to avoid repetition in db handlers.
