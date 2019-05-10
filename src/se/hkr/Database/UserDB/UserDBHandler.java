@@ -5,6 +5,8 @@ import se.hkr.HashUtils;
 import se.hkr.Model.User.Employee;
 import se.hkr.Model.User.Member;
 import se.hkr.Model.User.User;
+
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -65,7 +67,13 @@ public abstract class UserDBHandler <U extends User> extends ModelDBHandler<U> {
     }
 
     @Override
-    public void delete(U model) {
-        
+    public void delete(U model) throws SQLException {
+        String delete = "DELETE FROM user WHERE id=?";
+        try (PreparedStatement statement = connection.prepareStatement(delete)) {
+            statement.setString(1, model.getSocialSecurityNo());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new SQLException("Could not delete user.", e);
+        }
     }
 }

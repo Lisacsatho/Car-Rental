@@ -1,14 +1,11 @@
 package se.hkr.Database.UserDB;
 
-import se.hkr.HashUtils;
 import se.hkr.Model.User.Address;
 import se.hkr.Model.User.Member;
-import se.hkr.Model.User.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,11 +13,12 @@ public class MemberDBHandler extends UserDBHandler<Member> {
     @Override
     public void insert(Member model) throws SQLException {
         super.insert(model);
-        String insert = String.format("INSERT INTO member VALUES('%s', '%s')",
-                                    model.getDriverLicensNo(),
-                                    model.getSocialSecurityNo());
-        try (Statement statement = connection.createStatement()) {
-            statement.execute(insert);
+        String insert = String.format("INSERT INTO member (driversLicenseNumber, socialSecurityNo, verificationCode) VALUES(?, ?, ?)");
+        try (PreparedStatement statement = connection.prepareStatement(insert)) {
+            statement.setString(1, model.getDriverLicensNo());
+            statement.setString(2, model.getSocialSecurityNo());
+            statement.setString(3, model.getVerificationCode());
+            statement.execute();
         } catch (Exception e) {
             throw new SQLException(e);
         }
@@ -73,13 +71,24 @@ public class MemberDBHandler extends UserDBHandler<Member> {
         return null;
     }
 
+    public boolean verifyEmail(Member member, String code) throws SQLException {
+        String query = "UPDATE member SET verified=1 WHERE socialSecurityNo=? AND verificationCode=?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, member.getSocialSecurityNo());
+            statement.setString(2, code);
+            return statement.executeUpdate() == 1;
+        } catch (SQLException e) {
+            throw new SQLException("Email could not be verified.", e);
+        }
+    }
+
     @Override
     public List<Member> buildModels(ResultSet set) {
         List<Member> members = new ArrayList<>();
         try (AddressDBHandler addressDBHandler = new AddressDBHandler()){
             while (set.next()) {
                 Address address = addressDBHandler.readByPrimaryKey(Integer.toString(set.getInt("address")));
-                Member member = new Member(set.getString("socialSecurityNo"), set.getString("firstName"), set.getString("lastName"), set.getString("email"), set.getString("phoneNo"), address, set.getString("driversLicenseNumber"));
+                Member member = new Member(set.getString("socialSecurityNo"), set.getString("firstName"), set.getString("lastName"), set.getString("email"), set.getString("phoneNo"), address, set.getString("driversLicenseNumber"), set.getBoolean("verified"));
                 members.add(member);
             }
         } catch (Exception e) {
