@@ -3,6 +3,8 @@ package se.hkr;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import se.hkr.Email.Email;
+import se.hkr.Database.Database;
+import se.hkr.Database.DatabaseConnection;
 
 
 public class Main extends Application {
@@ -25,6 +27,12 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        DatabaseConnection.getInstance();
         launch(args);
+        try {
+            DatabaseConnection.getInstance().close();
+        } catch (Exception e) {
+            System.exit(0);
+        }
     }
 }

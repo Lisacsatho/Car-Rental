@@ -1,10 +1,8 @@
 package se.hkr.Database;
 
-import javax.sql.PooledConnectionBuilder;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,7 +11,6 @@ import java.util.Queue;
 public class DatabaseConnection implements Database {
     private static DatabaseConnection instance;
 
-    //private Connection connection;
     private final String USERNAME = "rentall";
     private final String PASSWORD = "Xj0K9_Z_n331";
     private final String IP = "den1.mysql2.gear.host";
@@ -21,7 +18,7 @@ public class DatabaseConnection implements Database {
     private final String ADDRESS = String.format("jdbc:mysql://%s/%s?user=%s&password=%s&serverTimezone=UTC",
                                                 IP, DATABASE, USERNAME, PASSWORD);
     private Queue<Connection> connections;
-    private final int INITIAL_CONNECTIONS = 5;
+    private final int INITIAL_CONNECTIONS = 6;
     private final int MAX_CONNECTIONS = 10;
     private List<Connection> connectionsInUse;
 
@@ -84,6 +81,7 @@ public class DatabaseConnection implements Database {
             connection = connections.poll();
         }
         connectionsInUse.add(connection);
+        System.out.println(connectionsInUse.size());
         return connection;
     }
 
@@ -92,5 +90,6 @@ public class DatabaseConnection implements Database {
             connections.add(connection);
         }
         connectionsInUse.remove(connection);
+        System.out.println(connectionsInUse.size());
     }
 }

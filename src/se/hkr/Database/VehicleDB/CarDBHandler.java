@@ -14,7 +14,7 @@ import java.util.List;
 public class CarDBHandler extends VehicleDBHandler<Car>{
     @Override
     public List<? extends Vehicle> readAvailable(Date startDate, Date endDate) throws SQLException {
-        List<Car> cars = new ArrayList<>();
+        List<Car> cars;
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String subQuery = "SELECT vehicleId FROM bookinghasvehicle JOIN booking ON booking.id = bookinghasvehicle.bookingId WHERE (startDate BETWEEN ? AND ?) OR (endDate BETWEEN ? AND ?) OR (startDate <= ?) AND (endDate >= ?)";
         String readAvailable = String.format("SELECT * FROM AllCars WHERE id NOT IN (%s)", subQuery);
@@ -100,10 +100,10 @@ public class CarDBHandler extends VehicleDBHandler<Car>{
              VehicleBrandDBHandler vehicleBrandDBHandler = new VehicleBrandDBHandler();
              VehicleOptionDBHandler vehicleOptionDBHandler = new VehicleOptionDBHandler()) {
             while(set.next()) {
-                FuelType fuelType = fuelTypeDBHandler.readByPrimaryKey(Integer.toString(set.getInt("fuelType")));
-                GearBox gearBox = gearBoxDBHandler.readByPrimaryKey(Integer.toString(set.getInt("gearBox")));
-                CarType carType = carTypeDBHandler.readByPrimaryKey(Integer.toString(set.getInt("carType")));
-                VehicleBrand vehicleBrand = vehicleBrandDBHandler.readByPrimaryKey(Integer.toString(set.getInt("brand")));
+                FuelType fuelType = fuelTypeDBHandler.buildModelWithColumnNames(set, "fuelTypeId", "fuelTypeName");
+                GearBox gearBox = gearBoxDBHandler.buildModelWithColumnNames(set, "gearBoxId", "gearBoxName");
+                CarType carType = carTypeDBHandler.buildModelWithColumnNames(set, "carTypeId", "carTypeName");
+                VehicleBrand vehicleBrand = vehicleBrandDBHandler.buildModelWithColumnNames(set, "brandId", "brandName");
 
                 Car car = new Car(set.getInt("id"), set.getDouble("price"), set.getString("description"), set.getInt("passengers"), fuelType, gearBox, set.getString("modelName"), set.getInt("modelYear"), vehicleBrand, set.getInt("suitcases"), carType);
                 List<VehicleOption> vehicleOptions = vehicleOptionDBHandler.readForVehicle(car);

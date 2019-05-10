@@ -12,26 +12,22 @@ import java.util.ResourceBundle;
 public class EditEmployeeController implements Initializable {
 
     @FXML
-
-    TextField txtFldFirstName,
-            txtFldLastName,
-            txtFldSsn,
-            txtFldAddress,
-            txtFldZip,
-            txtFldEmail,
-            txtFldPassword,
-            txtFldPhone,
-            txtFldCity,
-            txtFldTitle,
-            txtFldSalary;
-
+    private TextField txtFldFirstName,
+                      txtFldLastName,
+                      txtFldSsn,
+                      txtFldAddress,
+                      txtFldZip,
+                      txtFldEmail,
+                      txtFldPassword,
+                      txtFldPhone,
+                      txtFldCity,
+                      txtFldTitle,
+                      txtFldSalary;
 
     @FXML
-
-    Button btnSave;
+    private Button btnSave;
 
     public void btnSavePressed(ActionEvent ae){
-
 
     }
 

@@ -58,4 +58,16 @@ public class GearBoxDBHandler extends ModelDBHandler<GearBox> {
         }
         return gearBoxes;
     }
+
+    public GearBox buildModelWithColumnNames(ResultSet set, String... columnNames) throws SQLException {
+        GearBox gearBox = null;
+        try {
+            gearBox = new GearBox(set.getInt(columnNames[0]), set.getString(columnNames[1]));
+        } catch (SQLException e) {
+            throw new SQLException("Could not build fuel type from set.", e);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Column names not sufficient: " + e.getMessage(), e);
+        }
+        return gearBox;
+    }
 }

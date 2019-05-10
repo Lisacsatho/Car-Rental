@@ -24,7 +24,7 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
-public class ChooseExtrasController implements ReadController, Initializable {
+public class ChooseExtrasController implements ReadController<VehicleOption>, Initializable {
 
     @FXML
     private TableView<Pair<String, VehicleOption>> tblOptions,
@@ -119,7 +119,8 @@ public class ChooseExtrasController implements ReadController, Initializable {
     }
 
     @Override
-    public void filter() {
+    public boolean filter(VehicleOption model) {
+        return false;
     }
 
     @Override
