@@ -69,7 +69,6 @@ public class BookingDBHandler extends ModelDBHandler<Booking> {
         return bookings;
     }
 
-    @Override
     public Booking readForBooking(String key) throws SQLException {
         String query = "SELECT * FROM booking WHERE id=?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
