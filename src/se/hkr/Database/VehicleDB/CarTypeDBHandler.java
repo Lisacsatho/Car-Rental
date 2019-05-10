@@ -59,4 +59,16 @@ public class CarTypeDBHandler extends ModelDBHandler<CarType> {
         }
         return carTypes;
     }
+
+    public CarType buildModelWithColumnNames(ResultSet set, String... columnNames) throws SQLException {
+        CarType carType = null;
+        try {
+            carType = new CarType(set.getInt(columnNames[0]), set.getString(columnNames[1]));
+        } catch (SQLException e) {
+            throw new SQLException("Could not build fuel type from set.", e);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Column names not sufficient: " + e.getMessage(), e);
+        }
+        return carType;
+    }
 }

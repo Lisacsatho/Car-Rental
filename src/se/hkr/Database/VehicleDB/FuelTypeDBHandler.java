@@ -59,4 +59,16 @@ public class FuelTypeDBHandler extends ModelDBHandler<FuelType> {
         return fuelTypes;
 
     }
+
+    public FuelType buildModelWithColumnNames(ResultSet set, String... columnNames) throws SQLException {
+        FuelType fuelType = null;
+        try {
+            fuelType = new FuelType(set.getInt(columnNames[0]), set.getString(columnNames[1]));
+        } catch (SQLException e) {
+            throw new SQLException("Could not build fuel type from set.", e);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Column names not sufficient: " + e.getMessage(), e);
+        }
+        return fuelType;
+    }
 }
