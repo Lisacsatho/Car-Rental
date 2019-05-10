@@ -7,6 +7,7 @@ import se.hkr.Model.User.Member;
 import se.hkr.Model.User.User;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -34,6 +35,20 @@ public abstract class UserDBHandler <U extends User> extends ModelDBHandler<U> {
             throw new SQLException(e);
         }
         return null;
+    }
+
+    public boolean userExists(String socialSecurityNo) throws SQLException {
+        String query = "SELECT * FROM user WHERE socialSecurityNo=?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, socialSecurityNo);
+            ResultSet set = statement.executeQuery();
+            while (set.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+            throw new SQLException(e);
+        }
+        return false;
     }
 
     protected abstract boolean authenticateUser(String email, String hashedPassword);

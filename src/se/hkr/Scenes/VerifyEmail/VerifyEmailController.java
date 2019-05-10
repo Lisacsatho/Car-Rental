@@ -8,12 +8,10 @@ import javafx.scene.control.TextField;
 import se.hkr.Database.UserDB.MemberDBHandler;
 import se.hkr.Dialogue;
 import se.hkr.Model.User.Member;
-import se.hkr.Model.User.User;
 import se.hkr.Navigator;
 import se.hkr.UserSession;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class VerifyEmailController implements Initializable {

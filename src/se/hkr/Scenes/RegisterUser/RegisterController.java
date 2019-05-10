@@ -39,8 +39,8 @@ public class RegisterController implements Initializable {
             // TODO: implement more input verification.
             if (Pattern.matches("[0-9][0-9][0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]", txtFldSsn.getText())) {
                 Member member = new Member(txtFldSsn.getText(), txtFldFirstName.getText(), txtFldLastName.getText(), txtFldEmail.getText(),
-                                           txtFldPhone.getText(), new Address(txtFldStreet.getText(), txtFldZip.getText(), txtFldState.getText()),
-                                           HashUtils.hashPassword(txtFldPassword.getText()), txtFldDriversLicense.getText(), false);
+                        txtFldPhone.getText(), new Address(txtFldStreet.getText(), txtFldZip.getText(), txtFldState.getText()),
+                        HashUtils.hashPassword(txtFldPassword.getText()), txtFldDriversLicense.getText(), false);
                 member.setVerificationCode(HashUtils.generateCode(member.getEmail()));
                 memberDBHandler.insert(member);
                 Email email = new Email(member.getEmail(), "Email confirmation | RentAll", "Please verify your email using the following code: " + member.getVerificationCode());
@@ -50,7 +50,6 @@ public class RegisterController implements Initializable {
             }
         } catch (Exception e) {
             e.printStackTrace();
-
             Dialogue.alert("Database connection failed, please try again later.");
         }
     }
