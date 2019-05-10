@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ChooseExtras.ChooseExtrasController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ChooseExtras.ChooseExtrasController">
    <children>
       <TableView fx:id="tblOptions" layoutX="15.0" layoutY="61.0" prefHeight="200.0" prefWidth="318.0">
         <columns>
@@ -31,6 +31,6 @@
       <Button layoutX="507.0" layoutY="267.0" mnemonicParsing="false" onAction="#buttonRemovePressed" text="Remove" />
       <TextField fx:id="txtFldPrice" editable="false" layoutX="402.0" layoutY="305.0" />
       <Label layoutX="323.0" layoutY="310.0" text="Total price:" />
-      <Button layoutX="522.0" layoutY="345.0" mnemonicParsing="false" text="Next" />
+      <Button layoutX="522.0" layoutY="345.0" mnemonicParsing="false" onAction="#buttonProceedPressed" text="Next" />
    </children>
 </AnchorPane>

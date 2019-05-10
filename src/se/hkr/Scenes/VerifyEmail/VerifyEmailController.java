@@ -34,9 +34,9 @@ public class VerifyEmailController implements Initializable {
     private void buttonConfirmPressed(ActionEvent event) {
         try (MemberDBHandler memberDBHandler = new MemberDBHandler()) {
             if (memberDBHandler.verifyEmail((Member) UserSession.getInstance().getLoggedInUser(), txtFldCode.getText().trim())) {
-                Dialogue.alert("Email verified!");
                 ((Member) UserSession.getInstance().getLoggedInUser()).setVerified(true);
-                Navigator.getInstance().navigateToPanel();
+                Dialogue.alert("Email verified!");
+                Navigator.getInstance().goBack();
             } else {
                 Dialogue.alert("Wrong code.");
             }

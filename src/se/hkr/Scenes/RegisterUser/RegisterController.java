@@ -9,6 +9,8 @@ import se.hkr.Email.Email;
 import se.hkr.HashUtils;
 import se.hkr.Model.User.Address;
 import se.hkr.Model.User.Member;
+import se.hkr.Navigator;
+import se.hkr.UserSession;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -45,6 +47,8 @@ public class RegisterController implements Initializable {
                 memberDBHandler.insert(member);
                 Email email = new Email(member.getEmail(), "Email confirmation | RentAll", "Please verify your email using the following code: " + member.getVerificationCode());
                 email.send();
+                Dialogue.alert("User registered! Please check your email for the confirmation email.");
+                Navigator.getInstance().goBack();
             } else {
                 Dialogue.alert("Your input was incorrect. Check your information.\nSsn should be in format: YYMMDD-XXXX");
             }

@@ -1,6 +1,7 @@
 package se.hkr.Database;
 
 import javafx.fxml.Initializable;
+import javafx.util.Pair;
 import se.hkr.Database.VehicleDB.CarDBHandler;
 import se.hkr.Database.VehicleDB.VehicleDBHandler;
 import se.hkr.Database.VehicleDB.VehicleOptionDBHandler;
@@ -57,8 +58,8 @@ public class BookingDBHandler extends ModelDBHandler<Booking> {
         try (VehicleOptionDBHandler vehicleOptionDBHandler = new VehicleOptionDBHandler()) {
             while (set.next()) {
                 Booking booking = new Booking(set.getInt("id"), set.getDate("startDate"), set.getDate("endDate"), set.getDouble("totalPrice"));
-                List<VehicleOption> vehicleOptions = vehicleOptionDBHandler.readForBooking(booking);
                 List<Vehicle> vehicles = VehicleDBHandler.readForBooking(booking);
+                List<Pair<String, VehicleOption>> vehicleOptions = vehicleOptionDBHandler.readForBooking(booking);
                 booking.setVehicles(vehicles);
                 booking.setVehicleOptions(vehicleOptions);
                 bookings.add(booking);

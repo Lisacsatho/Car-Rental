@@ -17,6 +17,7 @@ import javafx.util.Pair;
 import se.hkr.BookingSession;
 import se.hkr.Dialogue;
 import se.hkr.Model.Vehicle.VehicleOption;
+import se.hkr.Navigator;
 import se.hkr.Scenes.ReadController;
 
 import java.net.URL;
@@ -73,9 +74,19 @@ public class ChooseExtrasController implements ReadController<VehicleOption>, In
                 vehicleOptions.add(new Pair<String, VehicleOption>(vehicle.getModelName(), vehicleOption));
             }));
         }));
+        if (BookingSession.getInstance().getBooking().getVehicleOptions() != null) {
+            initializeEarlierBookings();
+        }
 
         tblOptions.setItems(vehicleOptions);
         tblBookedOptions.setItems(bookedVehicleOptions);
+    }
+
+    private void initializeEarlierBookings() {
+        BookingSession.getInstance().getBooking().getVehicleOptions().forEach((pair) -> {
+            vehicleOptions.remove(pair);
+            bookedVehicleOptions.add(pair);
+        });
     }
 
     @FXML
@@ -116,6 +127,13 @@ public class ChooseExtrasController implements ReadController<VehicleOption>, In
             Dialogue.alert("Something went wrong, please try again.");
         }
         return startingPrice;
+    }
+
+    @FXML
+    private void buttonProceedPressed(ActionEvent event) {
+        BookingSession.getInstance().getBooking().setVehicleOptions(bookedVehicleOptions);
+        BookingSession.getInstance().getBooking().setTotalPrice(calculateTotalPrice());
+        Navigator.getInstance().navigateTo("ConfirmBooking/ConfirmBookingView.fxml");
     }
 
     @Override
