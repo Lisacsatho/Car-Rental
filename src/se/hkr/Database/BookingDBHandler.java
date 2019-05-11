@@ -133,9 +133,10 @@ public class BookingDBHandler extends ModelDBHandler<Booking> {
         try (VehicleOptionDBHandler vehicleOptionDBHandler = new VehicleOptionDBHandler()) {
             while (set.next()) {
                 Booking booking = new Booking(set.getInt("bookingId"), set.getDate("startDate"), set.getDate("endDate"), set.getDouble("totalPrice"));
+                // It's important that the vehicles are read before the vehicle options.
                 List<Vehicle> vehicles = VehicleDBHandler.readForBooking(booking);
-                List<Pair<Vehicle, VehicleOption>> vehicleOptions = vehicleOptionDBHandler.readForBooking(booking.getId());
                 booking.setVehicles(vehicles);
+                List<Pair<Vehicle, VehicleOption>> vehicleOptions = vehicleOptionDBHandler.readForBooking(booking);
                 booking.setVehicleOptions(vehicleOptions);
                 bookings.add(booking);
             }
