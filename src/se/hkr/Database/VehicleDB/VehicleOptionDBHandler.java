@@ -59,16 +59,16 @@ public class VehicleOptionDBHandler extends ModelDBHandler<VehicleOption> {
         }
     }
 
-    public List<Pair<String, VehicleOption>> readForBooking(Booking booking) throws SQLException {
-        List<Pair<String, VehicleOption>> vehicleOptions = new ArrayList<>();
-        String query = "SELECT vehicleoption.id id, vehicleoption.name name, vehicleoption.price price, vehicleoption.description description, vehicle.modelName modelName FROM vehicleoption JOIN bookinghasvehicleoption ON vehicleoption.id = bookinghasvehicleoption.vehicleOptionId JOIN vehicle ON vehicle.id=bookinghasvehicleoption.vehicleId WHERE bookinghasvehicleoption.bookingId=?";
+    public List<Pair<Vehicle, VehicleOption>> readForBooking(Booking booking) throws SQLException {
+        List<Pair<Vehicle, VehicleOption>> vehicleOptions = new ArrayList<>();
+        String query = "SELECT vehicleoption.id id, vehicleoption.name name, vehicleoption.price price, vehicleoption.description description, vehicle.* FROM vehicleoption JOIN bookinghasvehicleoption ON vehicleoption.id = bookinghasvehicleoption.vehicleOptionId JOIN vehicle ON vehicle.id=bookinghasvehicleoption.vehicleId WHERE bookinghasvehicleoption.bookingId=?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, booking.getId());
             ResultSet set = statement.executeQuery();
             // Doing 'manual' building of objects since this query requires slight modification
             while (set.next()) {
                 VehicleOption vehicleOption = new VehicleOption(set.getInt("id"), set.getString("name"), set.getString("description"), set.getDouble("price"));
-                vehicleOptions.add(new Pair<>(set.getString("modelName"), vehicleOption));
+                vehicleOptions.add(new Pair<Vehicle, VehicleOption>(VehicleDBHandler.readAbstractByPrimaryKey(Integer.toString(set.getInt("vehicle.id"))), vehicleOption));
             }
         } catch (SQLException e) {
             throw new SQLException("Trouble fetching vehicle options for booking: " + booking.getId(), e);

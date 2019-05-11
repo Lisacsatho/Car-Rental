@@ -13,8 +13,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 import javafx.util.Pair;
 import se.hkr.BookingSession;
+import se.hkr.Database.BookingDBHandler;
 import se.hkr.Database.UserDB.UserDBHandler;
 import se.hkr.Dialogue;
+import se.hkr.Email.Email;
+import se.hkr.Model.Booking;
+import se.hkr.Model.User.Employee;
 import se.hkr.Model.User.Member;
 import se.hkr.Model.User.User;
 import se.hkr.Model.Vehicle.Vehicle;
@@ -34,7 +38,7 @@ public class ConfirmBookingController implements Initializable {
     private TableView<Vehicle> tblVehicles;
 
     @FXML
-    private TableView<Pair<String, VehicleOption>> tblOptions;
+    private TableView<Pair<Vehicle, VehicleOption>> tblOptions;
 
     @FXML
     private TableColumn colVehicleModel,
@@ -62,7 +66,7 @@ public class ConfirmBookingController implements Initializable {
     private final String TOTAL_PREFIX = "Total amount: $";
 
     private ObservableList<Vehicle> vehicles;
-    private ObservableList<Pair<String, VehicleOption>> vehicleOptions;
+    private ObservableList<Pair<Vehicle, VehicleOption>> vehicleOptions;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -71,13 +75,13 @@ public class ConfirmBookingController implements Initializable {
         colOptionName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
             @Override
             public ObservableValue call(TableColumn.CellDataFeatures param) {
-                return new SimpleStringProperty(((Pair<String, VehicleOption>) param.getValue()).getValue().getName());
+                return new SimpleStringProperty(((Pair<Vehicle, VehicleOption>) param.getValue()).getValue().getName());
             }
         });
         colOptionVehicleModel.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
             @Override
             public ObservableValue call(TableColumn.CellDataFeatures param) {
-                return new SimpleStringProperty(((Pair<String, VehicleOption>) param.getValue()).getKey());
+                return new SimpleStringProperty(((Pair<Vehicle, VehicleOption>) param.getValue()).getKey().toString());
             }
         });
 
@@ -141,5 +145,40 @@ public class ConfirmBookingController implements Initializable {
         } catch (SQLException e) {
             Dialogue.alert("No user found");
         }
+    }
+
+    @FXML
+    private void buttonConfirmPressed(ActionEvent event) {
+        try (BookingDBHandler bookingDBHandler = new BookingDBHandler()) {
+            bookingDBHandler.insert(BookingSession.getInstance().getBooking());
+            Dialogue.alert("Your booking is made! Thank you for renting from RentAll.");
+            sendConfirmationMail();
+            BookingSession.getInstance().resetSession();
+        } catch (Exception e) {
+            Dialogue.alert("Could not save booking: " + e.getMessage());
+        }
+    }
+
+    private void sendConfirmationMail() {
+        Booking booking = BookingSession.getInstance().getBooking();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String subject = String.format("Booking confirmation for %s %s", UserSession.getInstance().getLoggedInUser().getFirstName(), UserSession.getInstance().getLoggedInUser().getLastName());
+        StringBuilder message = new StringBuilder();
+        message.append("Thank you for choosing RentAll!\n");
+        message.append(String.format("Your booking from %s to %s is confirmed. See booking details below.%n",
+                                    simpleDateFormat.format(booking.getStartDate()),
+                                    simpleDateFormat.format(booking.getEndDate())));
+        message.append(String.format("%nBooking id: %d%n", booking.getId()));
+        message.append("\nVehicles\n");
+        for (Vehicle vehicle : booking.getVehicles()) {
+            message.append(String.format("%s %s, Fuel type: %s, Gear box: %s%n", vehicle.getBrand(), vehicle.getModelName(), vehicle.getFuelType(), vehicle.getGearBox()));
+        }
+        message.append("\nExtra vehicle options\n");
+        for (Pair<Vehicle, VehicleOption> pair : booking.getVehicleOptions()) {
+            message.append(String.format("%s, for vehicle: %s %s%n", pair.getValue().getName(), pair.getKey().getBrand(), pair.getKey().getModelName()));
+        }
+        message.append(String.format("%nTotal: $%.2f", booking.getTotalPrice()));
+        Email email = new Email(UserSession.getInstance().getLoggedInUser().getEmail(), subject, message.toString());
+        email.send();
     }
 }

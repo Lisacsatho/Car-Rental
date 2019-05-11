@@ -9,17 +9,52 @@ import se.hkr.Model.Booking;
 import se.hkr.Model.Vehicle.Car;
 import se.hkr.Model.Vehicle.Vehicle;
 import se.hkr.Model.Vehicle.VehicleOption;
+import se.hkr.UserSession;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class BookingDBHandler extends ModelDBHandler<Booking> {
     @Override
     public void insert(Booking model) throws SQLException {
+        String insert = "INSERT INTO booking (totalPrice, startDate, endDate, member) VALUES (?, DATE(?), DATE(?), ?)";
+        String insertVehicles = "INSERT INTO bookinghasvehicle VALUES(?, ?)";
+        String insertVehicleOptions = "INSERT INTO bookinghasvehicleoption VALUES(?, ?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(insert);
+             PreparedStatement insertVehicleRelation = connection.prepareStatement(insertVehicles);
+             PreparedStatement insertVehicleOptionRelation = connection.prepareStatement(insertVehicleOptions)) {
 
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            statement.setDouble(1, model.getTotalPrice());
+            statement.setString(2, simpleDateFormat.format(model.getStartDate()));
+            statement.setString(3, simpleDateFormat.format(model.getEndDate()));
+            statement.setString(4, UserSession.getInstance().getLoggedInUser().getSocialSecurityNo());
+            statement.executeUpdate();
+
+            String getId = "SELECT LAST_INSERT_ID() AS id";
+            ResultSet set = statement.executeQuery(getId);
+            set.next();
+            model.setId(set.getInt("id"));
+
+            for (Vehicle vehicle : model.getVehicles()) {
+                insertVehicleRelation.setInt(1, model.getId());
+                insertVehicleRelation.setInt(2, vehicle.getId());
+                insertVehicleRelation.executeUpdate();
+            }
+            for (Pair<Vehicle, VehicleOption> pair : model.getVehicleOptions()) {
+                insertVehicleOptionRelation.setInt(1, pair.getValue().getId());
+                insertVehicleOptionRelation.setInt(2, model.getId());
+                insertVehicleOptionRelation.setInt(3, pair.getKey().getId());
+                insertVehicleOptionRelation.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Could not insert booking in database: " + e.getMessage(), e);
+        }
     }
 
     @Override
@@ -59,7 +94,7 @@ public class BookingDBHandler extends ModelDBHandler<Booking> {
             while (set.next()) {
                 Booking booking = new Booking(set.getInt("id"), set.getDate("startDate"), set.getDate("endDate"), set.getDouble("totalPrice"));
                 List<Vehicle> vehicles = VehicleDBHandler.readForBooking(booking);
-                List<Pair<String, VehicleOption>> vehicleOptions = vehicleOptionDBHandler.readForBooking(booking);
+                List<Pair<Vehicle, VehicleOption>> vehicleOptions = vehicleOptionDBHandler.readForBooking(booking);
                 booking.setVehicles(vehicles);
                 booking.setVehicleOptions(vehicleOptions);
                 bookings.add(booking);

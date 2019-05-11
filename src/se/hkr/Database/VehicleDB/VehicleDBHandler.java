@@ -43,6 +43,14 @@ public abstract class VehicleDBHandler <V extends Vehicle> extends ModelDBHandle
         return vehicles;
     }
 
+    public static Vehicle readAbstractByPrimaryKey(String key) throws SQLException {
+        try (CarDBHandler carDBHandler = new CarDBHandler()) {
+            return carDBHandler.readByPrimaryKey(key);
+        } catch (Exception e) {
+            throw new SQLException("Could not read abstract vehicle", e);
+        }
+    }
+
     // come up with a better name for abstract method.
     public abstract List<V> readForBookingSpecific(Booking booking);
 

@@ -13,7 +13,7 @@ public class Booking implements Model {
     private Date endDate;
     private double totalPrice;
 
-    private List<Pair<String, VehicleOption>> vehicleOptions;
+    private List<Pair<Vehicle, VehicleOption>> vehicleOptions;
     private List<Vehicle> vehicles;
 
     public Booking(int id, Date startDate, Date endDate, double totalPrice) {
@@ -59,11 +59,11 @@ public class Booking implements Model {
         this.totalPrice = totalPrice;
     }
 
-    public List<Pair<String, VehicleOption>> getVehicleOptions() {
+    public List<Pair<Vehicle, VehicleOption>> getVehicleOptions() {
         return vehicleOptions;
     }
 
-    public void setVehicleOptions(List<Pair<String, VehicleOption>> vehicleOptions) {
+    public void setVehicleOptions(List<Pair<Vehicle, VehicleOption>> vehicleOptions) {
         this.vehicleOptions = vehicleOptions;
     }
 

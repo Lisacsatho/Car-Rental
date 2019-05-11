@@ -16,6 +16,7 @@ import javafx.util.Callback;
 import javafx.util.Pair;
 import se.hkr.BookingSession;
 import se.hkr.Dialogue;
+import se.hkr.Model.Vehicle.Vehicle;
 import se.hkr.Model.Vehicle.VehicleOption;
 import se.hkr.Navigator;
 import se.hkr.Scenes.ReadController;
@@ -28,8 +29,8 @@ import java.util.concurrent.TimeUnit;
 public class ChooseExtrasController implements ReadController<VehicleOption>, Initializable {
 
     @FXML
-    private TableView<Pair<String, VehicleOption>> tblOptions,
-                      tblBookedOptions;
+    private TableView<Pair<Vehicle, VehicleOption>> tblOptions,
+                                                    tblBookedOptions;
 
     @FXML
     private TableColumn colCar,
@@ -40,30 +41,30 @@ public class ChooseExtrasController implements ReadController<VehicleOption>, In
     @FXML
     private TextField txtFldPrice;
 
-    private ObservableList<Pair<String, VehicleOption>> vehicleOptions;
-    private ObservableList<Pair<String, VehicleOption>> bookedVehicleOptions;
+    private ObservableList<Pair<Vehicle, VehicleOption>> vehicleOptions;
+    private ObservableList<Pair<Vehicle, VehicleOption>> bookedVehicleOptions;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         txtFldPrice.setText("$" + Double.toString(BookingSession.getInstance().getBooking().getTotalPrice()));
-        colCar.setCellValueFactory(new PropertyValueFactory<Pair<String, VehicleOption>, String>("key"));
+        colCar.setCellValueFactory(new PropertyValueFactory<Pair<Vehicle, VehicleOption>, String>("key"));
         colName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
             @Override
             public ObservableValue call(TableColumn.CellDataFeatures param) {
-                return new SimpleStringProperty(((Pair<String, VehicleOption>) param.getValue()).getValue().getName());
+                return new SimpleStringProperty(((Pair<Vehicle, VehicleOption>) param.getValue()).getValue().getName());
             }
         });
         colPrice.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
             @Override
             public ObservableValue call(TableColumn.CellDataFeatures param) {
-                return new SimpleDoubleProperty(((Pair<String, VehicleOption>) param.getValue()).getValue().getPrice());
+                return new SimpleDoubleProperty(((Pair<Vehicle, VehicleOption>) param.getValue()).getValue().getPrice());
             }
         });
-        colBookingCar.setCellValueFactory(new PropertyValueFactory<Pair<String, VehicleOption>, String>("key"));
+        colBookingCar.setCellValueFactory(new PropertyValueFactory<Pair<Vehicle, VehicleOption>, String>("key"));
         colBookingName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
             @Override
             public ObservableValue call(TableColumn.CellDataFeatures param) {
-                return new SimpleStringProperty(((Pair<String, VehicleOption>) param.getValue()).getValue().getName());
+                return new SimpleStringProperty(((Pair<Vehicle, VehicleOption>) param.getValue()).getValue().getName());
             }
         });
 
@@ -71,12 +72,15 @@ public class ChooseExtrasController implements ReadController<VehicleOption>, In
         bookedVehicleOptions = FXCollections.observableArrayList();
         BookingSession.getInstance().getBooking().getVehicles().forEach((vehicle -> {
             vehicle.getVehicleOptions().forEach((vehicleOption -> {
-                vehicleOptions.add(new Pair<String, VehicleOption>(vehicle.getModelName(), vehicleOption));
+                vehicleOptions.add(new Pair<Vehicle, VehicleOption>(vehicle, vehicleOption));
             }));
         }));
         if (BookingSession.getInstance().getBooking().getVehicleOptions() != null) {
             initializeEarlierBookings();
         }
+
+        System.out.println(vehicleOptions);
+        System.out.println(bookedVehicleOptions);
 
         tblOptions.setItems(vehicleOptions);
         tblBookedOptions.setItems(bookedVehicleOptions);
@@ -92,7 +96,7 @@ public class ChooseExtrasController implements ReadController<VehicleOption>, In
     @FXML
     private void buttonChoosePressed(ActionEvent event) {
         if (tblOptions.getSelectionModel().getSelectedItem() != null) {
-            Pair<String, VehicleOption> vehicleOption = tblOptions.getSelectionModel().getSelectedItem();
+            Pair<Vehicle, VehicleOption> vehicleOption = tblOptions.getSelectionModel().getSelectedItem();
             vehicleOptions.remove(vehicleOption);
             bookedVehicleOptions.add(vehicleOption);
             txtFldPrice.setText("$" + calculateTotalPrice());
@@ -104,7 +108,7 @@ public class ChooseExtrasController implements ReadController<VehicleOption>, In
     @FXML
     private void buttonRemovePressed(ActionEvent event) {
         if (tblBookedOptions.getSelectionModel().getSelectedItem() != null) {
-            Pair<String, VehicleOption> vehicleOption = tblBookedOptions.getSelectionModel().getSelectedItem();
+            Pair<Vehicle, VehicleOption> vehicleOption = tblBookedOptions.getSelectionModel().getSelectedItem();
             bookedVehicleOptions.remove(vehicleOption);
             vehicleOptions.add(vehicleOption);
             txtFldPrice.setText("$" + calculateTotalPrice());
@@ -120,7 +124,7 @@ public class ChooseExtrasController implements ReadController<VehicleOption>, In
             Date endDate = BookingSession.getInstance().getBooking().getEndDate();
             long diff = endDate.getTime() - startDate.getTime();
             long days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-            for (Pair<String, VehicleOption> vehicleOption : bookedVehicleOptions) {
+            for (Pair<Vehicle, VehicleOption> vehicleOption : bookedVehicleOptions) {
                 startingPrice += vehicleOption.getValue().getPrice() * days;
             }
         } catch (Exception x) {
