@@ -22,6 +22,7 @@ import se.hkr.Navigator;
 import se.hkr.Scenes.ReadController;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
@@ -99,6 +100,7 @@ public class ChooseExtrasController implements ReadController<VehicleOption>, In
             Pair<Vehicle, VehicleOption> vehicleOption = tblOptions.getSelectionModel().getSelectedItem();
             vehicleOptions.remove(vehicleOption);
             bookedVehicleOptions.add(vehicleOption);
+            BookingSession.getInstance().getBooking().setVehicleOptions(bookedVehicleOptions);
             txtFldPrice.setText("$" + calculateTotalPrice());
         } else {
             Dialogue.alert("Please choose an additional option.");
@@ -111,6 +113,7 @@ public class ChooseExtrasController implements ReadController<VehicleOption>, In
             Pair<Vehicle, VehicleOption> vehicleOption = tblBookedOptions.getSelectionModel().getSelectedItem();
             bookedVehicleOptions.remove(vehicleOption);
             vehicleOptions.add(vehicleOption);
+            BookingSession.getInstance().getBooking().setVehicleOptions(bookedVehicleOptions);
             txtFldPrice.setText("$" + calculateTotalPrice());
         } else {
             Dialogue.alert("Please choose an addition option to remove.");
