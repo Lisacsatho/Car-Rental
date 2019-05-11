@@ -15,6 +15,7 @@ import javafx.util.Pair;
 import se.hkr.BookingSession;
 import se.hkr.Database.BookingDBHandler;
 import se.hkr.Database.UserDB.UserDBHandler;
+import se.hkr.Database.VehicleDB.VehicleDBHandler;
 import se.hkr.Dialogue;
 import se.hkr.Email.Email;
 import se.hkr.Model.Booking;
@@ -30,6 +31,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
@@ -150,10 +152,16 @@ public class ConfirmBookingController implements Initializable {
     @FXML
     private void buttonConfirmPressed(ActionEvent event) {
         try (BookingDBHandler bookingDBHandler = new BookingDBHandler()) {
-            bookingDBHandler.insert(BookingSession.getInstance().getBooking());
-            Dialogue.alert("Your booking is made! Thank you for renting from RentAll.");
-            sendConfirmationMail();
-            BookingSession.getInstance().resetSession();
+            Booking booking = BookingSession.getInstance().getBooking();
+            List<? extends Vehicle> controlList = VehicleDBHandler.readAvailableVehicles(booking.getStartDate(), booking.getEndDate());
+            if (controlList.containsAll(booking.getVehicles())) {
+                bookingDBHandler.insert(BookingSession.getInstance().getBooking());
+                Dialogue.alert("Your booking is made! Thank you for renting from RentAll.");
+                sendConfirmationMail();
+                BookingSession.getInstance().resetSession();
+            } else {
+                Dialogue.alert("It seems some of your vehicles was booked while you were booking. Please try again.");
+            }
         } catch (Exception e) {
             Dialogue.alert("Could not save booking: " + e.getMessage());
         }
