@@ -163,8 +163,23 @@ public class ConfirmBookingController implements Initializable {
                 Dialogue.alert("It seems some of your vehicles was booked while you were booking. Please try again.");
             }
         } catch (Exception e) {
-            Dialogue.alert("Could not save booking: " + e.getMessage());
+            Dialogue.alert("Could not save booking, please try again later.");
+            try (BookingDBHandler bookingDBHandler = new BookingDBHandler()) {
+                bookingDBHandler.delete(BookingSession.getInstance().getBooking());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
+    }
+
+    private boolean checkVehicleAvailability() {
+        try {
+            Booking booking = BookingSession.getInstance().getBooking();
+            List<? extends Vehicle> controlVehicles = VehicleDBHandler.readAvailableVehicles(booking.getStartDate(), booking.getEndDate());
+        } catch (SQLException e) {
+
+        }
+        return false;
     }
 
     private void sendConfirmationMail() {

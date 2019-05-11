@@ -11,6 +11,7 @@ import se.hkr.Model.Vehicle.Vehicle;
 import se.hkr.Model.Vehicle.VehicleOption;
 import se.hkr.UserSession;
 
+import javax.xml.transform.Result;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -64,22 +65,43 @@ public class BookingDBHandler extends ModelDBHandler<Booking> {
 
     @Override
     public void delete(Booking model) throws SQLException {
-
+        String removeBooking = "DELETE FROM booking WHERE id=?";
+        String removeVehicleRelations = "DELETE FROM bookinghasvehicle WHERE bookingId=?";
+        String removeVehicleOptionRelations = "DELETE FROM bookinghasvehicleoption WHERE bookingId=?";
+        try (PreparedStatement removeBookingStmt = connection.prepareStatement(removeBooking);
+            PreparedStatement removeVehicleRelationsStmt = connection.prepareStatement(removeVehicleRelations);
+            PreparedStatement removeVehicleOptionRelationsStmt = connection.prepareStatement(removeVehicleOptionRelations)) {
+            removeBookingStmt.setInt(1, model.getId());
+            removeVehicleRelationsStmt.setInt(1, model.getId());
+            removeVehicleOptionRelationsStmt.setInt(1, model.getId());
+            removeVehicleRelationsStmt.executeUpdate();
+            removeVehicleOptionRelationsStmt.executeUpdate();
+            removeBookingStmt.executeUpdate();
+        } catch (Exception e) {
+            throw new SQLException("Cannot remove booking" + e.getMessage(), e);
+        }
     }
 
     @Override
     public List<Booking> readAll() throws SQLException {
-        return null;
+        String query = "SELECT * FROM AllBookings";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            ResultSet set = statement.executeQuery();
+            return buildModels(set);
+        } catch (Exception e) {
+            throw new SQLException("Trouble fetching booking from database.", e);
+        }
     }
 
     @Override
     public Booking readByPrimaryKey(String key) throws SQLException {
-        String query = "SELECT * FROM booking WHERE id=?";
+        String query = "SELECT * FROM AllBookings WHERE bookingId=? LIMIT 1";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, Integer.parseInt(key));
             ResultSet set = statement.executeQuery();
-            if (!buildModels(set).isEmpty()) {
-                return buildModels(set).get(0);
+            List<Booking> result = buildModels(set);
+            if (!result.isEmpty()) {
+                return result.get(0);
             }
         } catch (Exception e) {
             throw new SQLException("Trouble fetching booking from database.", e);
@@ -87,14 +109,23 @@ public class BookingDBHandler extends ModelDBHandler<Booking> {
         return null;
     }
 
+    public List<Booking> readAllSimple() throws SQLException {
+        String query = "SELECT * FROM AllBookings";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            return buildSimpleModels(statement.executeQuery());
+        } catch (Exception e) {
+            throw new SQLException(e);
+        }
+    }
+
     @Override
     public List<Booking> buildModels(ResultSet set) throws SQLException {
         List<Booking> bookings = new ArrayList<>();
         try (VehicleOptionDBHandler vehicleOptionDBHandler = new VehicleOptionDBHandler()) {
             while (set.next()) {
-                Booking booking = new Booking(set.getInt("id"), set.getDate("startDate"), set.getDate("endDate"), set.getDouble("totalPrice"));
+                Booking booking = new Booking(set.getInt("bookingId"), set.getDate("startDate"), set.getDate("endDate"), set.getDouble("totalPrice"));
                 List<Vehicle> vehicles = VehicleDBHandler.readForBooking(booking);
-                List<Pair<Vehicle, VehicleOption>> vehicleOptions = vehicleOptionDBHandler.readForBooking(booking);
+                List<Pair<Vehicle, VehicleOption>> vehicleOptions = vehicleOptionDBHandler.readForBooking(booking.getId());
                 booking.setVehicles(vehicles);
                 booking.setVehicleOptions(vehicleOptions);
                 bookings.add(booking);
@@ -105,17 +136,17 @@ public class BookingDBHandler extends ModelDBHandler<Booking> {
         return bookings;
     }
 
-    public Booking readForBooking(String key) throws SQLException {
-        String query = "SELECT * FROM booking WHERE id=?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, Integer.parseInt(key));
-            ResultSet set = statement.executeQuery();
-            if (!buildModels(set).isEmpty()) {
-                return buildModels(set).get(0);
+    // Build simple refers to bookings that doesn't necessarily need the vehicles and vehicle options.
+    public List<Booking> buildSimpleModels(ResultSet set) throws SQLException {
+        List<Booking> bookings = new ArrayList<>();
+        try {
+            while (set.next()) {
+                Booking booking = new Booking(set.getInt("bookingId"), set.getDate("startDate"), set.getDate("endDate"), set.getDouble("totalPrice"));
+                bookings.add(booking);
             }
         } catch (Exception e) {
-            throw new SQLException("Trouble fetching booking from database.", e);
+            throw new SQLException("Trouble building simple bookings from database.", e);
         }
-        return null;
+        return bookings;
     }
 }

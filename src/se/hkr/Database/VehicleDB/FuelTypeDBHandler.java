@@ -60,7 +60,7 @@ public class FuelTypeDBHandler extends ModelDBHandler<FuelType> {
 
     }
 
-    public FuelType buildModelWithColumnNames(ResultSet set, String... columnNames) throws SQLException {
+    public static FuelType buildModelWithColumnNames(ResultSet set, String... columnNames) throws SQLException {
         FuelType fuelType = null;
         try {
             fuelType = new FuelType(set.getInt(columnNames[0]), set.getString(columnNames[1]));

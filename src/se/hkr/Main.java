@@ -2,9 +2,15 @@ package se.hkr;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import se.hkr.Database.BookingDBHandler;
+import se.hkr.Database.VehicleDB.CarDBHandler;
 import se.hkr.Email.Email;
 import se.hkr.Database.Database;
 import se.hkr.Database.DatabaseConnection;
+import se.hkr.Model.Booking;
+import se.hkr.Model.Vehicle.Car;
+
+import java.util.List;
 
 
 public class Main extends Application {
