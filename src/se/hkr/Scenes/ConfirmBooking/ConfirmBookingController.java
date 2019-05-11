@@ -154,7 +154,7 @@ public class ConfirmBookingController implements Initializable {
         try (BookingDBHandler bookingDBHandler = new BookingDBHandler()) {
             Booking booking = BookingSession.getInstance().getBooking();
             List<? extends Vehicle> controlList = VehicleDBHandler.readAvailableVehicles(booking.getStartDate(), booking.getEndDate());
-            if (controlList.containsAll(booking.getVehicles())) {
+            if (vehiclesAreAvailable()) {
                 bookingDBHandler.insert(BookingSession.getInstance().getBooking());
                 Dialogue.alert("Your booking is made! Thank you for renting from RentAll.");
                 sendConfirmationMail();
@@ -172,14 +172,26 @@ public class ConfirmBookingController implements Initializable {
         }
     }
 
-    private boolean checkVehicleAvailability() {
+    private boolean vehiclesAreAvailable() {
         try {
             Booking booking = BookingSession.getInstance().getBooking();
             List<? extends Vehicle> controlVehicles = VehicleDBHandler.readAvailableVehicles(booking.getStartDate(), booking.getEndDate());
+            for (Vehicle vehicle : booking.getVehicles()) {
+                boolean confirmedVehicle = false;
+                for (Vehicle controlVehicle : controlVehicles) {
+                    if (controlVehicle.getId() == vehicle.getId()) {
+                        confirmedVehicle = true;
+                        break;
+                    }
+                }
+                if (!confirmedVehicle) {
+                    return false;
+                }
+            }
         } catch (SQLException e) {
-
+            Dialogue.alert("Something went wrong...");
         }
-        return false;
+        return true;
     }
 
     private void sendConfirmationMail() {

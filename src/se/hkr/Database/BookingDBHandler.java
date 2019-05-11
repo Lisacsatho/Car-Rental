@@ -6,6 +6,7 @@ import se.hkr.Database.VehicleDB.CarDBHandler;
 import se.hkr.Database.VehicleDB.VehicleDBHandler;
 import se.hkr.Database.VehicleDB.VehicleOptionDBHandler;
 import se.hkr.Model.Booking;
+import se.hkr.Model.User.Member;
 import se.hkr.Model.Vehicle.Car;
 import se.hkr.Model.Vehicle.Vehicle;
 import se.hkr.Model.Vehicle.VehicleOption;
@@ -115,6 +116,14 @@ public class BookingDBHandler extends ModelDBHandler<Booking> {
             return buildSimpleModels(statement.executeQuery());
         } catch (Exception e) {
             throw new SQLException(e);
+        }
+    }
+
+    public List<Booking> readForMemberSimple(Member member) throws SQLException {
+        String query = "SELECT * FROM AllBookings WHERE member=?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, member.getSocialSecurityNo());
+            return buildSimpleModels(statement.executeQuery());
         }
     }
 

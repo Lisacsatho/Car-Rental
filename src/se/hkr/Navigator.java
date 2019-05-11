@@ -12,7 +12,7 @@ import java.util.Stack;
 public class Navigator {
     private static Navigator ourInstance = new Navigator();
     private static final String PATH_TO_SCENES = "Scenes/";
-    private final String MEMBER_PANEL = "MainMenu/MainMenuView.fxml";
+    private final String MEMBER_PANEL = "MemberPanel/MemberPanelView.fxml";
     private final String EMPLOYEE_PANEL = "AddCar/AddCarView.fxml";
 
     private Stack<Scene> previousScenes;
