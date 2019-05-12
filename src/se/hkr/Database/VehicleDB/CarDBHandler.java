@@ -33,8 +33,15 @@ public class CarDBHandler extends VehicleDBHandler<Car>{
     }
 
     @Override
-    public List<Car> readForBookingSpecific(Booking booking) {
-        return null;
+    public List<Car> readForBookingSpecific(Booking booking) throws SQLException {
+        String query = "SELECT AllCars.* FROM AllCars JOIN bookinghasvehicle ON id=bookinghasvehicle.vehicleId WHERE bookinghasvehicle.bookingId=?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, booking.getId());
+            ResultSet set = statement.executeQuery();
+            return buildModels(set);
+        } catch (Exception e) {
+            throw new SQLException("Could not get cars for booking.", e);
+        }
     }
 
     @Override
@@ -83,7 +90,9 @@ public class CarDBHandler extends VehicleDBHandler<Car>{
             statement.setInt(1, Integer.parseInt(key));
             ResultSet set = statement.executeQuery();
             List<Car> result = buildModels(set);
-            car = (!result.isEmpty()) ? result.get(0) : car;
+            if (!result.isEmpty()) {
+                car = result.get(0);
+            }
         } catch (Exception e) {
             // TODO: Handle error
             e.printStackTrace();
@@ -94,16 +103,12 @@ public class CarDBHandler extends VehicleDBHandler<Car>{
     @Override
     public List<Car> buildModels(ResultSet set) {
         List<Car> cars = new ArrayList<>();
-        try (FuelTypeDBHandler fuelTypeDBHandler = new FuelTypeDBHandler();
-             GearBoxDBHandler gearBoxDBHandler = new GearBoxDBHandler();
-             CarTypeDBHandler carTypeDBHandler = new CarTypeDBHandler();
-             VehicleBrandDBHandler vehicleBrandDBHandler = new VehicleBrandDBHandler();
-             VehicleOptionDBHandler vehicleOptionDBHandler = new VehicleOptionDBHandler()) {
+        try (VehicleOptionDBHandler vehicleOptionDBHandler = new VehicleOptionDBHandler()) {
             while(set.next()) {
-                FuelType fuelType = fuelTypeDBHandler.buildModelWithColumnNames(set, "fuelTypeId", "fuelTypeName");
-                GearBox gearBox = gearBoxDBHandler.buildModelWithColumnNames(set, "gearBoxId", "gearBoxName");
-                CarType carType = carTypeDBHandler.buildModelWithColumnNames(set, "carTypeId", "carTypeName");
-                VehicleBrand vehicleBrand = vehicleBrandDBHandler.buildModelWithColumnNames(set, "brandId", "brandName");
+                FuelType fuelType = FuelTypeDBHandler.buildModelWithColumnNames(set, "fuelTypeId", "fuelTypeName");
+                GearBox gearBox = GearBoxDBHandler.buildModelWithColumnNames(set, "gearBoxId", "gearBoxName");
+                CarType carType = CarTypeDBHandler.buildModelWithColumnNames(set, "carTypeId", "carTypeName");
+                VehicleBrand vehicleBrand = VehicleBrandDBHandler.buildModelWithColumnNames(set, "brandId", "brandName");
 
                 Car car = new Car(set.getInt("id"), set.getDouble("price"), set.getString("description"), set.getInt("passengers"), fuelType, gearBox, set.getString("modelName"), set.getInt("modelYear"), vehicleBrand, set.getInt("suitcases"), carType);
                 List<VehicleOption> vehicleOptions = vehicleOptionDBHandler.readForVehicle(car);
@@ -115,5 +120,23 @@ public class CarDBHandler extends VehicleDBHandler<Car>{
             e.printStackTrace();
         }
         return cars;
+    }
+
+    public static Car buildWithColumnNames(ResultSet set) {
+        Car car = null;
+        try (VehicleOptionDBHandler vehicleOptionDBHandler = new VehicleOptionDBHandler()) {
+            FuelType fuelType = FuelTypeDBHandler.buildModelWithColumnNames(set, "fuelTypeId", "fuelTypeName");
+            GearBox gearBox = GearBoxDBHandler.buildModelWithColumnNames(set, "gearBoxId", "gearBoxName");
+            CarType carType = CarTypeDBHandler.buildModelWithColumnNames(set, "carTypeId", "carTypeName");
+            VehicleBrand vehicleBrand = VehicleBrandDBHandler.buildModelWithColumnNames(set, "brandId", "brandName");
+
+            car = new Car(set.getInt("id"), set.getDouble("price"), set.getString("description"), set.getInt("passengers"), fuelType, gearBox, set.getString("modelName"), set.getInt("modelYear"), vehicleBrand, set.getInt("suitcases"), carType);
+            List<VehicleOption> vehicleOptions = vehicleOptionDBHandler.readForVehicle(car);
+            car.setVehicleOptions(vehicleOptions);
+        } catch (Exception e) {
+            // TODO: Handle exception appropriately
+            e.printStackTrace();
+        }
+        return car;
     }
 }

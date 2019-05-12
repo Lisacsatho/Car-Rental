@@ -59,7 +59,7 @@ public class GearBoxDBHandler extends ModelDBHandler<GearBox> {
         return gearBoxes;
     }
 
-    public GearBox buildModelWithColumnNames(ResultSet set, String... columnNames) throws SQLException {
+    public static GearBox buildModelWithColumnNames(ResultSet set, String... columnNames) throws SQLException {
         GearBox gearBox = null;
         try {
             gearBox = new GearBox(set.getInt(columnNames[0]), set.getString(columnNames[1]));

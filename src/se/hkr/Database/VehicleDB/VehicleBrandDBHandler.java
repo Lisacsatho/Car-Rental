@@ -62,7 +62,7 @@ public class VehicleBrandDBHandler extends ModelDBHandler<VehicleBrand> {
         return vehicleBrands;
     }
 
-    public VehicleBrand buildModelWithColumnNames(ResultSet set, String... columnNames) throws SQLException {
+    public static VehicleBrand buildModelWithColumnNames(ResultSet set, String... columnNames) throws SQLException {
         VehicleBrand vehicleBrand = null;
         try {
             vehicleBrand = new VehicleBrand(set.getInt(columnNames[0]), set.getString(columnNames[1]));

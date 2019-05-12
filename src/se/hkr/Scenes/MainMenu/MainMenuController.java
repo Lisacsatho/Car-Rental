@@ -2,6 +2,7 @@ package se.hkr.Scenes.MainMenu;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -12,12 +13,14 @@ import se.hkr.Model.User.User;
 import se.hkr.Navigator;
 import se.hkr.UserSession;
 
+import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.ResourceBundle;
 
-public class MainMenuController {
+public class MainMenuController implements Initializable {
 
     @FXML
     private TextField txtFldUsername,
@@ -31,6 +34,13 @@ public class MainMenuController {
     @FXML
     private DatePicker datePicStart,
                        datePicReturn;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        if (UserSession.getInstance().isLoggedIn()) {
+            Navigator.getInstance().navigateToPanel();
+        }
+    }
 
     public void btnSignUpPressed(ActionEvent ae) {
         Navigator.getInstance().navigateTo("RegisterUser/RegisterView.fxml");

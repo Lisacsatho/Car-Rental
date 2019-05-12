@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import se.hkr.Model.User.Member;
 
 import java.io.IOException;
 import java.util.Stack;
@@ -11,7 +12,7 @@ import java.util.Stack;
 public class Navigator {
     private static Navigator ourInstance = new Navigator();
     private static final String PATH_TO_SCENES = "Scenes/";
-    private final String MEMBER_PANEL = "RegisterUser/RegisterView.fxml";
+    private final String MEMBER_PANEL = "MemberPanel/MemberPanelView.fxml";
     private final String EMPLOYEE_PANEL = "AddCar/AddCarView.fxml";
 
     private Stack<Scene> previousScenes;
@@ -27,9 +28,12 @@ public class Navigator {
 
     public void navigateToPanel() {
         assert(UserSession.getInstance().isLoggedIn());
-
         if (UserSession.getInstance().isMember()) {
-            navigateTo(MEMBER_PANEL);
+            if (!((Member) UserSession.getInstance().getLoggedInUser()).isVerified()) {
+                navigateTo("VerifyEmail/VerifyEmailView.fxml");
+            } else {
+                navigateTo(MEMBER_PANEL);
+            }
         } else if (UserSession.getInstance().isEmployee()) {
             navigateTo(EMPLOYEE_PANEL);
         }

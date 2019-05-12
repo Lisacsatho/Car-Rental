@@ -3,7 +3,7 @@
     Author: Group 2
 */
 /* dark-primary: #1c282d */
-/* light-primary: #dee7eb */
+/* light-primary: dee7eb*/
 /* key:  */
 /* accent: #ffd200 */
 /* ultra-dark: #0e1b20 */
@@ -65,6 +65,7 @@
     -fx-background-color: #0e1b20;
     -fx-text-fill: #dee7eb;
     -fx-focus-color: #1c282d;
+    -fx-font-weight: bold;
 }
 
 .invisible-light-button {
@@ -86,7 +87,7 @@
 }
 
 .dark-menu-bar {
-    -fx-background-color: rgba(14, 27, 32, 0.6);
+    -fx-background-color: rgba(14, 27, 32, 0.9);
     -fx-padding: 1 1 1 1;
 }
 

@@ -1,5 +1,6 @@
 package se.hkr.Model;
 
+import javafx.util.Pair;
 import se.hkr.Model.Vehicle.Vehicle;
 import se.hkr.Model.Vehicle.VehicleOption;
 
@@ -12,7 +13,7 @@ public class Booking implements Model {
     private Date endDate;
     private double totalPrice;
 
-    private List<VehicleOption> vehicleOptions;
+    private List<Pair<Vehicle, VehicleOption>> vehicleOptions;
     private List<Vehicle> vehicles;
 
     public Booking(int id, Date startDate, Date endDate, double totalPrice) {
@@ -58,11 +59,11 @@ public class Booking implements Model {
         this.totalPrice = totalPrice;
     }
 
-    public List<VehicleOption> getVehicleOptions() {
+    public List<Pair<Vehicle, VehicleOption>> getVehicleOptions() {
         return vehicleOptions;
     }
 
-    public void setVehicleOptions(List<VehicleOption> vehicleOptions) {
+    public void setVehicleOptions(List<Pair<Vehicle, VehicleOption>> vehicleOptions) {
         this.vehicleOptions = vehicleOptions;
     }
 
