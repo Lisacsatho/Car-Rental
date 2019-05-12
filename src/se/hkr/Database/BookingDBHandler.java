@@ -70,8 +70,8 @@ public class BookingDBHandler extends ModelDBHandler<Booking> {
         String removeVehicleRelations = "DELETE FROM bookinghasvehicle WHERE bookingId=?";
         String removeVehicleOptionRelations = "DELETE FROM bookinghasvehicleoption WHERE bookingId=?";
         try (PreparedStatement removeBookingStmt = connection.prepareStatement(removeBooking);
-            PreparedStatement removeVehicleRelationsStmt = connection.prepareStatement(removeVehicleRelations);
-            PreparedStatement removeVehicleOptionRelationsStmt = connection.prepareStatement(removeVehicleOptionRelations)) {
+             PreparedStatement removeVehicleRelationsStmt = connection.prepareStatement(removeVehicleRelations);
+             PreparedStatement removeVehicleOptionRelationsStmt = connection.prepareStatement(removeVehicleOptionRelations)) {
             removeBookingStmt.setInt(1, model.getId());
             removeVehicleRelationsStmt.setInt(1, model.getId());
             removeVehicleOptionRelationsStmt.setInt(1, model.getId());
@@ -108,6 +108,17 @@ public class BookingDBHandler extends ModelDBHandler<Booking> {
             throw new SQLException("Trouble fetching booking from database.", e);
         }
         return null;
+    }
+
+    public List<Booking> readForMember(Member member) throws SQLException {
+        String query = "SELECT * FROM booking WHERE member =?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, member.getSocialSecurityNo());
+            ResultSet set = statement.executeQuery();
+            return buildModels(set);
+        } catch (Exception e) {
+            throw new SQLException("Trouble fetching booking from database.", e);
+        }
     }
 
     public List<Booking> readAllSimple() throws SQLException {
@@ -160,3 +171,4 @@ public class BookingDBHandler extends ModelDBHandler<Booking> {
         return bookings;
     }
 }
+

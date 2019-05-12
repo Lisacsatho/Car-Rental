@@ -6,7 +6,13 @@ import javafx.scene.control.TextArea;
 import se.hkr.BookingSession;
 import se.hkr.Database.BookingDBHandler;
 import se.hkr.Model.Booking;
+import se.hkr.Model.User.Member;
 import se.hkr.Scenes.ReadController;
+import se.hkr.UserSession;
+
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class ViewBookingsController implements ReadController<Booking> {
 
@@ -17,31 +23,25 @@ public class ViewBookingsController implements ReadController<Booking> {
     private ComboBox comboJumpTo;
 
 
-    /*private void setTxtAreaBookingHistory() {
+    public void initialize(URL location, ResourceBundle resources) {
 
-        try {
+        try (BookingDBHandler dB = new BookingDBHandler()) {
 
-            if (BookingDBHandler.getInstance().getBooking() != null) {
+            List<Booking> bookings = dB.readForMember((Member) UserSession.getInstance().getLoggedInUser());
+            txtAreaBookingHistory.appendText(String.valueOf(bookings));
 
-                for (int i = 0; i < BookingDBHandler.getInstance().getBooking().readForMember(); ++) {
-                    if (BookingDBHandler.getInstance().getBooking().readForMember(i) != null) {
-                        txtAreaBookingHistory.appendText(Booking.getInstance().getBooking().get(i).toString());
-                    }
-                }
-
-            }
         } catch (Exception e) {
             e.printStackTrace();
-        }*/
+        }
 
-
+    }
     @Override
-    public boolean filter(Booking model) {
+    public boolean filter (Booking model){
         return false;
     }
 
     @Override
-    public void search() {
+    public void search () {
 
     }
 }
