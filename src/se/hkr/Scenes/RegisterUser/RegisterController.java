@@ -1,7 +1,9 @@
 package se.hkr.Scenes.RegisterUser;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import se.hkr.Database.UserDB.MemberDBHandler;
 import se.hkr.Dialogue;
@@ -30,6 +32,8 @@ public class RegisterController implements Initializable {
             txtFldPhone,
             txtFldState,
             txtFldDriversLicense;
+    @FXML
+    private Button btnGoBack;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -56,5 +60,11 @@ public class RegisterController implements Initializable {
             e.printStackTrace();
             Dialogue.alert("Database connection failed, please try again later.");
         }
+    }
+
+    public void goBack (ActionEvent event) {
+
+        if (event.getSource() == btnGoBack) {Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");}
+
     }
 }

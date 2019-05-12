@@ -1,4 +1,5 @@
 package se.hkr.Scenes.AddCar;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,7 +9,7 @@ import javafx.scene.control.*;
 import se.hkr.Database.VehicleDB.*;
 import se.hkr.Model.Vehicle.*;
 import se.hkr.Navigator;
-import java.io.CharArrayReader;
+
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -58,7 +59,7 @@ public class AddCarController implements Initializable {
             ObservableList<VehicleBrand> vehicleBrands = FXCollections.observableArrayList(vehicleBrandDBHandler.readAll());
             comboBrand.setItems(vehicleBrands);
 
-            ObservableList<Integer> suitcases= FXCollections.observableArrayList(1, 2, 3, 4, 5, 6);
+            ObservableList<Integer> suitcases = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6);
             comboSuitcases.setItems(suitcases);
 
             ObservableList<Integer> passengers = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6);
@@ -69,32 +70,34 @@ public class AddCarController implements Initializable {
             e.printStackTrace();
         }
     }
+
     @FXML
-    private void buttonAddPressed (ActionEvent ae) {
-        if(validate()) {
-           try (CarDBHandler carDBHandler = new CarDBHandler()) {
-               Car car = new Car(Double.parseDouble(textPrice.getText()),textDescription.getText(),((Integer) comboPassengers.getSelectionModel().getSelectedItem()).intValue(),
-                                (FuelType) comboFuelType.getSelectionModel().getSelectedItem(), (GearBox) comboGearBox.getSelectionModel().getSelectedItem(), textModel.getText(),
-                                Integer.parseInt(textYear.getText()),(VehicleBrand) comboBrand.getSelectionModel().getSelectedItem(), ((Integer)comboSuitcases.getSelectionModel().getSelectedItem()).intValue(),
-                                (CarType)comboCarType.getSelectionModel().getSelectedItem());
+    private void buttonAddPressed(ActionEvent ae) {
+        if (validate()) {
+            try (CarDBHandler carDBHandler = new CarDBHandler()) {
+                Car car = new Car(Double.parseDouble(textPrice.getText()), textDescription.getText(), ((Integer) comboPassengers.getSelectionModel().getSelectedItem()).intValue(),
+                        (FuelType) comboFuelType.getSelectionModel().getSelectedItem(), (GearBox) comboGearBox.getSelectionModel().getSelectedItem(), textModel.getText(),
+                        Integer.parseInt(textYear.getText()), (VehicleBrand) comboBrand.getSelectionModel().getSelectedItem(), ((Integer) comboSuitcases.getSelectionModel().getSelectedItem()).intValue(),
+                        (CarType) comboCarType.getSelectionModel().getSelectedItem());
 
-               carDBHandler.insert(car);
-               alert("Car was added to the system.");
-               Navigator.getInstance().navigateToPanel();
+                carDBHandler.insert(car);
+                alert("Car was added to the system.");
+                Navigator.getInstance().navigateToPanel();
 
-           } catch (SQLException e) {
+            } catch (SQLException e) {
                 alert("There was a problem while inserting the car into the database, please try again later.");
-           } catch (Exception e) {
+            } catch (Exception e) {
 
-           }
+            }
         }
     }
-    private boolean validate () {
-        if(comboFuelType.getSelectionModel().isEmpty()) {
+
+    private boolean validate() {
+        if (comboFuelType.getSelectionModel().isEmpty()) {
             alert("Please select a fuel type");
             return false;
         }
-        if(comboBrand.getSelectionModel().isEmpty()) {
+        if (comboBrand.getSelectionModel().isEmpty()) {
             alert("Please select a brand");
             return false;
         }
@@ -102,23 +105,23 @@ public class AddCarController implements Initializable {
             alert("Please select a gear box");
             return false;
         }
-        if(comboPassengers.getSelectionModel().isEmpty()) {
+        if (comboPassengers.getSelectionModel().isEmpty()) {
             alert("Please select amount of passengers");
             return false;
         }
-        if(comboSuitcases.getSelectionModel().isEmpty()) {
+        if (comboSuitcases.getSelectionModel().isEmpty()) {
             alert("Please select amount of suitcases");
             return false;
         }
-        if(comboCarType.getSelectionModel().isEmpty()) {
+        if (comboCarType.getSelectionModel().isEmpty()) {
             alert("Please select a car type");
             return false;
         }
-        if(textModel.getText().isEmpty()){
+        if (textModel.getText().isEmpty()) {
             alert("Please specify a model");
             return false;
         }
-        if (textYear.getText().isEmpty()){
+        if (textYear.getText().isEmpty()) {
             alert("Please specify a model year");
             return false;
         }

@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="408.0" prefWidth="717.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ChooseCar.ChooseCarController">
+<AnchorPane prefHeight="408.0" prefWidth="717.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ChooseCar.ChooseCarController">
     <children>
         <ImageView fitHeight="359.0" fitWidth="302.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
             <image>

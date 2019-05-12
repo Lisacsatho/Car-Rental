@@ -12,19 +12,6 @@ import java.util.ResourceBundle;
 
 public class ViewEmployeesController implements ReadController<Employee> {
 
-
-    public void initialize(URL location, ResourceBundle resources) {
-
-        try (EmployeeDBHandler dB = new EmployeeDBHandler()) {
-
-            List<Employee> employees = dB.readForEmployee((Employee) UserSession.getInstance().getLoggedInUser());
-            txtAreaBookingHistory.appendText(String.valueOf(bookings));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
     @Override
     public boolean filter(Employee model) {
         return false;
@@ -35,3 +22,6 @@ public class ViewEmployeesController implements ReadController<Employee> {
 
     }
 }
+
+
+

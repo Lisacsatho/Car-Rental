@@ -2,16 +2,20 @@ package se.hkr.Scenes.ChooseCar;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import se.hkr.BookingSession;
+import se.hkr.Database.VehicleDB.CarTypeDBHandler;
+import se.hkr.Database.VehicleDB.GearBoxDBHandler;
+import se.hkr.Database.VehicleDB.VehicleBrandDBHandler;
 import se.hkr.Database.VehicleDB.VehicleDBHandler;
 import se.hkr.Dialogue;
-import se.hkr.Model.Vehicle.Car;
-import se.hkr.Model.Vehicle.Vehicle;
+import se.hkr.Model.Vehicle.*;
 import se.hkr.Navigator;
 import se.hkr.Scenes.ReadController;
 
@@ -29,30 +33,31 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
 
     @FXML
     private TableView<Vehicle> tblAvailableVehicles,
-                               tblBookedVehicles;
+            tblBookedVehicles;
 
     @FXML
     private TableColumn colBrand,
-                        colModel,
-                        colPrice,
-                        colBookingBrand,
-                        colBookingModel;
+            colModel,
+            colPrice,
+            colBookingBrand,
+            colBookingModel;
     @FXML
     private TextField carPrices;
 
     @FXML
-    private ComboBox comboBrand,
-                     comboCarType,
-                     comboGearBox,
-                     comboPassengers;
+    private ComboBox
+            comboGearBox,
+            comboBrand,
+            comboPassengers,
+            comboCarType;
 
     @FXML
     private Label lblGearBox,
-                  lblFuelType,
-                  lblPassengers,
-                  lblSuitcases,
-                  lblDescription,
-                  lblCarName;
+            lblFuelType,
+            lblPassengers,
+            lblSuitcases,
+            lblDescription,
+            lblCarName;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -61,7 +66,6 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
 
         try {
             data = FXCollections.observableArrayList(VehicleDBHandler.readAvailableVehicles(startDate, endDate));
-            System.out.println(data);
             bookedVehicles = FXCollections.observableArrayList();
 
             colBrand.setCellValueFactory(new PropertyValueFactory<Vehicle, String>("brand"));
@@ -76,12 +80,13 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
                 }
             });
 
-            tblAvailableVehicles.setItems(data);
             tblBookedVehicles.setItems(bookedVehicles);
         } catch (SQLException e) {
             // Placeholder
             System.out.println("Database interaction failed, please try again later.");
         }
+
+        showComboData();
     }
 
     public void bookPressed() {
@@ -94,7 +99,7 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
                 carPrices.setText("$" + calculateTotalPrice());
             }
         } catch (Exception x) {
-            x.printStackTrace();
+            Dialogue.alert("Something went wrong. Check the information.");
         }
     }
 
@@ -108,7 +113,7 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
                 carPrices.setText("$" + calculateTotalPrice());
             }
         } catch (Exception x) {
-            x.printStackTrace();
+            Dialogue.alert("Please check your information. Something went wrong.");
         }
     }
 
@@ -131,7 +136,7 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
 
     private void showCarInformation(Vehicle vehicle) {
         final String GEARBOX_PREFIX = "Gear box: ";
-        final String FUELTYPE_PREFIX  = "Fuel type box: ";
+        final String FUELTYPE_PREFIX = "Fuel type box: ";
         final String PASSENGERS_PREFIX = "Passengers: ";
         final String SUITCASES_PREFIX = "Suitcases: ";
 
@@ -143,6 +148,7 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
         if (vehicle instanceof Car) {
             lblSuitcases.setText(SUITCASES_PREFIX + ((Car) vehicle).getSuitcases());
         }
+
     }
 
     @FXML
@@ -162,9 +168,64 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
         Navigator.getInstance().goBack();
     }
 
+
+    public void showComboData() {
+
+        try (GearBoxDBHandler gearBoxDBHandler = new GearBoxDBHandler(); VehicleBrandDBHandler vehicleBrandDBHandler = new VehicleBrandDBHandler(); CarTypeDBHandler carTypeDBHandler = new CarTypeDBHandler()) {
+
+            ObservableList<GearBox> gearBoxes = FXCollections.observableArrayList(gearBoxDBHandler.readAll());
+            comboGearBox.setItems(gearBoxes);
+            ObservableList<VehicleBrand> vehicleBrands = FXCollections.observableArrayList(vehicleBrandDBHandler.readAll());
+            comboBrand.setItems(vehicleBrands);
+            ObservableList<Integer> passengers = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7);
+            comboPassengers.setItems(passengers);
+            ObservableList<CarType> carTypes = FXCollections.observableArrayList(carTypeDBHandler.readAll());
+            comboCarType.setItems(carTypes);
+
+            FilteredList<Vehicle> vehicles = new FilteredList<>(data, c -> true);
+            comboGearBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> vehicles.setPredicate(vehicle -> filter(vehicle)));
+
+            comboBrand.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> vehicles.setPredicate(vehicle -> filter(vehicle)));
+
+            comboPassengers.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> vehicles.setPredicate(vehicle -> filter(vehicle)));
+
+            comboCarType.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> vehicles.setPredicate(vehicle -> filter(vehicle)));
+
+            SortedList<Vehicle> sortedData = new SortedList(vehicles);
+            sortedData.comparatorProperty().bind(tblAvailableVehicles.comparatorProperty());
+            tblAvailableVehicles.setItems(sortedData);
+
+        } catch (Exception x) {
+            x.printStackTrace();
+        }
+    }
+
     @Override
     public boolean filter(Vehicle model) {
-        return false;
+        if (!comboGearBox.getSelectionModel().isEmpty()) {
+            if (model.getGearBox().getId() != ((GearBox)comboGearBox.getSelectionModel().getSelectedItem()).getId()) {
+                return false;
+            }
+        }
+        if (!comboPassengers.getSelectionModel().isEmpty()) {
+            if (model.getPassengers() != ((Integer)comboPassengers.getSelectionModel().getSelectedItem())) {
+                return false;
+            }
+        }
+        if (!comboCarType.getSelectionModel().isEmpty()) {
+            if (model instanceof Car) {
+                if (((Car) model).getCarType().getId() != ((CarType) comboCarType.getSelectionModel().getSelectedItem()).getId()) {
+                    return false;
+                }
+            }
+        }
+        if (!comboBrand.getSelectionModel().isEmpty()) {
+            if (model.getBrand().getId() != ((VehicleBrand) comboBrand.getSelectionModel().getSelectedItem()).getId()) {
+                return false;
+            }
+        }
+        return true;
+
     }
 
     @Override
