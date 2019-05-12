@@ -59,7 +59,6 @@ public abstract class UserDBHandler <U extends User> extends ModelDBHandler<U> {
     public void insert(U model) throws SQLException {
         try (AddressDBHandler addressDB = new AddressDBHandler();
              Statement statement = connection.createStatement()) {
-            addressDB.connect();
             addressDB.insert(model.getAddress());
 
             String insert = String.format("INSERT INTO user VALUES ('%s', '%s', '%s', '%s', '%s', '%s', %d)",
@@ -77,8 +76,22 @@ public abstract class UserDBHandler <U extends User> extends ModelDBHandler<U> {
     }
 
     @Override
-    public void update(U model) {
-
+    public void update(U model) throws SQLException {
+        String query = "UPDATE user SET firstName=?, lastName=?, phoneNo=?, email=? WHERE socialSecurityNo=?";
+        try (AddressDBHandler addressDBHandler = new AddressDBHandler();
+            PreparedStatement statement = connection.prepareStatement(query)) {
+            addressDBHandler.update(model.getAddress());
+            statement.setString(1, model.getFirstName());
+            statement.setString(2, model.getLastName());
+            statement.setString(3, model.getPhoneNumber());
+            statement.setString(4, model.getEmail());
+            statement.setString(5, model.getSocialSecurityNo());
+            if (statement.executeUpdate() != 1) {
+                throw new SQLException("Cannot update user: " + model.getSocialSecurityNo());
+            }
+        } catch (Exception e) {
+            throw new SQLException("Cannot update user: " + model.getSocialSecurityNo(), e);
+        }
     }
 
     @Override

@@ -1,28 +1,28 @@
 package se.hkr.Model.User;
 
 public class Member extends User {
-    private String driverLicensNo;
+    private String driversLicenseNo;
     private boolean verified;
     private String verificationCode;
 
-    public Member(String socialSecurityNo, String firstName, String lastName, String email, String phoneNumber, Address address, String password, String driverLicensNo, boolean verified) {
+    public Member(String socialSecurityNo, String firstName, String lastName, String email, String phoneNumber, Address address, String password, String driversLicenseNo, boolean verified) {
         super(socialSecurityNo, firstName, lastName, email, phoneNumber, address, password);
-        this.driverLicensNo = driverLicensNo;
+        this.driversLicenseNo = driversLicenseNo;
         this.verified = verified;
     }
 
-    public Member(String socialSecurityNo, String firstName, String lastName, String email, String phoneNumber, Address address, String driverLicensNo, boolean verified) {
+    public Member(String socialSecurityNo, String firstName, String lastName, String email, String phoneNumber, Address address, String driversLicenseNo, boolean verified) {
         super(socialSecurityNo, firstName, lastName, email, phoneNumber, address);
-        this.driverLicensNo = driverLicensNo;
+        this.driversLicenseNo = driversLicenseNo;
         this.verified = verified;
     }
 
-    public String getDriverLicensNo() {
-        return driverLicensNo;
+    public String getDriversLicenseNo() {
+        return driversLicenseNo;
     }
 
-    public void setDriverLicensNo(String driverLicensNo) {
-        this.driverLicensNo = driverLicensNo;
+    public void setDriversLicenseNo(String driversLicenseNo) {
+        this.driversLicenseNo = driversLicenseNo;
     }
 
     public boolean isVerified() {
@@ -39,5 +39,13 @@ public class Member extends User {
 
     public void setVerificationCode(String verificationCode) {
         this.verificationCode = verificationCode;
+    }
+
+    @Override
+    public boolean matches(String key) {
+        if (super.matches(key)) {
+            return true;
+        }
+        return driversLicenseNo.matches(".*"+key+".*");
     }
 }

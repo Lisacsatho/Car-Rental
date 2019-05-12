@@ -55,6 +55,10 @@ public abstract class User implements Model {
         this.lastName = lastName;
     }
 
+    public String getFullName() {
+        return String.format("%s, %s", lastName, firstName);
+    }
+
     public String getEmail() {
         return email;
     }
@@ -87,9 +91,27 @@ public abstract class User implements Model {
         this.password = password;
     }
 
+    /*
+    *   Search matches on ssn, first name, last name, email, phone and address
+    * */
     @Override
     public boolean matches(String key) {
-        // TODO
-        return false;
+        if (address.matches(key)) {
+            return true;
+        } else if (socialSecurityNo.matches(".*"+key+".*")) {
+            return true;
+        } else if (firstName.matches(".*"+key+".*") || firstName.toLowerCase().matches(".*"+key+".*")) {
+            return true;
+        } else if (lastName.matches(".*"+key+".*") || lastName.toLowerCase().matches(".*"+key+".*")) {
+            return true;
+        } else if (email.matches(".*"+key+".*") || email.toLowerCase().matches(".*"+key+".*")) {
+            return true;
+        } else if (phoneNumber.matches(".*"+key+".*")) {
+            return true;
+        } else if (String.format("%s %s", firstName, lastName).matches(".*"+key+".*") || String.format("%s %s", firstName, lastName).toLowerCase().matches(".*"+key+".*")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

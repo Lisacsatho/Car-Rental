@@ -15,7 +15,7 @@ public class MemberDBHandler extends UserDBHandler<Member> {
         super.insert(model);
         String insert = String.format("INSERT INTO member (driversLicenseNumber, socialSecurityNo, verificationCode) VALUES(?, ?, ?)");
         try (PreparedStatement statement = connection.prepareStatement(insert)) {
-            statement.setString(1, model.getDriverLicensNo());
+            statement.setString(1, model.getDriversLicenseNo());
             statement.setString(2, model.getSocialSecurityNo());
             statement.setString(3, model.getVerificationCode());
             statement.execute();
@@ -38,8 +38,18 @@ public class MemberDBHandler extends UserDBHandler<Member> {
     }
 
     @Override
-    public void update(Member model) {
-        System.out.println("Updated member!");
+    public void update(Member model) throws SQLException {
+        super.update(model);
+        String query = "UPDATE member SET driversLicenseNumber=? WHERE socialSecurityNo=?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, model.getDriversLicenseNo());
+            statement.setString(2, model.getSocialSecurityNo());
+            if (statement.executeUpdate() != 1) {
+                throw new SQLException("No user with ssn: " + model.getSocialSecurityNo());
+            }
+        } catch (Exception e) {
+            throw new SQLException("Cannot update member: " + model.getSocialSecurityNo(), e);
+        }
     }
 
     @Override
@@ -48,8 +58,13 @@ public class MemberDBHandler extends UserDBHandler<Member> {
     }
 
     @Override
-    public List<Member> readAll() {
-        return null;
+    public List<Member> readAll() throws SQLException {
+        String query = "SELECT * FROM user JOIN member ON user.socialSecurityNo=member.socialSecurityNo";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            return buildModels(statement.executeQuery());
+        } catch (Exception e) {
+            throw new SQLException("Could not read members from database.", e);
+        }
     }
 
     @Override
