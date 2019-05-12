@@ -14,7 +14,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Navigator.getInstance().setPrimaryStage(primaryStage);
 
-        Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");
+        Navigator.getInstance().navigateTo("EditMember/EditMemberView.fxml");
 
 //        Navigator.getInstance().navigateTo("AddCar/AddCarView.fxml");
 //        Navigator.getInstance().navigateTo("ViewCars/ViewCarsView.fxml");

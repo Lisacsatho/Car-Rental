@@ -5,6 +5,7 @@ import se.hkr.Database.VehicleDB.CarDBHandler;
 import se.hkr.Database.VehicleDB.VehicleDBHandler;
 import se.hkr.Database.VehicleDB.VehicleOptionDBHandler;
 import se.hkr.Model.Booking;
+import se.hkr.Model.User.Member;
 import se.hkr.Model.Vehicle.Car;
 import se.hkr.Model.Vehicle.Vehicle;
 import se.hkr.Model.Vehicle.VehicleOption;
@@ -51,6 +52,17 @@ public class BookingDBHandler extends ModelDBHandler<Booking> {
         return null;
     }
 
+    public List <Booking> readForMember(Member member) throws SQLException {
+        String query = "SELECT * FROM booking WHERE member =?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, member.getSocialSecurityNo());
+            ResultSet set = statement.executeQuery();
+            return buildModels(set);
+        } catch (Exception e) {
+            throw new SQLException("Trouble fetching booking from database.", e);
+        }
+    }
+
     @Override
     public List<Booking> buildModels(ResultSet set) throws SQLException {
         List<Booking> bookings = new ArrayList<>();
@@ -70,17 +82,5 @@ public class BookingDBHandler extends ModelDBHandler<Booking> {
     }
 
 
-    public Booking readForBooking(String key) throws SQLException {
-        String query = "SELECT * FROM booking WHERE id=?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, Integer.parseInt(key));
-            ResultSet set = statement.executeQuery();
-            if (!buildModels(set).isEmpty()) {
-                return buildModels(set).get(0);
-            }
-        } catch (Exception e) {
-            throw new SQLException("Trouble fetching booking from database.", e);
-        }
-        return null;
-    }
+
 }
