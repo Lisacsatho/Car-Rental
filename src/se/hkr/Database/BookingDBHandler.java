@@ -118,56 +118,57 @@ public class BookingDBHandler extends ModelDBHandler<Booking> {
             return buildModels(set);
         } catch (Exception e) {
             throw new SQLException("Trouble fetching booking from database.", e);
-
-            public List<Booking> readAllSimple () throws SQLException {
-                String query = "SELECT * FROM AllBookings";
-                try (PreparedStatement statement = connection.prepareStatement(query)) {
-                    return buildSimpleModels(statement.executeQuery());
-                } catch (Exception e) {
-                    throw new SQLException(e);
-                }
-            }
-
-            public List<Booking> readForMemberSimple (Member member) throws SQLException {
-                String query = "SELECT * FROM AllBookings WHERE member=?";
-                try (PreparedStatement statement = connection.prepareStatement(query)) {
-                    statement.setString(1, member.getSocialSecurityNo());
-                    return buildSimpleModels(statement.executeQuery());
-                }
-            }
-
-            @Override
-            public List<Booking> buildModels (ResultSet set) throws SQLException {
-                List<Booking> bookings = new ArrayList<>();
-                try (VehicleOptionDBHandler vehicleOptionDBHandler = new VehicleOptionDBHandler()) {
-                    while (set.next()) {
-                        Booking booking = new Booking(set.getInt("bookingId"), set.getDate("startDate"), set.getDate("endDate"), set.getDouble("totalPrice"));
-                        // It's important that the vehicles are read before the vehicle options.
-                        List<Vehicle> vehicles = VehicleDBHandler.readForBooking(booking);
-                        booking.setVehicles(vehicles);
-                        List<Pair<Vehicle, VehicleOption>> vehicleOptions = vehicleOptionDBHandler.readForBooking(booking);
-                        booking.setVehicleOptions(vehicleOptions);
-                        bookings.add(booking);
-                    }
-                } catch (Exception e) {
-                    throw new SQLException("Trouble building bookings from database.", e);
-                }
-                return bookings;
-            }
-
-            // Build simple refers to bookings that doesn't necessarily need the vehicles and vehicle options.
-            public List<Booking> buildSimpleModels (ResultSet set) throws SQLException {
-                List<Booking> bookings = new ArrayList<>();
-                try {
-                    while (set.next()) {
-                        Booking booking = new Booking(set.getInt("bookingId"), set.getDate("startDate"), set.getDate("endDate"), set.getDouble("totalPrice"));
-                        bookings.add(booking);
-                    }
-                } catch (Exception e) {
-                    throw new SQLException("Trouble building simple bookings from database.", e);
-                }
-                return bookings;
-            }
         }
     }
+
+    public List<Booking> readAllSimple() throws SQLException {
+        String query = "SELECT * FROM AllBookings";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            return buildSimpleModels(statement.executeQuery());
+        } catch (Exception e) {
+            throw new SQLException(e);
+        }
+    }
+
+    public List<Booking> readForMemberSimple(Member member) throws SQLException {
+        String query = "SELECT * FROM AllBookings WHERE member=?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, member.getSocialSecurityNo());
+            return buildSimpleModels(statement.executeQuery());
+        }
+    }
+
+    @Override
+    public List<Booking> buildModels(ResultSet set) throws SQLException {
+        List<Booking> bookings = new ArrayList<>();
+        try (VehicleOptionDBHandler vehicleOptionDBHandler = new VehicleOptionDBHandler()) {
+            while (set.next()) {
+                Booking booking = new Booking(set.getInt("bookingId"), set.getDate("startDate"), set.getDate("endDate"), set.getDouble("totalPrice"));
+                // It's important that the vehicles are read before the vehicle options.
+                List<Vehicle> vehicles = VehicleDBHandler.readForBooking(booking);
+                booking.setVehicles(vehicles);
+                List<Pair<Vehicle, VehicleOption>> vehicleOptions = vehicleOptionDBHandler.readForBooking(booking);
+                booking.setVehicleOptions(vehicleOptions);
+                bookings.add(booking);
+            }
+        } catch (Exception e) {
+            throw new SQLException("Trouble building bookings from database.", e);
+        }
+        return bookings;
+    }
+
+    // Build simple refers to bookings that doesn't necessarily need the vehicles and vehicle options.
+    public List<Booking> buildSimpleModels(ResultSet set) throws SQLException {
+        List<Booking> bookings = new ArrayList<>();
+        try {
+            while (set.next()) {
+                Booking booking = new Booking(set.getInt("bookingId"), set.getDate("startDate"), set.getDate("endDate"), set.getDouble("totalPrice"));
+                bookings.add(booking);
+            }
+        } catch (Exception e) {
+            throw new SQLException("Trouble building simple bookings from database.", e);
+        }
+        return bookings;
+    }
 }
+
