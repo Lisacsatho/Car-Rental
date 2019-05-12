@@ -2,41 +2,64 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane prefHeight="452.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ViewEmployees.ViewEmployeesView">
+<AnchorPane prefHeight="452.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ViewEmployees.ViewEmployeesController">
    <children>
-      <TableView layoutX="24.0" layoutY="72.0" prefHeight="315.0" prefWidth="384.0">
+      <TableView fx:id="tblEmployees" layoutX="24.0" layoutY="65.0" prefHeight="322.0" prefWidth="384.0">
         <columns>
-          <TableColumn prefWidth="87.0" text="SSN" />
-          <TableColumn prefWidth="113.0" text="Name" />
-            <TableColumn prefWidth="93.0" text="Role" />
-            <TableColumn prefWidth="90.0" text="Salary" />
+          <TableColumn fx:id="colSocialSecurityNo" prefWidth="102.0" text="SSN" />
+          <TableColumn fx:id="colName" prefWidth="166.0" text="Name" />
+            <TableColumn fx:id="colRole" prefWidth="115.0" text="Role" />
         </columns>
       </TableView>
-      <TextField layoutX="24.0" layoutY="32.0" prefHeight="27.0" prefWidth="305.0" promptText="Search employee" />
-      <Button layoutX="338.0" layoutY="31.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="70.0" text="Search" />
-      <TextField layoutX="427.0" layoutY="32.0" promptText="SSN" />
+      <TextField fx:id="txtFldSearch" layoutX="24.0" layoutY="32.0" prefHeight="27.0" prefWidth="305.0" promptText="Search employee" />
+      <Button fx:id="btnSearch" layoutX="338.0" layoutY="31.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="70.0" text="Search" />
+      <TextField fx:id="lblSocialSecurityNo" layoutX="427.0" layoutY="32.0" prefHeight="27.0" prefWidth="269.0" promptText="SSN" />
       <Label layoutX="430.0" layoutY="71.0" text="First name" />
       <Label layoutX="568.0" layoutY="71.0" text="Last name" />
-      <TextField layoutX="430.0" layoutY="88.0" prefHeight="27.0" prefWidth="128.0" />
-      <TextField layoutX="563.0" layoutY="88.0" prefHeight="27.0" prefWidth="128.0" />
-      <TextField layoutX="428.0" layoutY="132.0" prefHeight="27.0" prefWidth="269.0" />
+      <TextField fx:id="txtFldFirstName" layoutX="430.0" layoutY="88.0" prefHeight="27.0" prefWidth="128.0" />
+      <TextField fx:id="txtFldLastName" layoutX="569.0" layoutY="88.0" prefHeight="27.0" prefWidth="128.0" />
+      <TextField fx:id="txtFldPhoneNo" layoutX="428.0" layoutY="132.0" prefHeight="27.0" prefWidth="269.0" />
       <Label layoutX="429.0" layoutY="115.0" text="Phone number" />
       <Label layoutX="432.0" layoutY="159.0" text="Email" />
-      <TextField layoutX="428.0" layoutY="176.0" prefHeight="27.0" prefWidth="269.0" />
+      <TextField fx:id="txtFldEmail" layoutX="428.0" layoutY="176.0" prefHeight="27.0" prefWidth="269.0" />
       <Label layoutX="427.0" layoutY="205.0" text="Driver license number" />
-      <TextField layoutX="428.0" layoutY="226.0" prefHeight="27.0" prefWidth="269.0" />
+      <TextField fx:id="txtFldDriversLicenseNo" layoutX="428.0" layoutY="226.0" prefHeight="27.0" prefWidth="269.0" />
       <Label layoutX="428.0" layoutY="260.0" text="Address" />
-      <TextField layoutX="427.0" layoutY="277.0" prefHeight="27.0" prefWidth="269.0" />
+      <TextField fx:id="txtFldAddress" layoutX="427.0" layoutY="277.0" prefHeight="27.0" prefWidth="269.0" />
       <Label layoutX="430.0" layoutY="304.0" text="Zip" />
-      <TextField layoutX="429.0" layoutY="321.0" prefHeight="27.0" prefWidth="112.0" />
+      <TextField fx:id="txtFldZip" layoutX="429.0" layoutY="321.0" prefHeight="27.0" prefWidth="112.0" />
       <Label layoutX="548.0" layoutY="304.0" text="City" />
-      <TextField layoutX="547.0" layoutY="321.0" />
-      <Button layoutX="469.0" layoutY="360.0" mnemonicParsing="false" text="Edit employee information" />
+      <TextField fx:id="txtFldCity" layoutX="547.0" layoutY="321.0" />
+      <Button fx:id="btnSaveEmployee" layoutX="122.0" layoutY="394.0" mnemonicParsing="false" onAction="#btnSaveEmployeePressed" text="Save new employee information" />
+      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="708.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <TextField fx:id="txtFldSalary" layoutX="427.0" layoutY="367.0" prefHeight="27.0" prefWidth="112.0" />
+      <Label layoutX="428.0" layoutY="350.0" text="Salary" />
    </children>
 </AnchorPane>
