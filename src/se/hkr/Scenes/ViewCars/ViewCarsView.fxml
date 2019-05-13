@@ -2,6 +2,9 @@
 
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
@@ -28,14 +31,33 @@
             <TableColumn fx:id="colSuitcases" prefWidth="91.0" text="Suitcases" />
         </columns>
       </TableView>
-      <Label layoutX="305.0" layoutY="14.0" text="All cars to disposal. ">
+      <Label layoutX="305.0" layoutY="32.0" text="All cars to disposal. ">
          <font>
             <Font size="26.0" />
          </font>
       </Label>
-      <ComboBox fx:id="comboBrand" layoutX="18.0" layoutY="66.0" prefWidth="150.0" promptText="Brand" />
-      <ComboBox fx:id="comboFuelType" layoutX="205.0" layoutY="66.0" prefWidth="150.0" promptText="Fuel type" />
-      <ComboBox fx:id="comboGearBox" layoutX="376.0" layoutY="66.0" prefWidth="150.0" promptText="Gear box" />
-      <ComboBox fx:id="comboCarType" layoutX="560.0" layoutY="66.0" prefWidth="150.0" promptText="Car type" />
+      <ComboBox fx:id="comboBrand" layoutX="16.0" layoutY="78.0" prefWidth="150.0" promptText="Brand" />
+      <ComboBox fx:id="comboFuelType" layoutX="205.0" layoutY="78.0" prefWidth="150.0" promptText="Fuel type" />
+      <ComboBox fx:id="comboGearBox" layoutX="376.0" layoutY="79.0" prefWidth="150.0" promptText="Gear box" />
+      <ComboBox fx:id="comboCarType" layoutX="560.0" layoutY="78.0" prefWidth="150.0" promptText="Car type" />
+      <MenuBar prefHeight="25.0" prefWidth="732.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Navigate">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="User">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
    </children>
 </AnchorPane>
