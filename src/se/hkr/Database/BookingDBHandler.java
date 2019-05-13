@@ -35,7 +35,7 @@ public class BookingDBHandler extends ModelDBHandler<Booking> {
             statement.setDouble(1, model.getTotalPrice());
             statement.setString(2, simpleDateFormat.format(model.getStartDate()));
             statement.setString(3, simpleDateFormat.format(model.getEndDate()));
-            statement.setString(4, UserSession.getInstance().getLoggedInUser().getSocialSecurityNo());
+            statement.setString(4, UserSession.getInstance().getSessionObject().getSocialSecurityNo());
             statement.executeUpdate();
 
             String getId = "SELECT LAST_INSERT_ID() AS id";

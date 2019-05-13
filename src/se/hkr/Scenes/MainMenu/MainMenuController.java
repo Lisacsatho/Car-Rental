@@ -71,14 +71,15 @@ public class MainMenuController implements Initializable {
             Date today = new Date();
             if (startDate.after(today) && endDate.after(startDate)) {
                 BookingSession.getInstance().resetSession();
-                BookingSession.getInstance().getBooking().setStartDate(startDate);
-                BookingSession.getInstance().getBooking().setEndDate(endDate);
+                BookingSession.getInstance().getSessionObject().setStartDate(startDate);
+                BookingSession.getInstance().getSessionObject().setEndDate(endDate);
 
                 Navigator.getInstance().navigateTo("ChooseCar/ChooseCarView.fxml");
             } else {
                 Dialogue.alert("Please select valid start and ending dates.");
             }
         } catch (Exception x) {
+            x.printStackTrace();
             Dialogue.alert("Choose both starting date and returning date.");
         }
     }

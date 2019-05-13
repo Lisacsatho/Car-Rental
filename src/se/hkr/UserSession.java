@@ -4,9 +4,8 @@ import se.hkr.Model.User.Employee;
 import se.hkr.Model.User.Member;
 import se.hkr.Model.User.User;
 
-public class UserSession {
+public class UserSession extends Session<User> {
     private static UserSession ourInstance = new UserSession();
-    private User loggedInUser;
 
     public static UserSession getInstance() {
         return ourInstance;
@@ -16,32 +15,29 @@ public class UserSession {
 
     }
 
-    public User getLoggedInUser(){
-        return loggedInUser;
+    @Override
+    public void resetSession() {
+        sessionObject = null;
     }
 
     public void logIn(User user) {
-         loggedInUser = user;
-    }
-
-    public void logOut() {
-        loggedInUser = null;
+         sessionObject = user;
     }
 
     public boolean isLoggedIn() {
-        return loggedInUser != null;
+        return sessionObject != null;
     }
 
     public boolean isMember() {
         if (isLoggedIn()) {
-            return loggedInUser instanceof Member;
+            return sessionObject instanceof Member;
         }
         return false;
     }
 
     public boolean isEmployee() {
         if (isLoggedIn()) {
-            return loggedInUser instanceof Employee;
+            return sessionObject instanceof Employee;
         }
         return false;
     }
