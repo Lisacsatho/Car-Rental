@@ -47,6 +47,7 @@ public class MemberPanelController  implements Initializable {
         endDate.setPadding(insets);
         Label id = new Label("Booking id: " + booking.getId());
         id.setPadding(insets);
+        System.out.println(booking.getId());
 
         container.getChildren().addAll(id, startDate, endDate);
         container.getStyleClass().add("highlighted-button");

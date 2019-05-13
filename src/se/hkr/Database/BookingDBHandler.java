@@ -170,7 +170,7 @@ public class BookingDBHandler extends ModelDBHandler<Booking> {
     }
 
     public List<Booking> readForMemberSimple(Member member) throws SQLException {
-        String query = "SELECT * FROM AllBookings WHERE member=?";
+        String query = "SELECT * FROM booking WHERE member=?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, member.getSocialSecurityNo());
             return buildSimpleModels(statement.executeQuery());
