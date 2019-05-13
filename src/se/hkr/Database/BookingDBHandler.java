@@ -61,7 +61,46 @@ public class BookingDBHandler extends ModelDBHandler<Booking> {
 
     @Override
     public void update(Booking model) throws SQLException {
+        String query = "UPDATE booking SET totalPrice=? WHERE id=?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setDouble(1, model.getTotalPrice());
+            statement.setInt(2, model.getId());
+            if (statement.executeUpdate() < 1) {
+                throw new SQLException("No booking found with id: " + model.getId());
+            }
+        } catch (Exception e) {
+            throw new SQLException("Could not update booking.", e);
+        }
+    }
 
+    public void removeVehicleFromBooking(Vehicle vehicle, Booking model) throws SQLException {
+        String removeVehicle = "DELETE FROM bookinghasvehicle WHERE vehicleId=? AND bookingId=?";
+        String removeVehicleOption = "DELETE FROM bookinghasvehicleoption WHERE vehicleId=? AND bookingId=?";
+        try (PreparedStatement removeVehicleStatement = connection.prepareStatement(removeVehicle);
+            PreparedStatement removeVehicleOptionStatement = connection.prepareStatement(removeVehicleOption)) {
+            removeVehicleStatement.setInt(1, vehicle.getId());
+            removeVehicleStatement.setInt(2, model.getId());
+            removeVehicleOptionStatement.setInt(1, vehicle.getId());
+            removeVehicleOptionStatement.setInt(2, model.getId());
+            removeVehicleStatement.executeUpdate();
+            removeVehicleOptionStatement.executeUpdate();
+        } catch (Exception e) {
+            throw new SQLException("Could not remove vehicle from booking", e);
+        }
+    }
+
+    public void removeVehicleOptionFromBooking(Pair<Vehicle, VehicleOption> vehicleOption, Booking model) throws SQLException {
+        String removeVehicleOption = "DELETE FROM bookinghasvehicleoption WHERE vehicleOptionId=? AND bookingId=? AND vehicleId=?";
+        try (PreparedStatement statement = connection.prepareStatement(removeVehicleOption)) {
+            statement.setInt(1, vehicleOption.getValue().getId());
+            statement.setInt(2, model.getId());
+            statement.setInt(3, vehicleOption.getKey().getId());
+            if (statement.executeUpdate() < 1) {
+                throw new SQLException(String.format("No vehicle option %d for booking %d and vehicle %d", vehicleOption.getValue().getId(), model.getId(), vehicleOption.getKey().getId()));
+            }
+        } catch (Exception e) {
+
+        }
     }
 
     @Override
@@ -111,7 +150,7 @@ public class BookingDBHandler extends ModelDBHandler<Booking> {
     }
 
     public List<Booking> readAllSimple() throws SQLException {
-        String query = "SELECT * FROM AllBookings";
+        String query = "SELECT * FROM booking";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             return buildSimpleModels(statement.executeQuery());
         } catch (Exception e) {
@@ -132,7 +171,7 @@ public class BookingDBHandler extends ModelDBHandler<Booking> {
         List<Booking> bookings = new ArrayList<>();
         try (VehicleOptionDBHandler vehicleOptionDBHandler = new VehicleOptionDBHandler()) {
             while (set.next()) {
-                Booking booking = new Booking(set.getInt("bookingId"), set.getDate("startDate"), set.getDate("endDate"), set.getDouble("totalPrice"));
+                Booking booking = new Booking(set.getInt("bookingId"), set.getDate("startDate"), set.getDate("endDate"), set.getDouble("totalPrice"), set.getString("member"));
                 // It's important that the vehicles are read before the vehicle options.
                 List<Vehicle> vehicles = VehicleDBHandler.readForBooking(booking);
                 booking.setVehicles(vehicles);
@@ -151,7 +190,7 @@ public class BookingDBHandler extends ModelDBHandler<Booking> {
         List<Booking> bookings = new ArrayList<>();
         try {
             while (set.next()) {
-                Booking booking = new Booking(set.getInt("bookingId"), set.getDate("startDate"), set.getDate("endDate"), set.getDouble("totalPrice"));
+                Booking booking = new Booking(set.getInt("id"), set.getDate("startDate"), set.getDate("endDate"), set.getDouble("totalPrice"), set.getString("member"));
                 bookings.add(booking);
             }
         } catch (Exception e) {
