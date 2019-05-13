@@ -1,5 +1,6 @@
 package se.hkr.Database.VehicleDB;
 
+import javafx.util.Pair;
 import se.hkr.Database.ModelDBHandler;
 import se.hkr.Model.Booking;
 import se.hkr.Model.Vehicle.Vehicle;
@@ -58,15 +59,39 @@ public class VehicleOptionDBHandler extends ModelDBHandler<VehicleOption> {
         }
     }
 
-    public List<VehicleOption> readForBooking(Booking booking) throws SQLException {
-        String query = "SELECT * FROM vehicleoption JOIN bookinghasvehicleoption ON vehicleoption.id=bookinghasvehicleoption.vehicleOptionId WHERE vehicleoption.id=?";
+    public List<Pair<Vehicle, VehicleOption>> readForBooking(Booking booking) throws SQLException {
+        List<Pair<Vehicle, VehicleOption>> vehicleOptions = new ArrayList<>();
+        String query = "SELECT vehicleoption.id id, vehicleoption.name name, vehicleoption.price price, vehicleoption.description description, vehicle.* FROM vehicleoption JOIN bookinghasvehicleoption ON vehicleoption.id = bookinghasvehicleoption.vehicleOptionId JOIN vehicle ON vehicle.id=bookinghasvehicleoption.vehicleId WHERE bookinghasvehicleoption.bookingId=?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, booking.getId());
             ResultSet set = statement.executeQuery();
-            return buildModels(set);
+            return buildForBooking(set, booking);
         } catch (SQLException e) {
             throw new SQLException("Trouble fetching vehicle options for booking: " + booking.getId(), e);
         }
+    }
+
+    public List<Pair<Vehicle, VehicleOption>> buildForBooking(ResultSet set, Booking booking) throws SQLException {
+        List<Pair<Vehicle, VehicleOption>> vehicleOptions = new ArrayList<>();
+        try {
+            while (set.next()) {
+                VehicleOption vehicleOption = new VehicleOption(set.getInt("id"), set.getString("name"), set.getString("description"), set.getDouble("price"));
+                Vehicle vehicle = null;
+                for (Vehicle v : booking.getVehicles()) {
+                    if (v.getId() == set.getInt("vehicle.id")) {
+                        vehicle = v;
+                    }
+                }
+                if (vehicle != null) {
+                    vehicleOptions.add(new Pair<Vehicle, VehicleOption>(vehicle, vehicleOption));
+                } else {
+                    throw new SQLException("Relationship error between vehicles and bookings.");
+                }
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Trouble building vehicle options", e);
+        }
+        return vehicleOptions;
     }
 
     @Override

@@ -26,22 +26,29 @@
             <Font name="System Italic" size="12.0" />
          </font>
       </TextField>
-      <TextField fx:id="txtFldPhone" layoutX="413.0" layoutY="132.0" promptText="Phone number" styleClass="drop-shadow" />
-      <TextField fx:id="txtFldAddress" layoutX="213.0" layoutY="171.0" prefHeight="25.0" prefWidth="350.0" promptText="Address" styleClass="drop-shadow">
+      <TextField fx:id="txtFldPhone" layoutX="212.0" layoutY="172.0" promptText="Phone number" styleClass="drop-shadow" />
+      <TextField fx:id="txtFldAddress" layoutX="212.0" layoutY="215.0" prefHeight="27.0" prefWidth="351.0" promptText="Address" styleClass="drop-shadow">
          <font>
             <Font name="System Italic" size="12.0" />
          </font>
       </TextField>
       <TextField fx:id="txtFldEmail" layoutX="413.0" layoutY="50.0" promptText="Email" styleClass="drop-shadow" />
-      <TextField fx:id="txtFldPassword" layoutX="413.0" layoutY="90.0" promptText="Password" styleClass="drop-shadow" />
+      <TextField fx:id="txtFldPassword" layoutX="413.0" layoutY="90.0" promptText="Old password" styleClass="drop-shadow" />
       <Label layoutX="375.0" layoutY="27.0" />
-      <TextField fx:id="txtFldZip" layoutX="212.0" layoutY="213.0" promptText="Zip" styleClass="drop-shadow" />
-      <TextField fx:id="txtFldCity" layoutX="413.0" layoutY="213.0" promptText="City" styleClass="drop-shadow" />
-      <Label layoutX="300.0" layoutY="16.0" text="Account information" textFill="#111111">
+      <TextField fx:id="txtFldZip" layoutX="212.0" layoutY="262.0" promptText="Zip" styleClass="drop-shadow" />
+      <TextField fx:id="txtFldCity" layoutX="413.0" layoutY="262.0" promptText="City" styleClass="drop-shadow" />
+      <Label layoutX="251.0" layoutY="12.0" text="Edit / update your information." textFill="#111111">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="btnSave" layoutX="512.0" layoutY="264.0" mnemonicParsing="false" onAction="#btnSavePressed" prefHeight="27.0" prefWidth="55.0" styleClass="drop-shadow" text="Save" />
+      <Button fx:id="btnSave" layoutX="508.0" layoutY="342.0" mnemonicParsing="false" onAction="#btnSavePressed" prefHeight="27.0" prefWidth="55.0" styleClass="drop-shadow" text="Save" />
+      <Button fx:id="btnGoBack" layoutX="213.0" layoutY="342.0" mnemonicParsing="false" onAction="#btnGoBackPressed" styleClass="drop-shadow" text="Go back" />
+      <TextField layoutX="414.0" layoutY="133.0" promptText="New password" styleClass="drop-shadow">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </TextField>
+      <TextField layoutX="414.0" layoutY="173.0" promptText="Repeat new password" styleClass="drop-shadow" />
    </children>
 </AnchorPane>

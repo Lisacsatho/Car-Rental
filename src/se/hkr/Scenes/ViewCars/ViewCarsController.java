@@ -7,9 +7,11 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import se.hkr.ComboBoxButtonCell;
 import se.hkr.Database.VehicleDB.*;
 import se.hkr.Model.Vehicle.*;
 import se.hkr.Scenes.ReadController;
@@ -73,15 +75,19 @@ public class ViewCarsController implements ReadController<Vehicle>, Initializabl
 
             ObservableList<FuelType> fuelTypes = FXCollections.observableArrayList(fuelTypeDBHandler.readAll());
             comboFuelType.setItems(fuelTypes);
+            comboFuelType.setButtonCell(new ComboBoxButtonCell("Fuel type"));
 
             ObservableList<GearBox> gearBoxes = FXCollections.observableArrayList(gearBoxDBHandler.readAll());
             comboGearBox.setItems(gearBoxes);
+            comboGearBox.setButtonCell(new ComboBoxButtonCell("Gear box"));
 
             ObservableList<CarType> carTypes = FXCollections.observableArrayList(carTypeDBHandler.readAll());
             comboCarType.setItems(carTypes);
+            comboCarType.setButtonCell(new ComboBoxButtonCell("Car type"));
 
             ObservableList<VehicleBrand> vehicleBrands = FXCollections.observableArrayList(vehicleBrandDBHandler.readAll());
             comboBrand.setItems(vehicleBrands);
+            comboBrand.setButtonCell(new ComboBoxButtonCell("Brand"));
 
             FilteredList<Car> filteredData = new FilteredList<>(data, c -> true);
             comboBrand.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -104,6 +110,14 @@ public class ViewCarsController implements ReadController<Vehicle>, Initializabl
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void btnResetFilterPressed() {
+        comboBrand.getSelectionModel().clearSelection();
+        comboCarType.getSelectionModel().clearSelection();
+        comboFuelType.getSelectionModel().clearSelection();
+        comboGearBox.getSelectionModel().clearSelection();
     }
 
     @Override

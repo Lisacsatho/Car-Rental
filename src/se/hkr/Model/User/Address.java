@@ -53,8 +53,19 @@ public class Address implements Model {
         this.state = state;
     }
 
+    /*
+    *   Searches for street, zip and state
+    * */
     @Override
     public boolean matches(String key) {
-        return false;
+        if (street.matches(".*"+key+".*") || street.toLowerCase().matches(".*"+key+".*")) {
+            return true;
+        } else if (zip.matches(".*"+key+".*")) {
+            return true;
+        } else if (state.matches(".*"+key+".*") || state.toLowerCase().matches(".*"+key+".*")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

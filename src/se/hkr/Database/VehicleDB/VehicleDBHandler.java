@@ -36,15 +36,23 @@ public abstract class VehicleDBHandler <V extends Vehicle> extends ModelDBHandle
     public static List<Vehicle> readForBooking(Booking booking) throws SQLException {
         List<Vehicle> vehicles = new ArrayList<>();
         try (CarDBHandler carDBHandler = new CarDBHandler()) {
-            vehicles.addAll(carDBHandler.readForBooking(booking));
+            vehicles.addAll(carDBHandler.readForBookingSpecific(booking));
         } catch (Exception e) {
             throw new SQLException("Trouble reading vehicles for booking.", e);
         }
         return vehicles;
     }
 
+    public static Vehicle readAbstractByPrimaryKey(String key) throws SQLException {
+        try (CarDBHandler carDBHandler = new CarDBHandler()) {
+            return carDBHandler.readByPrimaryKey(key);
+        } catch (Exception e) {
+            throw new SQLException("Could not read abstract vehicle", e);
+        }
+    }
+
     // come up with a better name for abstract method.
-    public abstract List<V> readForBookingSpecific(Booking booking);
+    public abstract List<V> readForBookingSpecific(Booking booking) throws SQLException;
 
     @Override
     public void insert(V model) throws SQLException {
@@ -80,5 +88,9 @@ public abstract class VehicleDBHandler <V extends Vehicle> extends ModelDBHandle
     @Override
     public void delete(V model) throws SQLException {
 
+    }
+
+    public static Vehicle buildSingle(ResultSet set) {
+        return CarDBHandler.buildSingle(set);
     }
 }

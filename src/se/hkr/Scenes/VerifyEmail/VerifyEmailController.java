@@ -8,12 +8,10 @@ import javafx.scene.control.TextField;
 import se.hkr.Database.UserDB.MemberDBHandler;
 import se.hkr.Dialogue;
 import se.hkr.Model.User.Member;
-import se.hkr.Model.User.User;
 import se.hkr.Navigator;
 import se.hkr.UserSession;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class VerifyEmailController implements Initializable {
@@ -36,9 +34,9 @@ public class VerifyEmailController implements Initializable {
     private void buttonConfirmPressed(ActionEvent event) {
         try (MemberDBHandler memberDBHandler = new MemberDBHandler()) {
             if (memberDBHandler.verifyEmail((Member) UserSession.getInstance().getLoggedInUser(), txtFldCode.getText().trim())) {
-                Dialogue.alert("Email verified!");
                 ((Member) UserSession.getInstance().getLoggedInUser()).setVerified(true);
-                Navigator.getInstance().navigateToPanel();
+                Dialogue.alert("Email verified!");
+                Navigator.getInstance().goBack();
             } else {
                 Dialogue.alert("Wrong code.");
             }

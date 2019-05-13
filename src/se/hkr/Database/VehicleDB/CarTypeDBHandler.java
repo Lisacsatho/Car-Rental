@@ -60,7 +60,7 @@ public class CarTypeDBHandler extends ModelDBHandler<CarType> {
         return carTypes;
     }
 
-    public CarType buildModelWithColumnNames(ResultSet set, String... columnNames) throws SQLException {
+    public static CarType buildModelWithColumnNames(ResultSet set, String... columnNames) throws SQLException {
         CarType carType = null;
         try {
             carType = new CarType(set.getInt(columnNames[0]), set.getString(columnNames[1]));

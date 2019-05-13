@@ -23,7 +23,7 @@
          </font></Label>
       <Button fx:id="buttonSave" layoutX="370.0" layoutY="273.0" mnemonicParsing="false" onAction="#buttonAddPressed" prefHeight="27.0" prefWidth="84.0" styleClass="drop-shadow" text="Save" />
       <TextField fx:id="textModel" layoutX="25.0" layoutY="67.0" prefHeight="27.0" prefWidth="159.0" promptText="Model" />
-      <TextField fx:id="textYear" layoutX="25.0" layoutY="101.0" prefHeight="27.0" prefWidth="159.0" promptText="¨" text="Year" />
+      <TextField fx:id="textYear" layoutX="25.0" layoutY="101.0" prefHeight="27.0" prefWidth="159.0" promptText="Year" />
       <ComboBox fx:id="comboBrand" layoutX="198.0" layoutY="67.0" prefHeight="25.0" prefWidth="159.0" promptText="Brand" />
       <ComboBox fx:id="comboFuelType" layoutX="25.0" layoutY="137.0" prefHeight="27.0" prefWidth="159.0" promptText="FuelType" />
       <ComboBox fx:id="comboGearBox" layoutX="198.0" layoutY="101.0" prefHeight="25.0" prefWidth="159.0" promptText="GearBox" />

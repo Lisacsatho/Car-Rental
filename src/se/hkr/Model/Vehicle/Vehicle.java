@@ -142,4 +142,9 @@ public abstract class Vehicle implements Model {
         // TODO
         return false;
     }
+
+    @Override
+    public String toString() {
+        return modelName;
+    }
 }

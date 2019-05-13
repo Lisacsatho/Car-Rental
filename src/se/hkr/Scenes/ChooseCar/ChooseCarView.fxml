@@ -26,7 +26,7 @@
         <Polygon fill="WHITE" layoutX="64.0" layoutY="248.0" points="227.0, -248.0, 226.0, 160.0, -144.5, -301.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="drop-shadow" />
         <AnchorPane layoutX="290.0" prefHeight="408.0" prefWidth="461.0" style="-fx-background-color: #fff;">
             <children>
-                <TableView fx:id="tblCars" layoutX="7.0" layoutY="104.0" prefHeight="255.0" prefWidth="243.0">
+                <TableView fx:id="tblAvailableVehicles" layoutX="7.0" layoutY="104.0" prefHeight="255.0" prefWidth="243.0">
                     <columns>
                         <TableColumn fx:id="colBrand" prefWidth="75.0" text="Brand" />
                         <TableColumn fx:id="colModel" prefWidth="82.0" text="Model" />
@@ -97,7 +97,7 @@
             <children>
 
 
-                <TableView fx:id="tblBookedCars" layoutX="14.0" layoutY="42.0" prefHeight="183.0" prefWidth="172.0">
+                <TableView fx:id="tblBookedVehicles" layoutX="14.0" layoutY="42.0" prefHeight="183.0" prefWidth="172.0">
                     <columns>
                         <TableColumn fx:id="colBookingBrand" prefWidth="85.0" text="Brand" />
                         <TableColumn fx:id="colBookingModel" prefWidth="86.0" text="Model" />

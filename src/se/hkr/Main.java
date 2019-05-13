@@ -2,9 +2,15 @@ package se.hkr;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import se.hkr.Database.BookingDBHandler;
+import se.hkr.Database.VehicleDB.CarDBHandler;
 import se.hkr.Email.Email;
 import se.hkr.Database.Database;
 import se.hkr.Database.DatabaseConnection;
+import se.hkr.Model.Booking;
+import se.hkr.Model.Vehicle.Car;
+
+import java.util.List;
 
 
 public class Main extends Application {
@@ -14,13 +20,16 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Navigator.getInstance().setPrimaryStage(primaryStage);
-        
+
 
 //        Navigator.getInstance().navigateTo("AddCar/AddCarView.fxml");
 //        Navigator.getInstance().navigateTo("ViewCars/ViewCarsView.fxml");
 
         
-        primaryStage.show();
+
+        Navigator.getInstance().navigateTo("ViewCars/ViewCarsView.fxml");
+
+  // primaryStage.show();
    //  Email email = new Email("helgefreiman@hotmail.com", "hey dickhead", "Hey you. Där sitter du i en grå soffa och ser lagom trött, sliten möjligen bakis ut? KAN du ha vart på BG igår? hmmmm... ett tips. Gå och lägg dig breve din heta BF ;););) ");
   //    email.send();
 

@@ -16,7 +16,7 @@ public class UserSession {
 
     }
 
-    public User getLoggedInUser() {
+    public User getLoggedInUser(){
         return loggedInUser;
     }
 

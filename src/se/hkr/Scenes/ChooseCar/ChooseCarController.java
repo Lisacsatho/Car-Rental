@@ -2,113 +2,118 @@ package se.hkr.Scenes.ChooseCar;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import se.hkr.BookingSession;
+import se.hkr.Database.VehicleDB.CarTypeDBHandler;
+import se.hkr.Database.VehicleDB.GearBoxDBHandler;
+import se.hkr.Database.VehicleDB.VehicleBrandDBHandler;
 import se.hkr.Database.VehicleDB.VehicleDBHandler;
 import se.hkr.Dialogue;
-import se.hkr.Model.Vehicle.Car;
-import se.hkr.Model.Vehicle.Vehicle;
+import se.hkr.Model.Vehicle.*;
 import se.hkr.Navigator;
 import se.hkr.Scenes.ReadController;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
 
 public class ChooseCarController implements ReadController<Vehicle>, Initializable {
 
-    private ObservableList<Car> data;
-    private ObservableList<Car> bookedCars;
+    private ObservableList<Vehicle> data;
+    private ObservableList<Vehicle> bookedVehicles;
 
     @FXML
-    private TableView<Car> tblCars,
-                           tblBookedCars;
+    private TableView<Vehicle> tblAvailableVehicles,
+            tblBookedVehicles;
 
     @FXML
     private TableColumn colBrand,
-                        colModel,
-                        colPrice,
-                        colBookingBrand,
-                        colBookingModel;
+            colModel,
+            colPrice,
+            colBookingBrand,
+            colBookingModel;
     @FXML
     private TextField carPrices;
 
     @FXML
-    private ComboBox comboBrand,
-                     comboCarType,
-                     comboGearBox,
-                     comboPassengers;
+    private ComboBox
+            comboGearBox,
+            comboBrand,
+            comboPassengers,
+            comboCarType;
 
     @FXML
     private Label lblGearBox,
-                  lblFuelType,
-                  lblPassengers,
-                  lblSuitcases,
-                  lblDescription,
-                  lblCarName;
+            lblFuelType,
+            lblPassengers,
+            lblSuitcases,
+            lblDescription,
+            lblCarName;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         Date startDate = BookingSession.getInstance().getBooking().getStartDate();
         Date endDate = BookingSession.getInstance().getBooking().getEndDate();
 
         try {
-            data = FXCollections.observableArrayList((List<Car>) VehicleDBHandler.readAvailableVehicles(startDate, endDate));
-            bookedCars = FXCollections.observableArrayList();
+            data = FXCollections.observableArrayList(VehicleDBHandler.readAvailableVehicles(startDate, endDate));
+            bookedVehicles = FXCollections.observableArrayList();
 
-            colBrand.setCellValueFactory(new PropertyValueFactory<Car, String>("brand"));
-            colModel.setCellValueFactory(new PropertyValueFactory<Car, String>("modelName"));
-            colPrice.setCellValueFactory(new PropertyValueFactory<Car, String>("basePrice"));
-            colBookingBrand.setCellValueFactory(new PropertyValueFactory<Car, String>("brand"));
-            colBookingModel.setCellValueFactory(new PropertyValueFactory<Car, String>("modelName"));
+            colBrand.setCellValueFactory(new PropertyValueFactory<Vehicle, String>("brand"));
+            colModel.setCellValueFactory(new PropertyValueFactory<Vehicle, String>("modelName"));
+            colPrice.setCellValueFactory(new PropertyValueFactory<Vehicle, String>("basePrice"));
+            colBookingBrand.setCellValueFactory(new PropertyValueFactory<Vehicle, String>("brand"));
+            colBookingModel.setCellValueFactory(new PropertyValueFactory<Vehicle, String>("modelName"));
 
-            tblCars.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            tblAvailableVehicles.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null) {
                     showCarInformation(newValue);
                 }
             });
 
-            tblCars.setItems(data);
-            tblBookedCars.setItems(bookedCars);
+            tblBookedVehicles.setItems(bookedVehicles);
         } catch (SQLException e) {
             // Placeholder
             System.out.println("Database interaction failed, please try again later.");
         }
+
+        showComboData();
     }
 
     public void bookPressed() {
-        Car car = tblCars.getSelectionModel().getSelectedItem();
+        Vehicle vehicle = tblAvailableVehicles.getSelectionModel().getSelectedItem();
         try {
-            if (tblCars.getSelectionModel().getSelectedItem() != null) {
-                data.remove(car);
-                bookedCars.add(car);
+            if (tblAvailableVehicles.getSelectionModel().getSelectedItem() != null) {
+                data.remove(vehicle);
+                bookedVehicles.add(vehicle);
+                BookingSession.getInstance().getBooking().setVehicles(bookedVehicles);
                 carPrices.setText("$" + calculateTotalPrice());
             }
         } catch (Exception x) {
-            x.printStackTrace();
+            Dialogue.alert("Something went wrong. Check the information.");
         }
     }
 
     public void removeBookedCar() {
         try {
-            if (tblBookedCars.getSelectionModel().getSelectedItem() != null) {
-                Car car = tblBookedCars.getSelectionModel().getSelectedItem();
-                bookedCars.remove(car);
-                data.add(car);
+            if (tblBookedVehicles.getSelectionModel().getSelectedItem() != null) {
+                Vehicle vehicle = tblBookedVehicles.getSelectionModel().getSelectedItem();
+                bookedVehicles.remove(vehicle);
+                data.add(vehicle);
+                BookingSession.getInstance().getBooking().setVehicles(bookedVehicles);
                 carPrices.setText("$" + calculateTotalPrice());
             }
         } catch (Exception x) {
-            x.printStackTrace();
+            Dialogue.alert("Please check your information. Something went wrong.");
         }
     }
 
@@ -119,8 +124,8 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
             long diff = endDate.getTime() - startDate.getTime();
             long days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
             double basePrices = 0.0;
-            for (Car car : bookedCars) {
-                basePrices += car.getBasePrice();
+            for (Vehicle vehicle : bookedVehicles) {
+                basePrices += vehicle.getBasePrice();
             }
             return basePrices * days;
         } catch (Exception x) {
@@ -131,7 +136,7 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
 
     private void showCarInformation(Vehicle vehicle) {
         final String GEARBOX_PREFIX = "Gear box: ";
-        final String FUELTYPE_PREFIX  = "Fuel type box: ";
+        final String FUELTYPE_PREFIX = "Fuel type box: ";
         final String PASSENGERS_PREFIX = "Passengers: ";
         final String SUITCASES_PREFIX = "Suitcases: ";
 
@@ -143,12 +148,13 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
         if (vehicle instanceof Car) {
             lblSuitcases.setText(SUITCASES_PREFIX + ((Car) vehicle).getSuitcases());
         }
+
     }
 
     @FXML
     private void buttonNextPressed(ActionEvent event) {
-        if (!bookedCars.isEmpty()) {
-            BookingSession.getInstance().getBooking().setVehicles(new ArrayList<>(bookedCars));
+        if (!bookedVehicles.isEmpty()) {
+            BookingSession.getInstance().getBooking().setVehicles(bookedVehicles);
             BookingSession.getInstance().getBooking().setTotalPrice(calculateTotalPrice());
             Navigator.getInstance().navigateTo("ChooseExtras/ChooseExtrasView.fxml");
         } else {
@@ -162,9 +168,64 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
         Navigator.getInstance().goBack();
     }
 
+
+    public void showComboData() {
+
+        try (GearBoxDBHandler gearBoxDBHandler = new GearBoxDBHandler(); VehicleBrandDBHandler vehicleBrandDBHandler = new VehicleBrandDBHandler(); CarTypeDBHandler carTypeDBHandler = new CarTypeDBHandler()) {
+
+            ObservableList<GearBox> gearBoxes = FXCollections.observableArrayList(gearBoxDBHandler.readAll());
+            comboGearBox.setItems(gearBoxes);
+            ObservableList<VehicleBrand> vehicleBrands = FXCollections.observableArrayList(vehicleBrandDBHandler.readAll());
+            comboBrand.setItems(vehicleBrands);
+            ObservableList<Integer> passengers = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7);
+            comboPassengers.setItems(passengers);
+            ObservableList<CarType> carTypes = FXCollections.observableArrayList(carTypeDBHandler.readAll());
+            comboCarType.setItems(carTypes);
+
+            FilteredList<Vehicle> vehicles = new FilteredList<>(data, c -> true);
+            comboGearBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> vehicles.setPredicate(vehicle -> filter(vehicle)));
+
+            comboBrand.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> vehicles.setPredicate(vehicle -> filter(vehicle)));
+
+            comboPassengers.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> vehicles.setPredicate(vehicle -> filter(vehicle)));
+
+            comboCarType.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> vehicles.setPredicate(vehicle -> filter(vehicle)));
+
+            SortedList<Vehicle> sortedData = new SortedList(vehicles);
+            sortedData.comparatorProperty().bind(tblAvailableVehicles.comparatorProperty());
+            tblAvailableVehicles.setItems(sortedData);
+
+        } catch (Exception x) {
+            x.printStackTrace();
+        }
+    }
+
     @Override
     public boolean filter(Vehicle model) {
-        return false;
+        if (!comboGearBox.getSelectionModel().isEmpty()) {
+            if (model.getGearBox().getId() != ((GearBox)comboGearBox.getSelectionModel().getSelectedItem()).getId()) {
+                return false;
+            }
+        }
+        if (!comboPassengers.getSelectionModel().isEmpty()) {
+            if (model.getPassengers() != ((Integer)comboPassengers.getSelectionModel().getSelectedItem())) {
+                return false;
+            }
+        }
+        if (!comboCarType.getSelectionModel().isEmpty()) {
+            if (model instanceof Car) {
+                if (((Car) model).getCarType().getId() != ((CarType) comboCarType.getSelectionModel().getSelectedItem()).getId()) {
+                    return false;
+                }
+            }
+        }
+        if (!comboBrand.getSelectionModel().isEmpty()) {
+            if (model.getBrand().getId() != ((VehicleBrand) comboBrand.getSelectionModel().getSelectedItem()).getId()) {
+                return false;
+            }
+        }
+        return true;
+
     }
 
     @Override

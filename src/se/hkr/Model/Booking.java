@@ -1,5 +1,6 @@
 package se.hkr.Model;
 
+import javafx.util.Pair;
 import se.hkr.Model.Vehicle.Vehicle;
 import se.hkr.Model.Vehicle.VehicleOption;
 
@@ -11,15 +12,17 @@ public class Booking implements Model {
     private Date startDate;
     private Date endDate;
     private double totalPrice;
+    private String member;
 
-    private List<VehicleOption> vehicleOptions;
+    private List<Pair<Vehicle, VehicleOption>> vehicleOptions;
     private List<Vehicle> vehicles;
 
-    public Booking(int id, Date startDate, Date endDate, double totalPrice) {
+    public Booking(int id, Date startDate, Date endDate, double totalPrice, String member) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
         this.totalPrice = totalPrice;
+        this.member = member;
     }
 
     public Booking() {
@@ -58,11 +61,11 @@ public class Booking implements Model {
         this.totalPrice = totalPrice;
     }
 
-    public List<VehicleOption> getVehicleOptions() {
+    public List<Pair<Vehicle, VehicleOption>> getVehicleOptions() {
         return vehicleOptions;
     }
 
-    public void setVehicleOptions(List<VehicleOption> vehicleOptions) {
+    public void setVehicleOptions(List<Pair<Vehicle, VehicleOption>> vehicleOptions) {
         this.vehicleOptions = vehicleOptions;
     }
 
@@ -74,10 +77,23 @@ public class Booking implements Model {
         this.vehicles = vehicles;
     }
 
+    public String getMember() {
+        return member;
+    }
+
+    public void setMember(String member) {
+        this.member = member;
+    }
+
     @Override
     public boolean matches(String key) {
-        // TODO: Specify search algorithm
-        return false;
+        if (Integer.toString(id).equals(key)) {
+            return true;
+        } else if (member.matches(".*"+key+".*")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 

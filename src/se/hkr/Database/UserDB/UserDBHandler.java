@@ -7,6 +7,7 @@ import se.hkr.Model.User.Member;
 import se.hkr.Model.User.User;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -36,6 +37,20 @@ public abstract class UserDBHandler <U extends User> extends ModelDBHandler<U> {
         return null;
     }
 
+    public boolean userExists(String socialSecurityNo) throws SQLException {
+        String query = "SELECT * FROM user WHERE socialSecurityNo=?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, socialSecurityNo);
+            ResultSet set = statement.executeQuery();
+            while (set.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+            throw new SQLException(e);
+        }
+        return false;
+    }
+
     protected abstract boolean authenticateUser(String email, String hashedPassword);
 
     protected abstract U readByEmail(String email) throws SQLException;
@@ -44,7 +59,6 @@ public abstract class UserDBHandler <U extends User> extends ModelDBHandler<U> {
     public void insert(U model) throws SQLException {
         try (AddressDBHandler addressDB = new AddressDBHandler();
              Statement statement = connection.createStatement()) {
-            addressDB.connect();
             addressDB.insert(model.getAddress());
 
             String insert = String.format("INSERT INTO user VALUES ('%s', '%s', '%s', '%s', '%s', '%s', %d)",
@@ -62,8 +76,22 @@ public abstract class UserDBHandler <U extends User> extends ModelDBHandler<U> {
     }
 
     @Override
-    public void update(U model) {
-
+    public void update(U model) throws SQLException {
+        String query = "UPDATE user SET firstName=?, lastName=?, phoneNo=?, email=? WHERE socialSecurityNo=?";
+        try (AddressDBHandler addressDBHandler = new AddressDBHandler();
+            PreparedStatement statement = connection.prepareStatement(query)) {
+            addressDBHandler.update(model.getAddress());
+            statement.setString(1, model.getFirstName());
+            statement.setString(2, model.getLastName());
+            statement.setString(3, model.getPhoneNumber());
+            statement.setString(4, model.getEmail());
+            statement.setString(5, model.getSocialSecurityNo());
+            if (statement.executeUpdate() != 1) {
+                throw new SQLException("Cannot update user: " + model.getSocialSecurityNo());
+            }
+        } catch (Exception e) {
+            throw new SQLException("Cannot update user: " + model.getSocialSecurityNo(), e);
+        }
     }
 
     @Override
