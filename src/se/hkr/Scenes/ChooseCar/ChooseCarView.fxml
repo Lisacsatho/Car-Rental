@@ -37,10 +37,15 @@
                 <ComboBox fx:id="comboCarType" layoutX="134.0" layoutY="71.0" prefHeight="27.0" prefWidth="116.0" promptText="Vehicle type" />
                 <ComboBox fx:id="comboGearBox" layoutX="8.0" layoutY="36.0" prefHeight="27.0" prefWidth="116.0" promptText="Gearbox" />
                 <ComboBox fx:id="comboPassengers" layoutX="8.0" layoutY="71.0" prefHeight="27.0" prefWidth="116.0" promptText="Passengers" />
+<<<<<<< HEAD
+            <Button fx:id="btnResetFilter" layoutX="14.0" layoutY="367.0" mnemonicParsing="false" onAction="#resetFilter" prefHeight="27.0" prefWidth="104.0" text="Reset Filter" />
+=======
+            <Button fx:id="btnResetFilter" layoutX="19.0" layoutY="367.0" mnemonicParsing="false" onAction="#resetFilter" prefHeight="27.0" prefWidth="104.0" text="Reset filter" />
+>>>>>>> TobzkiFilter
             </children>
         </AnchorPane>
 
-        <Button fx:id="book" layoutX="296.0" layoutY="365.0" mnemonicParsing="false" onAction="#bookPressed" prefHeight="29.0" prefWidth="243.0" styleClass="highlighted-button" text="Book" />
+        <Button fx:id="book" layoutX="423.0" layoutY="365.0" mnemonicParsing="false" onAction="#bookPressed" prefHeight="29.0" prefWidth="116.0" styleClass="highlighted-button" text="Book" />
         <Label fx:id="lblCarName" layoutX="30.0" layoutY="38.0" prefHeight="23.0" prefWidth="150.0" text="Car information" textFill="#141414">
             <font>
                 <Font size="18.0" />
