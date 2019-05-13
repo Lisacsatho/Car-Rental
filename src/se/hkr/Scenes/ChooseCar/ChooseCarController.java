@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import se.hkr.BookingSession;
+import se.hkr.ComboBoxButtonCell;
 import se.hkr.Database.VehicleDB.CarTypeDBHandler;
 import se.hkr.Database.VehicleDB.GearBoxDBHandler;
 import se.hkr.Database.VehicleDB.VehicleBrandDBHandler;
@@ -197,6 +198,10 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
             SortedList<Vehicle> sortedData = new SortedList(vehicles);
             sortedData.comparatorProperty().bind(tblAvailableVehicles.comparatorProperty());
             tblAvailableVehicles.setItems(sortedData);
+            comboGearBox.setButtonCell(new ComboBoxButtonCell("Gear box"));
+            comboBrand.setButtonCell(new ComboBoxButtonCell("Brand"));
+            comboPassengers.setButtonCell(new ComboBoxButtonCell("Passengers"));
+            comboCarType.setButtonCell(new ComboBoxButtonCell("Vehicle type"));
 
         } catch (Exception x) {
             x.printStackTrace();
