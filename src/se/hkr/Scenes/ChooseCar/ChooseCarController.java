@@ -59,6 +59,9 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
             lblDescription,
             lblCarName;
 
+    @FXML
+    private Button btnResetFilter;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Date startDate = BookingSession.getInstance().getBooking().getStartDate();
@@ -203,12 +206,12 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
     @Override
     public boolean filter(Vehicle model) {
         if (!comboGearBox.getSelectionModel().isEmpty()) {
-            if (model.getGearBox().getId() != ((GearBox)comboGearBox.getSelectionModel().getSelectedItem()).getId()) {
+            if (model.getGearBox().getId() != ((GearBox) comboGearBox.getSelectionModel().getSelectedItem()).getId()) {
                 return false;
             }
         }
         if (!comboPassengers.getSelectionModel().isEmpty()) {
-            if (model.getPassengers() != ((Integer)comboPassengers.getSelectionModel().getSelectedItem())) {
+            if (model.getPassengers() != ((Integer) comboPassengers.getSelectionModel().getSelectedItem())) {
                 return false;
             }
         }
@@ -227,6 +230,16 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
         return true;
 
     }
+
+    public void resetFilter(ActionEvent actionEvent) {
+
+        if (actionEvent.getSource() == btnResetFilter) {
+
+            showComboData();
+        }
+
+    }
+
 
     @Override
     public void search() {
