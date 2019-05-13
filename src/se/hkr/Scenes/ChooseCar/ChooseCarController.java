@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Pair;
 import se.hkr.BookingSession;
 import se.hkr.Database.VehicleDB.CarTypeDBHandler;
 import se.hkr.Database.VehicleDB.GearBoxDBHandler;
@@ -21,7 +22,9 @@ import se.hkr.Scenes.ReadController;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
@@ -42,7 +45,7 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
             colBookingBrand,
             colBookingModel;
     @FXML
-    private TextField carPrices;
+    private TextField txtFldTotalPrice;
 
     @FXML
     private ComboBox
@@ -85,7 +88,7 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
             // Placeholder
             System.out.println("Database interaction failed, please try again later.");
         }
-
+        txtFldTotalPrice.setText("$" + calculateTotalPrice());
         showComboData();
     }
 
@@ -96,7 +99,7 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
                 data.remove(vehicle);
                 bookedVehicles.add(vehicle);
                 BookingSession.getInstance().getBooking().setVehicles(bookedVehicles);
-                carPrices.setText("$" + calculateTotalPrice());
+                txtFldTotalPrice.setText("$" + calculateTotalPrice());
             }
         } catch (Exception x) {
             Dialogue.alert("Something went wrong. Check the information.");
@@ -110,7 +113,14 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
                 bookedVehicles.remove(vehicle);
                 data.add(vehicle);
                 BookingSession.getInstance().getBooking().setVehicles(bookedVehicles);
-                carPrices.setText("$" + calculateTotalPrice());
+                List<Pair<Vehicle, VehicleOption>> vehicleOptionsToRemove = new ArrayList<>();
+                for (Pair<Vehicle, VehicleOption> pair : BookingSession.getInstance().getBooking().getVehicleOptions()) {
+                    if (pair.getKey().getId() == vehicle.getId()) {
+                        vehicleOptionsToRemove.add(pair);
+                    }
+                }
+                BookingSession.getInstance().getBooking().getVehicleOptions().removeAll(vehicleOptionsToRemove);
+                txtFldTotalPrice.setText("$" + calculateTotalPrice());
             }
         } catch (Exception x) {
             Dialogue.alert("Please check your information. Something went wrong.");
@@ -126,6 +136,11 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
             double basePrices = 0.0;
             for (Vehicle vehicle : bookedVehicles) {
                 basePrices += vehicle.getBasePrice();
+            }
+            if (BookingSession.getInstance().getBooking().getVehicleOptions() != null) {
+                for (Pair<Vehicle, VehicleOption> pair : BookingSession.getInstance().getBooking().getVehicleOptions()) {
+                    basePrices += pair.getValue().getPrice() * days;
+                }
             }
             return basePrices * days;
         } catch (Exception x) {

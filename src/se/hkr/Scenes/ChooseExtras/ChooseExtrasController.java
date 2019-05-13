@@ -121,7 +121,7 @@ public class ChooseExtrasController implements ReadController<VehicleOption>, In
     }
 
     private double calculateTotalPrice() {
-        double startingPrice = BookingSession.getInstance().getBooking().getTotalPrice();
+        double startingPrice = 0.0;
         try {
             Date startDate = BookingSession.getInstance().getBooking().getStartDate();
             Date endDate = BookingSession.getInstance().getBooking().getEndDate();
@@ -129,6 +129,9 @@ public class ChooseExtrasController implements ReadController<VehicleOption>, In
             long days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
             for (Pair<Vehicle, VehicleOption> vehicleOption : bookedVehicleOptions) {
                 startingPrice += vehicleOption.getValue().getPrice() * days;
+            }
+            for (Vehicle vehicle : BookingSession.getInstance().getBooking().getVehicles()) {
+                startingPrice += vehicle.getBasePrice() * days;
             }
         } catch (Exception x) {
             Dialogue.alert("Something went wrong, please try again.");
@@ -141,6 +144,19 @@ public class ChooseExtrasController implements ReadController<VehicleOption>, In
         BookingSession.getInstance().getBooking().setVehicleOptions(bookedVehicleOptions);
         BookingSession.getInstance().getBooking().setTotalPrice(calculateTotalPrice());
         Navigator.getInstance().navigateTo("ConfirmBooking/ConfirmBookingView.fxml");
+    }
+
+    @FXML
+    private void buttonBackPressed() {
+        BookingSession.getInstance().getBooking().setVehicleOptions(bookedVehicleOptions);
+        BookingSession.getInstance().getBooking().setTotalPrice(calculateTotalPrice());
+        Navigator.getInstance().goBack();
+    }
+
+    @FXML
+    private void buttonCancelPressed() {
+        BookingSession.getInstance().resetSession();
+        Navigator.getInstance().navigateToPanel();
     }
 
     @Override
