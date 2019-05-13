@@ -25,6 +25,7 @@ import se.hkr.Model.User.User;
 import se.hkr.Model.Vehicle.Vehicle;
 import se.hkr.Model.Vehicle.VehicleOption;
 import se.hkr.Navigator;
+import se.hkr.Scenes.SessionListener;
 import se.hkr.UserSession;
 
 import java.net.URL;
@@ -35,7 +36,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
-public class ConfirmBookingController implements Initializable {
+public class ConfirmBookingController implements Initializable, SessionListener<BookingSession> {
     @FXML
     private TableView<Vehicle> tblVehicles;
 
@@ -72,6 +73,7 @@ public class ConfirmBookingController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        BookingSession.getInstance().addListener(this);
         colVehicleBrand.setCellValueFactory(new PropertyValueFactory<Vehicle, String>("brand"));
         colVehicleModel.setCellValueFactory(new PropertyValueFactory<Vehicle, String>("modelName"));
         colOptionName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
@@ -87,8 +89,8 @@ public class ConfirmBookingController implements Initializable {
             }
         });
 
-        vehicles = FXCollections.observableArrayList(BookingSession.getInstance().getBooking().getVehicles());
-        vehicleOptions = FXCollections.observableArrayList(BookingSession.getInstance().getBooking().getVehicleOptions());
+        vehicles = FXCollections.observableArrayList(BookingSession.getInstance().getSessionObject().getVehicles());
+        vehicleOptions = FXCollections.observableArrayList(BookingSession.getInstance().getSessionObject().getVehicleOptions());
         tblVehicles.setItems(vehicles);
         tblOptions.setItems(vehicleOptions);
         initializeLabels();
@@ -99,16 +101,21 @@ public class ConfirmBookingController implements Initializable {
         }
     }
 
+    @Override
+    public void update() {
+
+    }
+
     private void initializeLabels() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date startDate = BookingSession.getInstance().getBooking().getStartDate();
-        Date endDate = BookingSession.getInstance().getBooking().getEndDate();
+        Date startDate = BookingSession.getInstance().getSessionObject().getStartDate();
+        Date endDate = BookingSession.getInstance().getSessionObject().getEndDate();
         lblStartDate.setText(START_DATE_PREFIX + dateFormat.format(startDate));
         lblEndDate.setText(END_DATE_PREFIX + dateFormat.format(endDate));
         long diff = endDate.getTime() - startDate.getTime();
         long days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
         lblDays.setText(AMOUNT_OF_DAYS_PREFIX + days);
-        lblTotalAmount.setText(TOTAL_PREFIX + BookingSession.getInstance().getBooking().getTotalPrice());
+        lblTotalAmount.setText(TOTAL_PREFIX + BookingSession.getInstance().getSessionObject().getTotalPrice());
     }
 
     @FXML
@@ -152,10 +159,10 @@ public class ConfirmBookingController implements Initializable {
     @FXML
     private void buttonConfirmPressed(ActionEvent event) {
         try (BookingDBHandler bookingDBHandler = new BookingDBHandler()) {
-            Booking booking = BookingSession.getInstance().getBooking();
+            Booking booking = BookingSession.getInstance().getSessionObject();
             List<? extends Vehicle> controlList = VehicleDBHandler.readAvailableVehicles(booking.getStartDate(), booking.getEndDate());
             if (vehiclesAreAvailable()) {
-                bookingDBHandler.insert(BookingSession.getInstance().getBooking());
+                bookingDBHandler.insert(BookingSession.getInstance().getSessionObject());
                 Dialogue.alert("Your booking is made! Thank you for renting from RentAll.");
                 sendConfirmationMail();
                 BookingSession.getInstance().resetSession();
@@ -165,7 +172,7 @@ public class ConfirmBookingController implements Initializable {
         } catch (Exception e) {
             Dialogue.alert("Could not save booking, please try again later.");
             try (BookingDBHandler bookingDBHandler = new BookingDBHandler()) {
-                bookingDBHandler.delete(BookingSession.getInstance().getBooking());
+                bookingDBHandler.delete(BookingSession.getInstance().getSessionObject());
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -174,7 +181,7 @@ public class ConfirmBookingController implements Initializable {
 
     private boolean vehiclesAreAvailable() {
         try {
-            Booking booking = BookingSession.getInstance().getBooking();
+            Booking booking = BookingSession.getInstance().getSessionObject();
             List<? extends Vehicle> controlVehicles = VehicleDBHandler.readAvailableVehicles(booking.getStartDate(), booking.getEndDate());
             for (Vehicle vehicle : booking.getVehicles()) {
                 boolean confirmedVehicle = false;
@@ -195,9 +202,9 @@ public class ConfirmBookingController implements Initializable {
     }
 
     private void sendConfirmationMail() {
-        Booking booking = BookingSession.getInstance().getBooking();
+        Booking booking = BookingSession.getInstance().getSessionObject();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String subject = String.format("Booking confirmation for %s %s", UserSession.getInstance().getLoggedInUser().getFirstName(), UserSession.getInstance().getLoggedInUser().getLastName());
+        String subject = String.format("Booking confirmation for %s %s", UserSession.getInstance().getSessionObject().getFirstName(), UserSession.getInstance().getSessionObject().getLastName());
         StringBuilder message = new StringBuilder();
         message.append("Thank you for choosing RentAll!\n");
         message.append(String.format("Your booking from %s to %s is confirmed. See booking details below.%n",
@@ -213,7 +220,7 @@ public class ConfirmBookingController implements Initializable {
             message.append(String.format("%s, for vehicle: %s %s%n", pair.getValue().getName(), pair.getKey().getBrand(), pair.getKey().getModelName()));
         }
         message.append(String.format("%nTotal: $%.2f", booking.getTotalPrice()));
-        Email email = new Email(UserSession.getInstance().getLoggedInUser().getEmail(), subject, message.toString());
+        Email email = new Email(UserSession.getInstance().getSessionObject().getEmail(), subject, message.toString());
         email.send();
     }
 }

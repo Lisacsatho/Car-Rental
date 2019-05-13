@@ -19,10 +19,13 @@ public class Main extends Application {
      * */
     @Override
     public void start(Stage primaryStage) throws Exception {
-
         Navigator.getInstance().setPrimaryStage(primaryStage);
         Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");
+
        // Navigator.getInstance().navigateTo("CustomerService/CustomerServiceView.fxml");
+
+
+        //Navigator.getInstance().navigateTo("ViewBookings/ViewBookingsView.fxml");
 
         primaryStage.show();
     }

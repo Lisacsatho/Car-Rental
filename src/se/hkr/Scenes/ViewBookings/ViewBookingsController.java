@@ -18,6 +18,8 @@ import se.hkr.Model.Vehicle.VehicleOption;
 import se.hkr.Scenes.ReadController;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import java.text.SimpleDateFormat;
@@ -154,11 +156,13 @@ public class ViewBookingsController implements ReadController<Booking>, Initiali
         if (currentVehicles.size() > 1) {
             currentVehicles.remove(vehicle);
             vehiclesToRemove.add(vehicle);
+            List<Pair<Vehicle, VehicleOption>> temporaryVehicleOptionsToRemove = new ArrayList<>();
             for (Pair<Vehicle, VehicleOption> pair : currentVehicleOptions) {
                 if (vehicle.getId() == pair.getKey().getId()) {
-                    currentVehicleOptions.remove(pair);
+                    temporaryVehicleOptionsToRemove.add(pair);
                 }
             }
+            currentVehicleOptions.removeAll(temporaryVehicleOptionsToRemove);
             // Update the price to match the changes made
             txtFldTotalPrice.setText(Double.toString(calculatePriceForCurrentBooking()));
         } else {

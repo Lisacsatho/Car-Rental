@@ -48,8 +48,8 @@ public class EditMemberController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         if (UserSession.getInstance().isMember()) {
-            User user = UserSession.getInstance().getLoggedInUser();
-            Member member = (Member) UserSession.getInstance().getLoggedInUser();
+            User user = UserSession.getInstance().getSessionObject();
+            Member member = (Member) UserSession.getInstance().getSessionObject();
             txtFldSsn.setText(user.getSocialSecurityNo());
             txtFldFirstName.setText(user.getFirstName());
             txtFldLastName.setText(user.getLastName());

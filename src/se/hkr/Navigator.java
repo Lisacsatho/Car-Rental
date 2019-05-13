@@ -28,14 +28,17 @@ public class Navigator {
 
     public void navigateToPanel() {
         assert(UserSession.getInstance().isLoggedIn());
+        previousScenes.clear();
         if (UserSession.getInstance().isMember()) {
-            if (!((Member) UserSession.getInstance().getLoggedInUser()).isVerified()) {
+            if (!((Member) UserSession.getInstance().getSessionObject()).isVerified()) {
                 navigateTo("VerifyEmail/VerifyEmailView.fxml");
             } else {
                 navigateTo(MEMBER_PANEL);
             }
         } else if (UserSession.getInstance().isEmployee()) {
             navigateTo(EMPLOYEE_PANEL);
+        } else {
+            navigateTo("MainMenu/MainMenuView.fxml");
         }
     }
 

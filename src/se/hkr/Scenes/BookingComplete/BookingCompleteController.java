@@ -6,9 +6,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import se.hkr.Database.BookingDBHandler;
+import se.hkr.Model.Booking;
+import se.hkr.Model.User.Member;
 import se.hkr.Navigator;
+import se.hkr.UserSession;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class BookingCompleteController implements Initializable {
@@ -17,19 +22,30 @@ public class BookingCompleteController implements Initializable {
     private TextArea txtAreaBookingDetails;
 
     @FXML
-    private Button btnGoMainMenu, btnGoMyPages;
+    Button btnGoMainMenu, btnGoMyPages;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-    }
+        try (BookingDBHandler dB = new BookingDBHandler()) {
 
-    public void btnGoMainMenuPressed(ActionEvent ae){
+            List<Booking> booking = dB.readForMember((Member) UserSession.getInstance().getSessionObject());
+            txtAreaBookingDetails.appendText(String.valueOf(booking));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+    @FXML
+    public void btnGoMainMenuPressed (ActionEvent ae){
         Navigator.getInstance().navigateTo("MainMenu/MainMenuViewView.fxml");
 
     }
 
-    public void btnGoMyPagesPressed(ActionEvent ae){
+    @FXML
+    public void btnGoMyPagesPressed (ActionEvent ae){
+        Navigator.getInstance().navigateTo("MemberPanel/MemberPanelView.fxml");
 
     }
 }

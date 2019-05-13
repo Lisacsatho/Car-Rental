@@ -20,6 +20,7 @@ import se.hkr.Model.Vehicle.Vehicle;
 import se.hkr.Model.Vehicle.VehicleOption;
 import se.hkr.Navigator;
 import se.hkr.Scenes.ReadController;
+import se.hkr.Scenes.SessionListener;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
-public class ChooseExtrasController implements ReadController<VehicleOption>, Initializable {
+public class ChooseExtrasController implements ReadController<VehicleOption>, Initializable, SessionListener<BookingSession> {
 
     @FXML
     private TableView<Pair<Vehicle, VehicleOption>> tblOptions,
@@ -47,7 +48,8 @@ public class ChooseExtrasController implements ReadController<VehicleOption>, In
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        txtFldPrice.setText("$" + Double.toString(BookingSession.getInstance().getBooking().getTotalPrice()));
+        BookingSession.getInstance().addListener(this);
+        txtFldPrice.setText("$" + Double.toString(BookingSession.getInstance().getSessionObject().getTotalPrice()));
         colCar.setCellValueFactory(new PropertyValueFactory<Pair<Vehicle, VehicleOption>, String>("key"));
         colName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
             @Override
@@ -71,24 +73,25 @@ public class ChooseExtrasController implements ReadController<VehicleOption>, In
 
         vehicleOptions = FXCollections.observableArrayList();
         bookedVehicleOptions = FXCollections.observableArrayList();
-        BookingSession.getInstance().getBooking().getVehicles().forEach((vehicle -> {
+        BookingSession.getInstance().getSessionObject().getVehicles().forEach((vehicle -> {
             vehicle.getVehicleOptions().forEach((vehicleOption -> {
                 vehicleOptions.add(new Pair<Vehicle, VehicleOption>(vehicle, vehicleOption));
             }));
         }));
-        if (BookingSession.getInstance().getBooking().getVehicleOptions() != null) {
+        if (BookingSession.getInstance().getSessionObject().getVehicleOptions() != null) {
             initializeEarlierBookings();
         }
-
-        System.out.println(vehicleOptions);
-        System.out.println(bookedVehicleOptions);
-
         tblOptions.setItems(vehicleOptions);
         tblBookedOptions.setItems(bookedVehicleOptions);
     }
 
+    @Override
+    public void update() {
+        txtFldPrice.setText("$" + calculateTotalPrice());
+    }
+
     private void initializeEarlierBookings() {
-        BookingSession.getInstance().getBooking().getVehicleOptions().forEach((pair) -> {
+        BookingSession.getInstance().getSessionObject().getVehicleOptions().forEach((pair) -> {
             vehicleOptions.remove(pair);
             bookedVehicleOptions.add(pair);
         });
@@ -100,7 +103,7 @@ public class ChooseExtrasController implements ReadController<VehicleOption>, In
             Pair<Vehicle, VehicleOption> vehicleOption = tblOptions.getSelectionModel().getSelectedItem();
             vehicleOptions.remove(vehicleOption);
             bookedVehicleOptions.add(vehicleOption);
-            BookingSession.getInstance().getBooking().setVehicleOptions(bookedVehicleOptions);
+            BookingSession.getInstance().getSessionObject().setVehicleOptions(bookedVehicleOptions);
             txtFldPrice.setText("$" + calculateTotalPrice());
         } else {
             Dialogue.alert("Please choose an additional option.");
@@ -113,7 +116,7 @@ public class ChooseExtrasController implements ReadController<VehicleOption>, In
             Pair<Vehicle, VehicleOption> vehicleOption = tblBookedOptions.getSelectionModel().getSelectedItem();
             bookedVehicleOptions.remove(vehicleOption);
             vehicleOptions.add(vehicleOption);
-            BookingSession.getInstance().getBooking().setVehicleOptions(bookedVehicleOptions);
+            BookingSession.getInstance().getSessionObject().setVehicleOptions(bookedVehicleOptions);
             txtFldPrice.setText("$" + calculateTotalPrice());
         } else {
             Dialogue.alert("Please choose an addition option to remove.");
@@ -121,12 +124,15 @@ public class ChooseExtrasController implements ReadController<VehicleOption>, In
     }
 
     private double calculateTotalPrice() {
-        double startingPrice = BookingSession.getInstance().getBooking().getTotalPrice();
+        double startingPrice = 0.0;
         try {
-            Date startDate = BookingSession.getInstance().getBooking().getStartDate();
-            Date endDate = BookingSession.getInstance().getBooking().getEndDate();
+            Date startDate = BookingSession.getInstance().getSessionObject().getStartDate();
+            Date endDate = BookingSession.getInstance().getSessionObject().getEndDate();
             long diff = endDate.getTime() - startDate.getTime();
             long days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+            for (Vehicle vehicle : BookingSession.getInstance().getSessionObject().getVehicles()) {
+                startingPrice += vehicle.getBasePrice() * days;
+            }
             for (Pair<Vehicle, VehicleOption> vehicleOption : bookedVehicleOptions) {
                 startingPrice += vehicleOption.getValue().getPrice() * days;
             }
@@ -137,10 +143,24 @@ public class ChooseExtrasController implements ReadController<VehicleOption>, In
     }
 
     @FXML
-    private void buttonProceedPressed(ActionEvent event) {
-        BookingSession.getInstance().getBooking().setVehicleOptions(bookedVehicleOptions);
-        BookingSession.getInstance().getBooking().setTotalPrice(calculateTotalPrice());
+    private void buttonProceedPressed() {
+        BookingSession.getInstance().getSessionObject().setVehicleOptions(bookedVehicleOptions);
+        BookingSession.getInstance().getSessionObject().setTotalPrice(calculateTotalPrice());
+        BookingSession.getInstance().notifyListeners();
         Navigator.getInstance().navigateTo("ConfirmBooking/ConfirmBookingView.fxml");
+    }
+
+    @FXML
+    private void buttonBackPressed() {
+        BookingSession.getInstance().getSessionObject().setVehicleOptions(bookedVehicleOptions);
+        BookingSession.getInstance().notifyListeners();
+        Navigator.getInstance().goBack();
+    }
+
+    @FXML
+    private void buttonCancelPressed() {
+        BookingSession.getInstance().resetSession();
+        Navigator.getInstance().navigateToPanel();
     }
 
     @Override

@@ -35,7 +35,7 @@ public class BookingDBHandler extends ModelDBHandler<Booking> {
             statement.setDouble(1, model.getTotalPrice());
             statement.setString(2, simpleDateFormat.format(model.getStartDate()));
             statement.setString(3, simpleDateFormat.format(model.getEndDate()));
-            statement.setString(4, UserSession.getInstance().getLoggedInUser().getSocialSecurityNo());
+            statement.setString(4, UserSession.getInstance().getSessionObject().getSocialSecurityNo());
             statement.executeUpdate();
 
             String getId = "SELECT LAST_INSERT_ID() AS id";
@@ -170,7 +170,7 @@ public class BookingDBHandler extends ModelDBHandler<Booking> {
     }
 
     public List<Booking> readForMemberSimple(Member member) throws SQLException {
-        String query = "SELECT * FROM AllBookings WHERE member=?";
+        String query = "SELECT * FROM booking WHERE member=?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, member.getSocialSecurityNo());
             return buildSimpleModels(statement.executeQuery());
