@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.ComboBoxListCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import se.hkr.BookingSession;
 import se.hkr.Database.VehicleDB.CarTypeDBHandler;
@@ -58,6 +59,8 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
             lblSuitcases,
             lblDescription,
             lblCarName;
+    @FXML
+    private Button btnResetFilter;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -194,6 +197,7 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
             SortedList<Vehicle> sortedData = new SortedList(vehicles);
             sortedData.comparatorProperty().bind(tblAvailableVehicles.comparatorProperty());
             tblAvailableVehicles.setItems(sortedData);
+            
 
         } catch (Exception x) {
             x.printStackTrace();
@@ -203,12 +207,12 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
     @Override
     public boolean filter(Vehicle model) {
         if (!comboGearBox.getSelectionModel().isEmpty()) {
-            if (model.getGearBox().getId() != ((GearBox)comboGearBox.getSelectionModel().getSelectedItem()).getId()) {
+            if (model.getGearBox().getId() != ((GearBox) comboGearBox.getSelectionModel().getSelectedItem()).getId()) {
                 return false;
             }
         }
         if (!comboPassengers.getSelectionModel().isEmpty()) {
-            if (model.getPassengers() != ((Integer)comboPassengers.getSelectionModel().getSelectedItem())) {
+            if (model.getPassengers() != ((Integer) comboPassengers.getSelectionModel().getSelectedItem())) {
                 return false;
             }
         }
@@ -226,6 +230,15 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
         }
         return true;
 
+    }
+
+    public void resetFilter(ActionEvent actionEvent) {
+
+        if (actionEvent.getSource() == btnResetFilter)
+            comboGearBox.getSelectionModel().clearSelection();
+            comboBrand.getSelectionModel().clearSelection();
+            comboPassengers.getSelectionModel().clearSelection();
+            comboCarType.getSelectionModel().clearSelection();
     }
 
     @Override
