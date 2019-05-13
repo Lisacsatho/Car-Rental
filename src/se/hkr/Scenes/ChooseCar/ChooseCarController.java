@@ -12,6 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Pair;
 import se.hkr.BookingSession;
 import se.hkr.ComboBoxButtonCell;
+import se.hkr.Database.DatabaseConnection;
 import se.hkr.Database.VehicleDB.CarTypeDBHandler;
 import se.hkr.Database.VehicleDB.GearBoxDBHandler;
 import se.hkr.Database.VehicleDB.VehicleBrandDBHandler;
@@ -125,15 +126,18 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
                 data.add(vehicle);
                 BookingSession.getInstance().getSessionObject().setVehicles(bookedVehicles);
                 List<Pair<Vehicle, VehicleOption>> vehicleOptionsToRemove = new ArrayList<>();
-                for (Pair<Vehicle, VehicleOption> pair : BookingSession.getInstance().getSessionObject().getVehicleOptions()) {
-                    if (pair.getKey().getId() == vehicle.getId()) {
-                        vehicleOptionsToRemove.add(pair);
+                if (BookingSession.getInstance().getSessionObject().getVehicleOptions() != null) {
+                    for (Pair<Vehicle, VehicleOption> pair : BookingSession.getInstance().getSessionObject().getVehicleOptions()) {
+                        if (pair.getKey().getId() == vehicle.getId()) {
+                            vehicleOptionsToRemove.add(pair);
+                        }
                     }
                 }
                 BookingSession.getInstance().getSessionObject().getVehicleOptions().removeAll(vehicleOptionsToRemove);
                 txtFldTotalPrice.setText("$" + calculateTotalPrice());
             }
         } catch (Exception x) {
+            x.printStackTrace();
             Dialogue.alert("Please check your information. Something went wrong.");
         }
     }
@@ -160,7 +164,6 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
             x.printStackTrace();
             Dialogue.alert("Something went wrong, please try again.");
         }
-        System.out.println("Total price: " + startingPrice);
         return startingPrice;
     }
 
@@ -231,7 +234,13 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
             comboPassengers.setButtonCell(new ComboBoxButtonCell("Passengers"));
             comboCarType.setButtonCell(new ComboBoxButtonCell("Vehicle type"));
         } catch (Exception x) {
-            x.printStackTrace();
+            Dialogue.alert("Attempting to reconnect to the server...");
+            try {
+                DatabaseConnection.getInstance().close();
+                DatabaseConnection.getInstance().connect();
+            } catch (Exception e) {
+                Dialogue.alert("Cannot reconnect to server...");
+            }
         }
     }
 
