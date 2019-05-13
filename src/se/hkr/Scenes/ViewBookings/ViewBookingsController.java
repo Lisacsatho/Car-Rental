@@ -232,15 +232,45 @@ public class ViewBookingsController implements ReadController<Booking>, Initiali
         }
     }
 
+    @FXML
+    private void btnRemoveBookingPressed() {
+        Booking booking = tblBookings.getSelectionModel().getSelectedItem();
+        if (booking != null) {
+            if (Dialogue.alertOk(String.format("Are you sure you want to delete booking id: %d for member: %s?", booking.getId(), booking.getMember()))) {
+                removeBooking(booking);
+                updateBookingList();
+            }
+        }
+    }
+
+    private void removeBooking(Booking booking) {
+        try (BookingDBHandler bookingDBHandler = new BookingDBHandler()) {
+            bookingDBHandler.delete(booking);
+            Dialogue.alert("Booking was deleted successfully.");
+        } catch (Exception e) {
+            Dialogue.alert("Something went wrong when deleting booking: " + e.getMessage());
+        }
+    }
+
     @Override
     public boolean filter (Booking model){
         return false;
+    }
+
+    @FXML
+    private void btnResetDatesPressed() {
+        datePicFilterTo.setValue(null);
+        datePicFilterFrom.setValue(null);
     }
 
     @Override
     public void search() {
         String key = txtFldSearch.getText().trim();
         matchingBookings.clear();
+        if (datePicFilterFrom.getValue() == null && datePicFilterTo.getValue() != null) {
+            datePicEndDate.setValue(null);
+            Dialogue.inform("Use the 'from' date to filter by one date.");
+        }
         if (key.equals("")) {
             searchOnEmptyKey();
         } else {
