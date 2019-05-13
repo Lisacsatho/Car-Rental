@@ -26,7 +26,7 @@ public class MemberPanelController  implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try (BookingDBHandler bookingDBHandler = new BookingDBHandler()) {
-            List<Booking> bookings = bookingDBHandler.readForMemberSimple((Member)UserSession.getInstance().getLoggedInUser());
+            List<Booking> bookings = bookingDBHandler.readForMemberSimple((Member)UserSession.getInstance().getSessionObject());
             bookings.forEach((booking -> {
                 containerBookings.getChildren().add(buildBooking(booking));
             }));
