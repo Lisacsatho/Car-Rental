@@ -21,11 +21,11 @@ public class Main extends Application {
 
         
         primaryStage.show();
-       //Email email = new Email("tobiasgustaverik@icloud.com", "RentAll, Employee Announcement", "Hello Tobias Andersson, we just want to thank you for your great service in this project and wish you an amazing day. P.S. This mail was sent via our Java application.");
-     // email.send();
+   //  Email email = new Email("helgefreiman@hotmail.com", "hey dickhead", "Hey you. Där sitter du i en grå soffa och ser lagom trött, sliten möjligen bakis ut? KAN du ha vart på BG igår? hmmmm... ett tips. Gå och lägg dig breve din heta BF ;););) ");
+  //    email.send();
 
-        Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");
-        primaryStage.show();
+     //   Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");
+   //     primaryStage.show();
 
     }
 
