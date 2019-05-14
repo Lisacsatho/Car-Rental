@@ -26,7 +26,7 @@ public class MemberPanelController  implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try (BookingDBHandler bookingDBHandler = new BookingDBHandler()) {
-            List<Booking> bookings = bookingDBHandler.readForMemberSimple((Member)UserSession.getInstance().getLoggedInUser());
+            List<Booking> bookings = bookingDBHandler.readForMemberSimple((Member)UserSession.getInstance().getSessionObject());
             bookings.forEach((booking -> {
                 containerBookings.getChildren().add(buildBooking(booking));
             }));
@@ -47,6 +47,7 @@ public class MemberPanelController  implements Initializable {
         endDate.setPadding(insets);
         Label id = new Label("Booking id: " + booking.getId());
         id.setPadding(insets);
+        System.out.println(booking.getId());
 
         container.getChildren().addAll(id, startDate, endDate);
         container.getStyleClass().add("highlighted-button");

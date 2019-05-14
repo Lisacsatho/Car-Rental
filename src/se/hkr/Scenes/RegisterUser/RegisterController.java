@@ -18,7 +18,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
-public class RegisterController implements Initializable {
+public class RegisterController {
 
     @FXML
     private TextField
@@ -32,13 +32,6 @@ public class RegisterController implements Initializable {
             txtFldPhone,
             txtFldState,
             txtFldDriversLicense;
-    @FXML
-    private Button btnGoBack;
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
 
     public void registerUser() {
         try (MemberDBHandler memberDBHandler = new MemberDBHandler()) {
@@ -63,8 +56,6 @@ public class RegisterController implements Initializable {
     }
 
     public void goBack (ActionEvent event) {
-
-        if (event.getSource() == btnGoBack) {Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");}
-
+        Navigator.getInstance().goBack();
     }
 }

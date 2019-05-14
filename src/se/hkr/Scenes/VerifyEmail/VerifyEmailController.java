@@ -26,15 +26,15 @@ public class VerifyEmailController implements Initializable {
         if (!UserSession.getInstance().isLoggedIn()) {
             Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");
         } else {
-            lblEmail.setText(UserSession.getInstance().getLoggedInUser().getEmail());
+            lblEmail.setText(UserSession.getInstance().getSessionObject().getEmail());
         }
     }
 
     @FXML
     private void buttonConfirmPressed(ActionEvent event) {
         try (MemberDBHandler memberDBHandler = new MemberDBHandler()) {
-            if (memberDBHandler.verifyEmail((Member) UserSession.getInstance().getLoggedInUser(), txtFldCode.getText().trim())) {
-                ((Member) UserSession.getInstance().getLoggedInUser()).setVerified(true);
+            if (memberDBHandler.verifyEmail((Member) UserSession.getInstance().getSessionObject(), txtFldCode.getText().trim())) {
+                ((Member) UserSession.getInstance().getSessionObject()).setVerified(true);
                 Dialogue.alert("Email verified!");
                 Navigator.getInstance().goBack();
             } else {
