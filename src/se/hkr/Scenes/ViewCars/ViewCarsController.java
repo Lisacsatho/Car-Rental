@@ -6,17 +6,17 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import se.hkr.ComboBoxButtonCell;
 import se.hkr.Database.VehicleDB.*;
+import se.hkr.Dialogue;
 import se.hkr.Model.Vehicle.*;
 import se.hkr.Scenes.ReadController;
 
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ViewCarsController implements ReadController<Vehicle>, Initializable {
@@ -27,38 +27,44 @@ public class ViewCarsController implements ReadController<Vehicle>, Initializabl
                      comboCarType;
 
     @FXML
-    private TableView tblCars;
+    private TableView<Vehicle> tblVehicles;
 
     @FXML
     private TableColumn colBrand,
                         colModel,
                         colModelYear,
-                        colFuelType,
-                        colGearBox,
                         colPrice,
                         colPassengers,
                         colSuitcases;
 
+    @FXML
+    private TextField txtFldSearch;
+
+    @FXML
+    private Label lblVehicleName,
+                  lblFuelType,
+                  lblGearBox;
+    @FXML
+    private TextField txtFldPriceFrom;
+
+    private ObservableList<Vehicle> matchingVehicles;
+    private List<Vehicle> allVehicles;
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try (CarDBHandler db = new CarDBHandler();
-             FuelTypeDBHandler fuelTypeDBHandler = new FuelTypeDBHandler();
+        try (FuelTypeDBHandler fuelTypeDBHandler = new FuelTypeDBHandler();
              GearBoxDBHandler gearBoxDBHandler = new GearBoxDBHandler();
              CarTypeDBHandler carTypeDBHandler = new CarTypeDBHandler();
              VehicleBrandDBHandler vehicleBrandDBHandler = new VehicleBrandDBHandler()) {
 
-            ObservableList<Car> data = FXCollections.observableArrayList(db.readAll());
+            updateList();
+
             colBrand.setCellValueFactory(
                     new PropertyValueFactory<Car, String>("brand")
             );
             colModel.setCellValueFactory(
                     new PropertyValueFactory<Car, String>("modelName")
-            );
-            colFuelType.setCellValueFactory(
-                    new PropertyValueFactory<Car, String>("fuelType")
-            );
-            colGearBox.setCellValueFactory(
-                    new PropertyValueFactory<Car, String>("gearBox")
             );
             colModelYear.setCellValueFactory(
                     new PropertyValueFactory<Car, Integer>("modelYear")
@@ -89,7 +95,7 @@ public class ViewCarsController implements ReadController<Vehicle>, Initializabl
             comboBrand.setItems(vehicleBrands);
             comboBrand.setButtonCell(new ComboBoxButtonCell("Brand"));
 
-            FilteredList<Car> filteredData = new FilteredList<>(data, c -> true);
+            FilteredList<Vehicle> filteredData = new FilteredList<>(matchingVehicles, c -> true);
             comboBrand.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 filteredData.setPredicate(car -> filter(car));
             });
@@ -103,12 +109,65 @@ public class ViewCarsController implements ReadController<Vehicle>, Initializabl
                 filteredData.setPredicate(car -> filter(car));
             });
 
-            SortedList<Car> sortedData = new SortedList<>(filteredData);
-            sortedData.comparatorProperty().bind(tblCars.comparatorProperty());
-            tblCars.setItems(sortedData);
+            SortedList<Vehicle> sortedData = new SortedList<>(filteredData);
+            sortedData.comparatorProperty().bind(tblVehicles.comparatorProperty());
+            tblVehicles.setItems(sortedData);
 
+            tblVehicles.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> displayVehicle(newValue));
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void updateList() {
+        try {
+            allVehicles = FXCollections.observableArrayList(VehicleDBHandler.readAbstractAll());
+            if (matchingVehicles == null) {
+                matchingVehicles = FXCollections.observableArrayList();
+                matchingVehicles.addAll(allVehicles);
+            } else {
+                matchingVehicles.clear();
+                matchingVehicles.addAll(allVehicles);
+            }
+        } catch (SQLException e) {
+            Dialogue.alert(e.getMessage());
+        }
+    }
+
+    private void resetDisplay() {
+        tblVehicles.getSelectionModel().clearSelection();
+        lblVehicleName.setText("Vehicle name");
+        lblFuelType.setText("Fuel type: ");
+        lblGearBox.setText("Gear box: ");
+        txtFldPriceFrom.clear();
+    }
+
+    private void displayVehicle(Vehicle vehicle) {
+        if (vehicle != null) {
+            lblVehicleName.setText(String.format("%s %s, %d", vehicle.getBrand().getName(), vehicle.getModelName(), vehicle.getModelYear()));
+            lblFuelType.setText(String.format("Fuel type: %s", vehicle.getFuelType().getName()));
+            lblGearBox.setText(String.format("Gear box: %s", vehicle.getGearBox().getName()));
+            txtFldPriceFrom.setText(Double.toString(vehicle.getBasePrice()));
+        }
+    }
+
+    @FXML
+    private void buttonSavePressed() {
+        Vehicle vehicle = tblVehicles.getSelectionModel().getSelectedItem();
+        if (vehicle != null) {
+            try (VehicleDBHandler vehicleDBHandler = VehicleDBHandler.getHandlerFor(vehicle)) {
+                vehicle.setBasePrice(Double.parseDouble(txtFldPriceFrom.getText()));
+                vehicleDBHandler.update(vehicle);
+                Dialogue.inform("Vehicle was updated!");
+                resetDisplay();
+                updateList();
+            } catch (SQLException e) {
+                Dialogue.alert(e.getMessage());
+            } catch (NumberFormatException e) {
+                Dialogue.alert("Enter a valid value for total price.");
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
@@ -118,6 +177,7 @@ public class ViewCarsController implements ReadController<Vehicle>, Initializabl
         comboCarType.getSelectionModel().clearSelection();
         comboFuelType.getSelectionModel().clearSelection();
         comboGearBox.getSelectionModel().clearSelection();
+        search();
     }
 
     @Override
@@ -149,6 +209,17 @@ public class ViewCarsController implements ReadController<Vehicle>, Initializabl
 
     @Override
     public void search() {
-
+        resetDisplay();
+        String key = txtFldSearch.getText();
+        matchingVehicles.clear();
+        if (key.equals("")) {
+            matchingVehicles.addAll(allVehicles);
+        } else {
+            for (Vehicle vehicle : allVehicles) {
+                if (vehicle.matches(key)) {
+                    matchingVehicles.add(vehicle);
+                }
+            }
+        }
     }
 }

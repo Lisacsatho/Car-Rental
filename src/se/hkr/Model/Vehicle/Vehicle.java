@@ -139,8 +139,13 @@ public abstract class Vehicle implements Model {
 
     @Override
     public boolean matches(String key) {
-        // TODO
-        return false;
+        if (brand.matches(key)) {
+            return true;
+        } else if (modelName.matches(".*"+key+".*")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
