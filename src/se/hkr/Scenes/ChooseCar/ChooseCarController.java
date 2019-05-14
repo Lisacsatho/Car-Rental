@@ -63,9 +63,6 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
     @FXML
     private Button btnResetFilter;
 
-    @FXML
-    private Button btnResetFilter;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Date startDate = BookingSession.getInstance().getBooking().getStartDate();
@@ -201,14 +198,12 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
             SortedList<Vehicle> sortedData = new SortedList(vehicles);
             sortedData.comparatorProperty().bind(tblAvailableVehicles.comparatorProperty());
             tblAvailableVehicles.setItems(sortedData);
-<<<<<<< HEAD
+
             comboGearBox.setButtonCell(new ComboBoxButtonCell("Gear box"));
             comboBrand.setButtonCell(new ComboBoxButtonCell("Brand"));
             comboPassengers.setButtonCell(new ComboBoxButtonCell("Passengers"));
             comboCarType.setButtonCell(new ComboBoxButtonCell("Vehicle type"));
-=======
-            
->>>>>>> TobzkiFilter
+
 
         } catch (Exception x) {
             x.printStackTrace();
@@ -244,25 +239,12 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
     }
 
     public void resetFilter(ActionEvent actionEvent) {
-
-<<<<<<< HEAD
-        if (actionEvent.getSource() == btnResetFilter) {
-
-            showComboData();
-        }
-
-    }
-
-
-=======
         if (actionEvent.getSource() == btnResetFilter)
             comboGearBox.getSelectionModel().clearSelection();
             comboBrand.getSelectionModel().clearSelection();
             comboPassengers.getSelectionModel().clearSelection();
             comboCarType.getSelectionModel().clearSelection();
     }
-
->>>>>>> TobzkiFilter
     @Override
     public void search() {
 

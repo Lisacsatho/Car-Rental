@@ -36,12 +36,7 @@
                 <ComboBox fx:id="comboBrand" layoutX="134.0" layoutY="36.0" prefHeight="27.0" prefWidth="116.0" promptText="Brand" />
                 <ComboBox fx:id="comboCarType" layoutX="134.0" layoutY="71.0" prefHeight="27.0" prefWidth="116.0" promptText="Vehicle type" />
                 <ComboBox fx:id="comboGearBox" layoutX="8.0" layoutY="36.0" prefHeight="27.0" prefWidth="116.0" promptText="Gearbox" />
-                <ComboBox fx:id="comboPassengers" layoutX="8.0" layoutY="71.0" prefHeight="27.0" prefWidth="116.0" promptText="Passengers" />
-<<<<<<< HEAD
-            <Button fx:id="btnResetFilter" layoutX="14.0" layoutY="367.0" mnemonicParsing="false" onAction="#resetFilter" prefHeight="27.0" prefWidth="104.0" text="Reset Filter" />
-=======
-            <Button fx:id="btnResetFilter" layoutX="19.0" layoutY="367.0" mnemonicParsing="false" onAction="#resetFilter" prefHeight="27.0" prefWidth="104.0" text="Reset filter" />
->>>>>>> TobzkiFilter
+
             </children>
         </AnchorPane>
 
