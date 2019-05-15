@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="488.0" prefWidth="832.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ViewCars.ViewCarsController">
+<AnchorPane prefHeight="488.0" prefWidth="832.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ViewCars.ViewCarsController">
    <children>
       <TableView fx:id="tblVehicles" layoutX="14.0" layoutY="143.0" prefHeight="329.0" prefWidth="538.0">
         <columns>
@@ -60,13 +60,16 @@
       <Label fx:id="lblGearBox" layoutX="564.0" layoutY="90.0" text="Gear box:" />
       <Label layoutX="565.0" layoutY="114.0" text="Price from:" />
       <TextField fx:id="txtFldPriceFrom" layoutX="664.0" layoutY="109.0" prefHeight="28.0" prefWidth="156.0" />
-      <Button layoutX="768.0" layoutY="142.0" mnemonicParsing="false" onAction="#buttonSavePressed" styleClass="highlighted-button" text="Save" />
-      <Button layoutX="677.0" layoutY="142.0" mnemonicParsing="false" onAction="#buttonInactivatePressed" styleClass="danger-button" text="Inactivate" />
+      <Button layoutX="763.0" layoutY="180.0" mnemonicParsing="false" onAction="#buttonSavePressed" prefHeight="27.0" prefWidth="57.0" styleClass="highlighted-button" text="Save" />
+      <Button layoutX="702.0" layoutY="143.0" mnemonicParsing="false" onAction="#buttonInactivatePressed" prefHeight="27.0" prefWidth="118.0" styleClass="danger-button" text="Inactivate" />
       <Label layoutX="647.0" layoutY="114.0" text="\$">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
       <CheckBox fx:id="checkBoxShowInactive" layoutX="14.0" layoutY="114.0" mnemonicParsing="false" text="Show inactive cars" />
+      <Button fx:id="btnInspectNeed" layoutX="561.0" layoutY="143.0" mnemonicParsing="false" onAction="#btnInspectNeedPressed" prefHeight="27.0" prefWidth="128.0" style="-fx-background-color: #4169E1;" text="Inspection needed" textFill="#fffdfd" />
+      <CheckBox fx:id="checkBoxShowInspected" layoutX="145.0" layoutY="114.0" mnemonicParsing="false" text="Show cars under inspection" />
+      <CheckBox fx:id="checkBoxReadyRent" layoutX="565.0" layoutY="185.0" mnemonicParsing="false" text="Make ready for rent" />
    </children>
 </AnchorPane>

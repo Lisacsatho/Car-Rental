@@ -104,10 +104,11 @@ public abstract class VehicleDBHandler <V extends Vehicle> extends ModelDBHandle
 
     @Override
     public void update(V model) throws SQLException {
-        String query = "UPDATE vehicle SET price=? WHERE id=?";
+        String query = "UPDATE vehicle SET price=?, readyForRent =? WHERE id=?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setDouble(1, model.getBasePrice());
-            statement.setInt(2, model.getId());
+            statement.setBoolean(2, model.isReadyForRent());
+            statement.setInt(3, model.getId());
             if (statement.executeUpdate() != 1) {
                 throw new SQLException("No vehicle with id: " + model.getId());
             }

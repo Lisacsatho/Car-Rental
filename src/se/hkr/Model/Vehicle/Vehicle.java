@@ -18,10 +18,11 @@ public abstract class Vehicle implements Model {
     private String modelName;
     private int modelYear;
     private VehicleBrand brand;
+    private boolean readyForRent;
 
     private List<VehicleOption> vehicleOptions;
 
-    public Vehicle(int id, double basePrice, String description, int passengers, FuelType fuelType, GearBox gearBox, String modelName, int modelYear, VehicleBrand brand, List<VehicleOption> vehicleOptions) {
+    public Vehicle(int id, double basePrice, String description, int passengers, FuelType fuelType, GearBox gearBox, String modelName, int modelYear, VehicleBrand brand, boolean readyForRent, List<VehicleOption> vehicleOptions) {
         this.id = id;
         this.basePrice = basePrice;
         this.description = description;
@@ -31,10 +32,11 @@ public abstract class Vehicle implements Model {
         this.modelName = modelName;
         this.modelYear = modelYear;
         this.brand = brand;
+        this.readyForRent = readyForRent;
         this.vehicleOptions = vehicleOptions;
     }
 
-    public Vehicle(int id, double basePrice, String description, int passengers, FuelType fuelType, GearBox gearBox, String modelName, int modelYear, VehicleBrand brand) {
+    public Vehicle(int id, double basePrice, String description, int passengers, FuelType fuelType, GearBox gearBox, String modelName, int modelYear, VehicleBrand brand, boolean readyForRent) {
         this.id = id;
         this.basePrice = basePrice;
         this.description = description;
@@ -44,6 +46,7 @@ public abstract class Vehicle implements Model {
         this.modelName = modelName;
         this.modelYear = modelYear;
         this.brand = brand;
+        this.readyForRent = readyForRent;
     }
 
     public Vehicle(double basePrice, String description, int passengers, FuelType fuelType, GearBox gearBox, String modelName, int modelYear, VehicleBrand brand) {
@@ -55,6 +58,7 @@ public abstract class Vehicle implements Model {
         this.modelName = modelName;
         this.modelYear = modelYear;
         this.brand = brand;
+        this.readyForRent = true;
     }
 
     public int getId() {
@@ -128,6 +132,10 @@ public abstract class Vehicle implements Model {
     public void setBrand(VehicleBrand brand) {
         this.brand = brand;
     }
+
+    public boolean isReadyForRent() { return readyForRent; }
+
+    public void setReadyForRent(Boolean readyForRent) { this.readyForRent = readyForRent; }
 
     public List<VehicleOption> getVehicleOptions() {
         return vehicleOptions;
