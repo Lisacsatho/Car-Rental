@@ -52,6 +52,5 @@ public class Email {
            Dialogue.alert("OHNOOOO");
        }
 
-
     }
 }
