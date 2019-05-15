@@ -1,5 +1,6 @@
 package se.hkr.Database.VehicleDB;
 
+import javafx.fxml.FXML;
 import javafx.util.Pair;
 import se.hkr.Database.ModelDBHandler;
 import se.hkr.Model.Booking;
@@ -30,7 +31,23 @@ public class VehicleOptionDBHandler extends ModelDBHandler<VehicleOption> {
 
     @Override
     public List<VehicleOption> readAll() throws SQLException {
-        return null;
+        String query = "SELECT * FROM vehicleoption";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            return buildModels(statement.executeQuery());
+        } catch (Exception e) {
+            throw new SQLException("Cannot read vehicle options", e);
+        }
+    }
+
+    public void insertVehicleRelation(Vehicle vehicle, VehicleOption vehicleOption) throws SQLException {
+        String query = "INSERT INTO vehiclehasvehicleoption VALUES (?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, vehicleOption.getId());
+            statement.setInt(2, vehicle.getId());
+            statement.execute();
+        } catch (Exception e) {
+            throw new SQLException("Cannot insert vehicle-vehicle option relation: " + e.getMessage(), e);
+        }
     }
 
     @Override

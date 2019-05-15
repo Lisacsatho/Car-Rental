@@ -31,15 +31,17 @@ import java.util.concurrent.TimeUnit;
 public class ChooseExtrasController implements ReadController<VehicleOption>, Initializable, SessionListener<BookingSession> {
 
     @FXML
-    private TableView<Pair<Vehicle, VehicleOption>> tblOptions,
-                                                    tblBookedOptions;
+    private TableView <Pair<Vehicle, VehicleOption>>
+            tblOptions,
+            tblBookedOptions;
 
     @FXML
-    private TableColumn colCar,
-                        colName,
-                        colPrice,
-                        colBookingName,
-                        colBookingCar;
+    private TableColumn
+            colCar,
+            colName,
+            colPrice,
+            colBookingName,
+            colBookingCar;
     @FXML
     private TextField txtFldPrice;
 
@@ -64,6 +66,7 @@ public class ChooseExtrasController implements ReadController<VehicleOption>, In
             }
         });
         colBookingCar.setCellValueFactory(new PropertyValueFactory<Pair<Vehicle, VehicleOption>, String>("key"));
+
         colBookingName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
             @Override
             public ObservableValue call(TableColumn.CellDataFeatures param) {

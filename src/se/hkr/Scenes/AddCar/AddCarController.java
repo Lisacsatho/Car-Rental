@@ -6,7 +6,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Pair;
+import se.hkr.BookingSession;
 import se.hkr.Database.VehicleDB.*;
+import se.hkr.Dialogue;
 import se.hkr.Model.Vehicle.*;
 import se.hkr.Navigator;
 
@@ -23,7 +27,9 @@ public class AddCarController implements Initializable {
     @FXML
     private Button
             buttonExit,
-            buttonSave;
+            buttonSave,
+            buttonAdd,
+            buttonRemove;
 
     @FXML
     private TextField
@@ -40,12 +46,28 @@ public class AddCarController implements Initializable {
             comboSuitcases,
             comboCarType;
 
+    @FXML
+    private TableView <VehicleOption>
+            tableViewPick,
+            tableViewChoose;
+
+    @FXML
+    private TableColumn
+            colChooseName,
+            colChooseId,
+            colName,
+            colIID;
+
+    private ObservableList<VehicleOption> allVehicleOptions;
+    private ObservableList<VehicleOption> chooseVehicleOptions;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try (FuelTypeDBHandler fuelTypeDBHandler = new FuelTypeDBHandler();
              GearBoxDBHandler gearBoxDBHandler = new GearBoxDBHandler();
              CarTypeDBHandler carTypeDBHandler = new CarTypeDBHandler();
-             VehicleBrandDBHandler vehicleBrandDBHandler = new VehicleBrandDBHandler()) {
+             VehicleBrandDBHandler vehicleBrandDBHandler = new VehicleBrandDBHandler();
+             VehicleOptionDBHandler vehicleOptionDBHandler = new VehicleOptionDBHandler()) {
 
             ObservableList<FuelType> fuelTypes = FXCollections.observableArrayList(fuelTypeDBHandler.readAll());
             comboFuelType.setItems(fuelTypes);
@@ -65,6 +87,20 @@ public class AddCarController implements Initializable {
             ObservableList<Integer> passengers = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6);
             comboPassengers.setItems(passengers);
 
+            allVehicleOptions =FXCollections.observableArrayList(vehicleOptionDBHandler.readAll());
+            chooseVehicleOptions = FXCollections.observableArrayList();
+
+            colIID.setCellValueFactory(new PropertyValueFactory<VehicleOptionDBHandler, Integer>("id"));
+
+            colName.setCellValueFactory(new PropertyValueFactory<VehicleOptionDBHandler, String>("name"));
+
+            colChooseId.setCellValueFactory(new PropertyValueFactory<VehicleOptionDBHandler, Integer>("id"));
+
+            colChooseName.setCellValueFactory(new PropertyValueFactory<VehicleOptionDBHandler, String>("name"));
+
+            tableViewPick.setItems(allVehicleOptions);
+
+            tableViewChoose.setItems(chooseVehicleOptions);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,17 +108,26 @@ public class AddCarController implements Initializable {
     }
 
     @FXML
-    private void buttonAddPressed(ActionEvent ae) {
+    private void buttonSavePressed(ActionEvent ae) {
         if (validate()) {
-            try (CarDBHandler carDBHandler = new CarDBHandler()) {
-                Car car = new Car(Double.parseDouble(textPrice.getText()), textDescription.getText(), ((Integer) comboPassengers.getSelectionModel().getSelectedItem()).intValue(),
-                        (FuelType) comboFuelType.getSelectionModel().getSelectedItem(), (GearBox) comboGearBox.getSelectionModel().getSelectedItem(), textModel.getText(),
-                        Integer.parseInt(textYear.getText()), (VehicleBrand) comboBrand.getSelectionModel().getSelectedItem(), ((Integer) comboSuitcases.getSelectionModel().getSelectedItem()).intValue(),
+            try (CarDBHandler carDBHandler = new CarDBHandler();
+                VehicleOptionDBHandler vehicleOptionDBHandler = new VehicleOptionDBHandler()) {
+                Car car = new Car(Double.parseDouble(textPrice.getText()),
+                        textDescription.getText(),
+                        ((Integer) comboPassengers.getSelectionModel().getSelectedItem()).intValue(),
+                        (FuelType) comboFuelType.getSelectionModel().getSelectedItem(),
+                        (GearBox) comboGearBox.getSelectionModel().getSelectedItem(),
+                        textModel.getText(),
+                        Integer.parseInt(textYear.getText()),
+                        (VehicleBrand) comboBrand.getSelectionModel().getSelectedItem(),
+                        ((Integer) comboSuitcases.getSelectionModel().getSelectedItem()).intValue(),
                         (CarType) comboCarType.getSelectionModel().getSelectedItem());
 
                 carDBHandler.insert(car);
+                for (VehicleOption vehicleOption : chooseVehicleOptions) {
+                    vehicleOptionDBHandler.insertVehicleRelation(car, vehicleOption);
+                }
                 alert("Car was added to the system.");
-                Navigator.getInstance().navigateToPanel();
 
             } catch (SQLException e) {
                 alert("There was a problem while inserting the car into the database, please try again later.");
@@ -142,6 +187,28 @@ public class AddCarController implements Initializable {
         alert.setTitle("Alert");
         alert.setHeaderText(prompt);
         alert.showAndWait();
+    }
+
+    @FXML
+    private void buttonAddPressed(ActionEvent ae) {
+        VehicleOption vehicleOption = tableViewPick.getSelectionModel().getSelectedItem();
+        if (vehicleOption != null) {
+            chooseVehicleOptions.add(vehicleOption);
+            allVehicleOptions.remove(vehicleOption);
+        } else {
+            Dialogue.alert("please choose a vehicle option");
+        }
+    }
+
+    @FXML
+    private void buttonRemovePressed(ActionEvent ae) {
+        VehicleOption vehicleOption = tableViewChoose.getSelectionModel().getSelectedItem();
+        if(vehicleOption != null){
+            allVehicleOptions.add(vehicleOption);
+            chooseVehicleOptions.remove(vehicleOption);
+        } else {
+            Dialogue.alert("No item to remove");
+        }
     }
 }
 
