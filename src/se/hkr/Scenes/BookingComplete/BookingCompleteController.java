@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import se.hkr.Database.BookingDBHandler;
 import se.hkr.Model.Booking;
 import se.hkr.Model.User.Member;

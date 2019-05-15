@@ -35,6 +35,9 @@ public class Main extends Application {
 
         Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");
         //Navigator.getInstance().navigateTo("ViewBookings/ViewBookingsView.fxml");
+
+        //Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");
+        Navigator.getInstance().navigateTo("ViewMembers/ViewMembersView.fxml");
         primaryStage.show();
 
     }
