@@ -6,8 +6,8 @@ public class Car extends Vehicle {
     private int suitcases;
     private CarType carType;
 
-    public Car(int id, double basePrice, String description, int passengerSeats, FuelType fuelType, GearBox gearBox, String modelName, int modelyear, VehicleBrand brand, List<VehicleOption> vehicleOptions, int suitcases, CarType carType) {
-        super(id, basePrice, description, passengerSeats, fuelType, gearBox, modelName, modelyear, brand, vehicleOptions);
+    public Car(int id, double basePrice, String description, int passengerSeats, FuelType fuelType, GearBox gearBox, String modelName, int modelyear, VehicleBrand brand, List<VehicleOption> vehicleOptions, int suitcases, CarType carType, boolean readyForRent) {
+        super(id, basePrice, description, passengerSeats, fuelType, gearBox, modelName, modelyear, brand,  readyForRent, vehicleOptions);
         this.suitcases = suitcases;
         this.carType = carType;
     }
@@ -18,8 +18,8 @@ public class Car extends Vehicle {
         this.carType = carType;
     }
 
-    public Car(int id, double basePrice, String description, int passengers, FuelType fuelType, GearBox gearBox, String modelName, int modelYear, VehicleBrand brand, int suitcases, CarType carType) {
-        super(id, basePrice, description, passengers, fuelType, gearBox, modelName, modelYear, brand);
+    public Car(int id, double basePrice, String description, int passengers, FuelType fuelType, GearBox gearBox, String modelName, int modelYear, VehicleBrand brand, int suitcases, CarType carType, boolean readyForRent) {
+        super(id, basePrice, description, passengers, fuelType, gearBox, modelName, modelYear, brand, readyForRent);
         this.suitcases = suitcases;
         this.carType = carType;
     }
