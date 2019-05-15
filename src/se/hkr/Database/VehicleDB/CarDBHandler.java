@@ -59,8 +59,13 @@ public class CarDBHandler extends VehicleDBHandler<Car>{
     }
 
     @Override
-    public void update(Car model) {
-
+    public void update(Car model) throws SQLException {
+        try {
+            super.update(model);
+            // do eventual update here, nothing to do for now though
+        } catch (Exception e) {
+            throw new SQLException("Could not update car table", e);
+        }
     }
 
     @Override

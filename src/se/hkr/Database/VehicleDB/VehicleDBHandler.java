@@ -17,6 +17,7 @@ public abstract class VehicleDBHandler <V extends Vehicle> extends ModelDBHandle
         if (model instanceof Car) {
             return new CarDBHandler();
         } else {
+            System.out.println("No!");
             return null;
         }
     }
@@ -51,6 +52,16 @@ public abstract class VehicleDBHandler <V extends Vehicle> extends ModelDBHandle
         }
     }
 
+    public static List<Vehicle> readAbstractAll() throws SQLException {
+        List<Vehicle> vehicles = new ArrayList<>();
+        try (CarDBHandler carDBHandler = new CarDBHandler()){
+            vehicles.addAll(carDBHandler.readAll());
+        } catch (Exception e) {
+            throw new SQLException("Cannot read vehicles: " + e.getMessage(), e);
+        }
+        return vehicles;
+    }
+
     // come up with a better name for abstract method.
     public abstract List<V> readForBookingSpecific(Booking booking) throws SQLException;
 
@@ -82,7 +93,16 @@ public abstract class VehicleDBHandler <V extends Vehicle> extends ModelDBHandle
 
     @Override
     public void update(V model) throws SQLException {
-
+        String query = "UPDATE vehicle SET price=? WHERE id=?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setDouble(1, model.getBasePrice());
+            statement.setInt(2, model.getId());
+            if (statement.executeUpdate() != 1) {
+                throw new SQLException("No vehicle with id: " + model.getId());
+            }
+        } catch (Exception e) {
+            throw new SQLException("Could not update vehicle: " + model.getModelName(), e);
+        }
     }
 
     @Override
