@@ -12,16 +12,18 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.MemberPanel.MemberPanelController">
    <children>
-      <ImageView fitHeight="408.0" fitWidth="600.0" layoutY="-2.0">
+      <ImageView fitHeight="407.0" fitWidth="391.0" layoutY="2.0">
          <image>
-            <Image url="@../../Assets/Images/splash.jpg" />
+            <Image url="@../../Assets/Images/lambo4.png" />
          </image>
       </ImageView>
-      <VBox fx:id="containerBookings" layoutX="149.0" layoutY="224.0" prefHeight="174.0" prefWidth="423.0" spacing="10.0" styleClass="high" />
+      <Polygon fill="WHITE" layoutX="199.0" layoutY="113.0" points="50.0, 296.0, 50.0, -85.0, -6.0, -85.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+      <VBox fx:id="containerBookings" layoutX="149.0" layoutY="223.0" prefHeight="174.0" prefWidth="423.0" spacing="10.0" styleClass="high" />
       <MenuBar fx:id="menuBarLogOut" prefHeight="29.0" prefWidth="600.0">
         <menus>
           <Menu mnemonicParsing="false" onAction="#helpMenu" text="Help">
@@ -36,34 +38,43 @@
           </Menu>
         </menus>
       </MenuBar>
-      <DatePicker fx:id="datePickerStart" layoutX="23.0" layoutY="121.0" promptText="Start date" />
-      <DatePicker fx:id="datePickerEnd" layoutX="22.0" layoutY="173.0" promptText="Return date" />
-      <Button fx:id="btnGo" layoutX="50.0" layoutY="224.0" mnemonicParsing="false" onAction="#pressedGo" prefHeight="29.0" prefWidth="49.0" text="Go!" />
-      <Label fx:id="lblWelcomeMessage" layoutX="8.0" layoutY="39.0" prefHeight="23.0" prefWidth="423.0" text="Welcome Message" textAlignment="CENTER" textFill="WHITE">
+      <DatePicker fx:id="datePickerStart" layoutX="18.0" layoutY="96.0" promptText="Start date" />
+      <DatePicker fx:id="datePickerEnd" layoutX="18.0" layoutY="135.0" promptText="Return date" />
+      <Button fx:id="btnGo" layoutX="147.0" layoutY="174.0" mnemonicParsing="false" onAction="#pressedGo" prefHeight="29.0" prefWidth="49.0" text="Go!" />
+      <Label fx:id="lblWelcomeMessage" layoutX="204.0" layoutY="32.0" prefHeight="23.0" prefWidth="385.0" text="Welcome Message" textAlignment="CENTER" textFill="#111111">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="lblSsn" layoutX="288.0" layoutY="58.0" prefHeight="27.0" prefWidth="117.0" text="Ssn" textFill="WHITE">
+      <Label fx:id="lblSsn" layoutX="230.0" layoutY="53.0" prefHeight="27.0" prefWidth="117.0" text="Ssn">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="lblPhoneNumber" layoutX="289.0" layoutY="108.0" prefHeight="17.0" prefWidth="93.0" text="Phonenumber" textFill="WHITE" />
-      <Label fx:id="lbleMail" layoutX="288.0" layoutY="121.0" prefHeight="17.0" prefWidth="212.0" text="Email" textFill="WHITE" />
-      <Label fx:id="lblStreet" layoutX="288.0" layoutY="78.0" text="Street" textFill="WHITE">
+      <Label fx:id="lblPhoneNumber" layoutX="230.0" layoutY="116.0" prefHeight="17.0" prefWidth="93.0" text="Phonenumber">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label fx:id="lbleMail" layoutX="230.0" layoutY="136.0" prefHeight="17.0" prefWidth="212.0" text="Email">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label fx:id="lblStreet" layoutX="230.0" layoutY="76.0" text="Street" textFill="#0d0d0d">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="lblZip" layoutX="289.0" layoutY="93.0" prefHeight="18.0" prefWidth="117.0" text="Zip" textFill="WHITE">
+      <Label fx:id="lblZip" layoutX="230.0" layoutY="96.0" prefHeight="18.0" prefWidth="117.0" text="Zip" textFill="#030303">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="lblCity" layoutX="347.0" layoutY="93.0" prefHeight="17.0" prefWidth="93.0" text="City" textFill="WHITE" />
-      <Button fx:id="btnEditMember" layoutX="339.0" layoutY="159.0" mnemonicParsing="false" onAction="#editMemberInformation" prefHeight="27.0" prefWidth="132.0" text="Edit information" />
-      <AnchorPane layoutX="229.0" layoutY="49.0" opacity="0.16" prefHeight="105.0" prefWidth="264.0" styleClass="dark-panel">
+      <Label fx:id="lblCity" layoutX="314.0" layoutY="96.0" prefHeight="17.0" prefWidth="93.0" text="City" textFill="#030303">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Button fx:id="btnEditMember" layoutX="230.0" layoutY="171.0" mnemonicParsing="false" onAction="#editMemberInformation" prefHeight="27.0" prefWidth="117.0" text="Edit information" />
+      <AnchorPane layoutX="399.0" layoutY="52.0" opacity="0.16" prefHeight="94.0" prefWidth="187.0" styleClass="dark-panel">
          <effect>
             <Bloom threshold="0.0">
                <input>
@@ -72,7 +83,7 @@
             </Bloom>
          </effect>
       </AnchorPane>
-      <Label layoutX="23.0" layoutY="89.0" prefHeight="18.0" prefWidth="93.0" text="Cruise dates:" textFill="WHITE">
+      <Label layoutX="19.0" layoutY="67.0" prefHeight="18.0" prefWidth="93.0" text="Cruise dates:" textFill="WHITE">
          <font>
             <Font size="14.0" />
          </font>
