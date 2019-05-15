@@ -72,8 +72,7 @@ public class ViewBookingsController implements ReadController<Booking>, Initiali
     private Label lblLateReturn;
 
     @FXML
-    private CheckBox    checkBoxReturned,
-                        checkBoxShowReturned;
+    private CheckBox checkBoxReturned, checkBoxShowReturned;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
