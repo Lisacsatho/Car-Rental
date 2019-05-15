@@ -17,7 +17,7 @@ public class CarDBHandler extends VehicleDBHandler<Car>{
         List<Car> cars;
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String subQuery = "SELECT vehicleId FROM bookinghasvehicle JOIN booking ON booking.id = bookinghasvehicle.bookingId WHERE (startDate BETWEEN ? AND ?) OR (endDate BETWEEN ? AND ?) OR (startDate <= ?) AND (endDate >= ?)";
-        String readAvailable = String.format("SELECT * FROM AllCars WHERE id NOT IN (%s)", subQuery);
+        String readAvailable = String.format("SELECT * FROM AllCars WHERE id NOT IN (%s) AND readyForRent=1 AND inInventory=1", subQuery);
         try (PreparedStatement statement = connection.prepareStatement(readAvailable)) {
             statement.setString(1, format.format(startDate));
             statement.setString(2, format.format(endDate));
@@ -69,6 +69,11 @@ public class CarDBHandler extends VehicleDBHandler<Car>{
     }
 
     @Override
+    public void inactivate(Car model) throws SQLException {
+        super.inactivate(model);
+    }
+
+    @Override
     public void delete(Car model) {
 
     }
@@ -76,13 +81,24 @@ public class CarDBHandler extends VehicleDBHandler<Car>{
     @Override
     public List<Car> readAll() {
         List<Car> cars = new ArrayList<>();
-        String query = String.format("SELECT * FROM AllCars");
+        String query = "SELECT * FROM AllCars WHERE inInventory=1";
         try (Statement statement = connection.createStatement()) {
             ResultSet set = statement.executeQuery(query);
             cars = buildModels(set);
         } catch (Exception e) {
             // TODO: Handle error
             e.printStackTrace();
+        }
+        return cars;
+    }
+
+    public List<Car> readAllIncludingInactive() throws SQLException {
+        List<Car> cars = new ArrayList<>();
+        String query = "SELECT * FROM AllCars";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            cars.addAll(buildModels(statement.executeQuery()));
+        } catch (Exception e) {
+            throw new SQLException("Could not fetch cars", e);
         }
         return cars;
     }

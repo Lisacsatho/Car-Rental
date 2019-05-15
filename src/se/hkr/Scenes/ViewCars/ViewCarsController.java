@@ -47,6 +47,9 @@ public class ViewCarsController implements ReadController<Vehicle>, Initializabl
     @FXML
     private TextField txtFldPriceFrom;
 
+    @FXML
+    private CheckBox checkBoxShowInactive;
+
     private ObservableList<Vehicle> matchingVehicles;
     private List<Vehicle> allVehicles;
 
@@ -121,7 +124,11 @@ public class ViewCarsController implements ReadController<Vehicle>, Initializabl
 
     private void updateList() {
         try {
-            allVehicles = FXCollections.observableArrayList(VehicleDBHandler.readAbstractAll());
+            if (checkBoxShowInactive.isSelected()) {
+                allVehicles = FXCollections.observableArrayList(VehicleDBHandler.readAbstractAllIncludingInactive());
+            } else {
+                allVehicles = FXCollections.observableArrayList(VehicleDBHandler.readAbstractAll());
+            }
             if (matchingVehicles == null) {
                 matchingVehicles = FXCollections.observableArrayList();
                 matchingVehicles.addAll(allVehicles);
@@ -168,6 +175,27 @@ public class ViewCarsController implements ReadController<Vehicle>, Initializabl
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
+        }
+    }
+
+    @FXML
+    private void buttonInactivatePressed() {
+        Vehicle vehicle = tblVehicles.getSelectionModel().getSelectedItem();
+        if (vehicle != null) {
+            if (Dialogue.alertOk("Are you sure you want to inactivate " + vehicle.getModelName() + "?")) {
+                try (VehicleDBHandler vehicleDBHandler = VehicleDBHandler.getHandlerFor(vehicle)) {
+                    vehicleDBHandler.inactivate(vehicle);
+                    Dialogue.inform("Vehicle has been inactivated.");
+                    resetDisplay();
+                    updateList();
+                } catch (SQLException e) {
+                    Dialogue.alert(e.getMessage());
+                } catch (Exception e) {
+                    Dialogue.alert(e.getMessage());
+                }
+            }
+        } else {
+            Dialogue.alert("Please choose a vehicle to inactivate.");
         }
     }
 

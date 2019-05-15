@@ -1,4 +1,5 @@
 package se.hkr.Database.VehicleDB;
+import com.mysql.cj.jdbc.exceptions.SQLError;
 import se.hkr.Database.ModelDBHandler;
 import se.hkr.Model.Booking;
 import se.hkr.Model.Vehicle.Car;
@@ -62,6 +63,16 @@ public abstract class VehicleDBHandler <V extends Vehicle> extends ModelDBHandle
         return vehicles;
     }
 
+    public static List<Vehicle> readAbstractAllIncludingInactive() throws SQLException {
+        List<Vehicle> vehicles = new ArrayList<>();
+        try (CarDBHandler carDBHandler = new CarDBHandler()) {
+            vehicles.addAll(carDBHandler.readAllIncludingInactive());
+        } catch (Exception e) {
+            throw new SQLException("Cannot read vehicles: " + e.getMessage(), e);
+        }
+        return vehicles;
+    }
+
     // come up with a better name for abstract method.
     public abstract List<V> readForBookingSpecific(Booking booking) throws SQLException;
 
@@ -102,6 +113,18 @@ public abstract class VehicleDBHandler <V extends Vehicle> extends ModelDBHandle
             }
         } catch (Exception e) {
             throw new SQLException("Could not update vehicle: " + model.getModelName(), e);
+        }
+    }
+
+    public void inactivate(V model) throws SQLException {
+        String query = "UPDATE vehicle SET inInventory=0 WHERE id=?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, model.getId());
+            if (statement.executeUpdate() != 1) {
+                throw new SQLException("No vehicle with id: " + model.getId() + " found.");
+            }
+        } catch (Exception e) {
+            throw new SQLException("Could not disable vehicle.");
         }
     }
 
