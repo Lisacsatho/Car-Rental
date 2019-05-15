@@ -8,16 +8,20 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import se.hkr.BookingSession;
 import se.hkr.ComboBoxButtonCell;
 import se.hkr.Database.VehicleDB.*;
 import se.hkr.Dialogue;
+import se.hkr.Model.Booking;
 import se.hkr.Model.Vehicle.*;
 import se.hkr.Scenes.ReadController;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 public class ViewCarsController implements ReadController<Vehicle>, Initializable {
     @FXML
@@ -46,6 +50,9 @@ public class ViewCarsController implements ReadController<Vehicle>, Initializabl
                   lblGearBox;
     @FXML
     private TextField txtFldPriceFrom;
+
+    @FXML
+    private CheckBox checkBoxShowInactive;
 
     private ObservableList<Vehicle> matchingVehicles;
     private List<Vehicle> allVehicles;
@@ -121,7 +128,11 @@ public class ViewCarsController implements ReadController<Vehicle>, Initializabl
 
     private void updateList() {
         try {
-            allVehicles = FXCollections.observableArrayList(VehicleDBHandler.readAbstractAll());
+            if (checkBoxShowInactive.isSelected()) {
+                allVehicles = FXCollections.observableArrayList(VehicleDBHandler.readAbstractAllIncludingInactive());
+            } else {
+                allVehicles = FXCollections.observableArrayList(VehicleDBHandler.readAbstractAll());
+            }
             if (matchingVehicles == null) {
                 matchingVehicles = FXCollections.observableArrayList();
                 matchingVehicles.addAll(allVehicles);
@@ -168,6 +179,27 @@ public class ViewCarsController implements ReadController<Vehicle>, Initializabl
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
+        }
+    }
+
+    @FXML
+    private void buttonInactivatePressed() {
+        Vehicle vehicle = tblVehicles.getSelectionModel().getSelectedItem();
+        if (vehicle != null) {
+            if (Dialogue.alertOk("Are you sure you want to inactivate " + vehicle.getModelName() + "?")) {
+                try (VehicleDBHandler vehicleDBHandler = VehicleDBHandler.getHandlerFor(vehicle)) {
+                    vehicleDBHandler.inactivate(vehicle);
+                    Dialogue.inform("Vehicle has been inactivated.");
+                    resetDisplay();
+                    updateList();
+                } catch (SQLException e) {
+                    Dialogue.alert(e.getMessage());
+                } catch (Exception e) {
+                    Dialogue.alert(e.getMessage());
+                }
+            }
+        } else {
+            Dialogue.alert("Please choose a vehicle to inactivate.");
         }
     }
 
