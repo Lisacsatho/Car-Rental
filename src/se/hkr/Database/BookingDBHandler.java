@@ -61,10 +61,11 @@ public class BookingDBHandler extends ModelDBHandler<Booking> {
 
     @Override
     public void update(Booking model) throws SQLException {
-        String query = "UPDATE booking SET totalPrice=? WHERE id=?";
+        String query = "UPDATE booking SET totalPrice=?, isReturned=? WHERE id=?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setDouble(1, model.getTotalPrice());
-            statement.setInt(2, model.getId());
+            statement.setBoolean(2, model.isReturned());
+            statement.setInt(3, model.getId());
             if (statement.executeUpdate() < 1) {
                 throw new SQLException("No booking found with id: " + model.getId());
             }
@@ -182,7 +183,7 @@ public class BookingDBHandler extends ModelDBHandler<Booking> {
         List<Booking> bookings = new ArrayList<>();
         try (VehicleOptionDBHandler vehicleOptionDBHandler = new VehicleOptionDBHandler()) {
             while (set.next()) {
-                Booking booking = new Booking(set.getInt("bookingId"), set.getDate("startDate"), set.getDate("endDate"), set.getDouble("totalPrice"), set.getString("member"));
+                Booking booking = new Booking(set.getInt("bookingId"), set.getDate("startDate"), set.getDate("endDate"), set.getDouble("totalPrice"), set.getString("member"), set.getBoolean("isReturned"));
                 // It's important that the vehicles are read before the vehicle options.
                 List<Vehicle> vehicles = VehicleDBHandler.readForBooking(booking);
                 booking.setVehicles(vehicles);
@@ -201,7 +202,7 @@ public class BookingDBHandler extends ModelDBHandler<Booking> {
         List<Booking> bookings = new ArrayList<>();
         try {
             while (set.next()) {
-                Booking booking = new Booking(set.getInt("id"), set.getDate("startDate"), set.getDate("endDate"), set.getDouble("totalPrice"), set.getString("member"));
+                Booking booking = new Booking(set.getInt("id"), set.getDate("startDate"), set.getDate("endDate"), set.getDouble("totalPrice"), set.getString("member"), set.getBoolean("isReturned"));
                 bookings.add(booking);
             }
         } catch (Exception e) {

@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Paint;
 import javafx.util.Callback;
 import javafx.util.Pair;
 import se.hkr.Database.BookingDBHandler;
@@ -63,8 +64,16 @@ public class ViewBookingsController implements ReadController<Booking>, Initiali
 
     @FXML
     private DatePicker datePicStartDate, datePicEndDate;
+
     @FXML
     private TextField txtFldTotalPrice;
+
+    @FXML
+    private Label lblLateReturn;
+
+    @FXML
+    private CheckBox    checkBoxReturned,
+                        checkBoxShowReturned;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -114,6 +123,7 @@ public class ViewBookingsController implements ReadController<Booking>, Initiali
                 matchingBookings.clear();
                 matchingBookings.addAll(allBookings);
             }
+            search();
         } catch (Exception e) {
             Dialogue.alert("Could not connect to database.");
         }
@@ -134,6 +144,26 @@ public class ViewBookingsController implements ReadController<Booking>, Initiali
             datePicStartDate.setValue(LocalDate.parse(simpleDateFormat.format(booking.getStartDate())));
             datePicEndDate.setValue(LocalDate.parse(simpleDateFormat.format(booking.getEndDate())));
 
+            if (!booking.isReturned()) {
+                checkBoxReturned.setDisable(false);
+                checkBoxReturned.setSelected(false);
+                long daysLate = calculateLateBooking(booking);
+                if (daysLate > 0) {
+                    lblLateReturn.textFillProperty().setValue(Paint.valueOf("#c0392b"));
+                    lblLateReturn.setText(String.format("Booking is late %d days.", daysLate));
+                } else if (daysLate == 0) {
+                    lblLateReturn.textFillProperty().setValue(Paint.valueOf("#E8AB20"));
+                    lblLateReturn.setText("Return is expected today");
+                } else {
+                    lblLateReturn.textFillProperty().setValue(Paint.valueOf("#27ae60"));
+                    lblLateReturn.setText(String.format("There are %d days left until return date.", Math.abs(daysLate)));
+                }
+            } else {
+                lblLateReturn.textFillProperty().setValue(Paint.valueOf("#27ae60"));
+                lblLateReturn.setText("Booking has been returned.");
+                checkBoxReturned.setSelected(true);
+                checkBoxReturned.setDisable(true);
+            }
             txtFldTotalPrice.setText(String.format("%.2f", booking.getTotalPrice()));
         } catch (Exception e) {
             resetDisplay();
@@ -150,6 +180,15 @@ public class ViewBookingsController implements ReadController<Booking>, Initiali
         } else {
             Dialogue.alert("Please choose a vehicle to delete.");
         }
+    }
+
+    private long calculateLateBooking(Booking booking) {
+        Date today = new Date();
+        Date endDate = booking.getEndDate();
+        long diff = today.getTime() - endDate.getTime();
+        long days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+
+        return days;
     }
 
     private void removeVehicle(Vehicle vehicle) {
@@ -195,6 +234,7 @@ public class ViewBookingsController implements ReadController<Booking>, Initiali
         datePicStartDate.setValue(null);
         datePicEndDate.setValue(null);
         txtFldTotalPrice.clear();
+        lblLateReturn.setText("");
     }
 
     private double calculatePriceForCurrentBooking() {
@@ -220,16 +260,32 @@ public class ViewBookingsController implements ReadController<Booking>, Initiali
         Booking booking = tblBookings.getSelectionModel().getSelectedItem();
         if (booking != null) {
             try (BookingDBHandler bookingDBHandler = new BookingDBHandler()) {
-                booking.setTotalPrice(Double.parseDouble(txtFldTotalPrice.getText()));
-                bookingDBHandler.update(booking);
+                Booking extendedBooking = bookingDBHandler.readByPrimaryKey(Integer.toString(booking.getId()));
+                double price = Double.parseDouble(txtFldTotalPrice.getText());
+                if (checkBoxReturned.isSelected() && calculateLateBooking(extendedBooking) > 0) {
+                    double penaltyFine = 0.0;
+                    for (Vehicle vehicle : extendedBooking.getVehicles()) {
+                        penaltyFine += vehicle.getBasePrice();
+                    }
+                    for (Pair<Vehicle, VehicleOption> pair : extendedBooking.getVehicleOptions()) {
+                        penaltyFine += pair.getValue().getPrice();
+                    }
+                    penaltyFine *= calculateLateBooking(extendedBooking);
+                    price += penaltyFine;
+                    Dialogue.inform("The customer recieved a $" + penaltyFine + " penalty fine.");
+                }
+                extendedBooking.setTotalPrice(price);
+                extendedBooking.setReturned(checkBoxReturned.isSelected());
+                bookingDBHandler.update(extendedBooking);
                 for (Vehicle vehicle : vehiclesToRemove) {
-                    bookingDBHandler.removeVehicleFromBooking(vehicle, booking);
+                    bookingDBHandler.removeVehicleFromBooking(vehicle, extendedBooking);
                 }
                 for (Pair<Vehicle, VehicleOption> vehicleOption : vehicleOptionsToRemove) {
-                    bookingDBHandler.removeVehicleOptionFromBooking(vehicleOption, booking);
+                    bookingDBHandler.removeVehicleOptionFromBooking(vehicleOption, extendedBooking);
                 }
                 Dialogue.inform("Booking was updated!");
             } catch (Exception e) {
+                e.printStackTrace();
                 Dialogue.alert(e.getMessage());
             }
             updateBookingList();
@@ -287,16 +343,28 @@ public class ViewBookingsController implements ReadController<Booking>, Initiali
             if (datePicFilterFrom.getValue() != null && datePicFilterTo.getValue() == null) {
                 Date filterStartDate = extractDate(datePicFilterFrom);
                 if (booking.getStartDate().after(filterStartDate)) {
-                    matchingBookings.add(booking);
+                    if (checkBoxShowReturned.isSelected() && booking.isReturned()) {
+                        matchingBookings.add(booking);
+                    } else if (!checkBoxShowReturned.isSelected() && !booking.isReturned()) {
+                        matchingBookings.add(booking);
+                    }
                 }
             } else if (datePicFilterFrom.getValue() != null && datePicFilterTo.getValue() != null) {
                 Date filterStartDate = extractDate(datePicFilterFrom);
                 Date filterEndDate = extractDate(datePicFilterTo);
                 if (booking.getStartDate().after(filterStartDate) && booking.getStartDate().before(filterEndDate)) {
-                    matchingBookings.add(booking);
+                    if (checkBoxShowReturned.isSelected() && booking.isReturned()) {
+                        matchingBookings.add(booking);
+                    } else if (!checkBoxShowReturned.isSelected() && !booking.isReturned()) {
+                        matchingBookings.add(booking);
+                    }
                 }
             } else {
-                matchingBookings.add(booking);
+                if (checkBoxShowReturned.isSelected() && booking.isReturned()) {
+                    matchingBookings.add(booking);
+                } else if (!checkBoxShowReturned.isSelected() && !booking.isReturned()) {
+                    matchingBookings.add(booking);
+                }
             }
         }
     }
@@ -306,17 +374,29 @@ public class ViewBookingsController implements ReadController<Booking>, Initiali
             if (datePicFilterFrom.getValue() != null && datePicFilterTo == null) {
                 Date filterStartDate = extractDate(datePicFilterFrom);
                 if (booking.matches(key) && (booking.getStartDate().after(filterStartDate))) {
-                    matchingBookings.add(booking);
+                    if (checkBoxShowReturned.isSelected() && booking.isReturned()) {
+                        matchingBookings.add(booking);
+                    } else if (!checkBoxShowReturned.isSelected() && !booking.isReturned()) {
+                        matchingBookings.add(booking);
+                    }
                 }
             } else if (datePicFilterFrom.getValue() != null && datePicFilterTo.getValue() != null) {
                 Date filterStartDate = extractDate(datePicFilterFrom);
                 Date filterEndDate = extractDate(datePicFilterTo);
                 if (booking.matches(key) && (booking.getStartDate().after(filterStartDate) && booking.getStartDate().before(filterEndDate))) {
-                    matchingBookings.add(booking);
+                    if (checkBoxShowReturned.isSelected() && booking.isReturned()) {
+                        matchingBookings.add(booking);
+                    } else if (!checkBoxShowReturned.isSelected() && !booking.isReturned()) {
+                        matchingBookings.add(booking);
+                    }
                 }
             } else {
                 if (booking.matches(key)) {
-                    matchingBookings.add(booking);
+                    if (checkBoxShowReturned.isSelected() && booking.isReturned()) {
+                        matchingBookings.add(booking);
+                    } else if (!checkBoxShowReturned.isSelected() && !booking.isReturned()) {
+                        matchingBookings.add(booking);
+                    }
                 }
             }
         }

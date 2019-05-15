@@ -13,16 +13,18 @@ public class Booking implements Model {
     private Date endDate;
     private double totalPrice;
     private String member;
+    private boolean isReturned;
 
     private List<Pair<Vehicle, VehicleOption>> vehicleOptions;
     private List<Vehicle> vehicles;
 
-    public Booking(int id, Date startDate, Date endDate, double totalPrice, String member) {
+    public Booking(int id, Date startDate, Date endDate, double totalPrice, String member, boolean isReturned) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
         this.totalPrice = totalPrice;
         this.member = member;
+        this.isReturned = isReturned;
     }
 
     public Booking() {
@@ -83,6 +85,14 @@ public class Booking implements Model {
 
     public void setMember(String member) {
         this.member = member;
+    }
+
+    public boolean isReturned() {
+        return isReturned;
+    }
+
+    public void setReturned(boolean returned) {
+        isReturned = returned;
     }
 
     @Override
