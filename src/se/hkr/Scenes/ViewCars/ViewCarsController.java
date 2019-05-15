@@ -44,6 +44,9 @@ public class ViewCarsController implements ReadController<Vehicle>, Initializabl
     @FXML
     private TextField txtFldSearch;
 
+  /* @FXML
+    private Button btnInspectNeed;*/
+
     @FXML
     private Label lblVehicleName,
                   lblFuelType,
@@ -52,7 +55,9 @@ public class ViewCarsController implements ReadController<Vehicle>, Initializabl
     private TextField txtFldPriceFrom;
 
     @FXML
-    private CheckBox checkBoxShowInactive;
+    private CheckBox checkBoxShowInactive,
+                     checkBoxShowInspected,
+                     checkBoxReadyRent;
 
     private ObservableList<Vehicle> matchingVehicles;
     private List<Vehicle> allVehicles;
@@ -128,25 +133,32 @@ public class ViewCarsController implements ReadController<Vehicle>, Initializabl
 
     private void updateList() {
         try {
-            if (checkBoxShowInactive.isSelected()) {
+            if (checkBoxShowInspected.isSelected()) {
                 allVehicles = FXCollections.observableArrayList(VehicleDBHandler.readAbstractAllIncludingInactive());
             } else {
-                allVehicles = FXCollections.observableArrayList(VehicleDBHandler.readAbstractAll());
+                allVehicles = FXCollections.observableArrayList(VehicleDBHandler.readAbstractAll());}
+
+                if (checkBoxShowInactive.isSelected()) {
+                    allVehicles = FXCollections.observableArrayList(VehicleDBHandler.readAbstractAllIncludingInactive());
+                } else {
+                    allVehicles = FXCollections.observableArrayList(VehicleDBHandler.readAbstractAll());
+                }
+                if (matchingVehicles == null) {
+                    matchingVehicles = FXCollections.observableArrayList();
+                    matchingVehicles.addAll(allVehicles);
+                } else {
+                    matchingVehicles.clear();
+                    matchingVehicles.addAll(allVehicles);
+                }
+
+            } catch(SQLException e){
+                Dialogue.alert(e.getMessage());
             }
-            if (matchingVehicles == null) {
-                matchingVehicles = FXCollections.observableArrayList();
-                matchingVehicles.addAll(allVehicles);
-            } else {
-                matchingVehicles.clear();
-                matchingVehicles.addAll(allVehicles);
-            }
-        } catch (SQLException e) {
-            Dialogue.alert(e.getMessage());
         }
-    }
 
     private void resetDisplay() {
         tblVehicles.getSelectionModel().clearSelection();
+        checkBoxReadyRent.setSelected(false);
         lblVehicleName.setText("Vehicle name");
         lblFuelType.setText("Fuel type: ");
         lblGearBox.setText("Gear box: ");
@@ -155,6 +167,7 @@ public class ViewCarsController implements ReadController<Vehicle>, Initializabl
 
     private void displayVehicle(Vehicle vehicle) {
         if (vehicle != null) {
+            checkBoxReadyRent.setSelected(vehicle.isReadyForRent());
             lblVehicleName.setText(String.format("%s %s, %d", vehicle.getBrand().getName(), vehicle.getModelName(), vehicle.getModelYear()));
             lblFuelType.setText(String.format("Fuel type: %s", vehicle.getFuelType().getName()));
             lblGearBox.setText(String.format("Gear box: %s", vehicle.getGearBox().getName()));
@@ -168,6 +181,7 @@ public class ViewCarsController implements ReadController<Vehicle>, Initializabl
         if (vehicle != null) {
             try (VehicleDBHandler vehicleDBHandler = VehicleDBHandler.getHandlerFor(vehicle)) {
                 vehicle.setBasePrice(Double.parseDouble(txtFldPriceFrom.getText()));
+                vehicle.setReadyForRent(checkBoxReadyRent.isSelected());
                 vehicleDBHandler.update(vehicle);
                 Dialogue.inform("Vehicle was updated!");
                 resetDisplay();
@@ -200,6 +214,27 @@ public class ViewCarsController implements ReadController<Vehicle>, Initializabl
             }
         } else {
             Dialogue.alert("Please choose a vehicle to inactivate.");
+        }
+    }
+
+    @FXML
+    private void btnInspectNeedPressed(){
+        Vehicle vehicle = tblVehicles.getSelectionModel().getSelectedItem();
+        if (vehicle != null) {
+            if (Dialogue.alertOk("Vehicle needed for inspection is " + vehicle.getModelName() + "?")) {
+                try (VehicleDBHandler vehicleDBHandler = VehicleDBHandler.getHandlerFor(vehicle)) {
+                    vehicleDBHandler.inactivate(vehicle);
+                    Dialogue.inform("Vehicle has been sent to inspection.");
+                    resetDisplay();
+                    updateList();
+                } catch (SQLException e) {
+                    Dialogue.alert(e.getMessage());
+                } catch (Exception e) {
+                    Dialogue.alert(e.getMessage());
+                }
+            }
+        } else {
+            Dialogue.alert("Please choose a vehicle to send to inspection.");
         }
     }
 

@@ -131,7 +131,7 @@ public class CarDBHandler extends VehicleDBHandler<Car>{
                 CarType carType = CarTypeDBHandler.buildModelWithColumnNames(set, "carTypeId", "carTypeName");
                 VehicleBrand vehicleBrand = VehicleBrandDBHandler.buildModelWithColumnNames(set, "brandId", "brandName");
 
-                Car car = new Car(set.getInt("id"), set.getDouble("price"), set.getString("description"), set.getInt("passengers"), fuelType, gearBox, set.getString("modelName"), set.getInt("modelYear"), vehicleBrand, set.getInt("suitcases"), carType);
+                Car car = new Car(set.getInt("id"), set.getDouble("price"), set.getString("description"), set.getInt("passengers"), fuelType, gearBox, set.getString("modelName"), set.getInt("modelYear"), vehicleBrand, set.getInt("suitcases"), carType, set.getBoolean("readyForRent"));
                 List<VehicleOption> vehicleOptions = vehicleOptionDBHandler.readForVehicle(car);
                 car.setVehicleOptions(vehicleOptions);
                 cars.add(car);
@@ -151,7 +151,7 @@ public class CarDBHandler extends VehicleDBHandler<Car>{
             CarType carType = CarTypeDBHandler.buildModelWithColumnNames(set, "carTypeId", "carTypeName");
             VehicleBrand vehicleBrand = VehicleBrandDBHandler.buildModelWithColumnNames(set, "brandId", "brandName");
 
-            car = new Car(set.getInt("id"), set.getDouble("price"), set.getString("description"), set.getInt("passengers"), fuelType, gearBox, set.getString("modelName"), set.getInt("modelYear"), vehicleBrand, set.getInt("suitcases"), carType);
+            car = new Car(set.getInt("id"), set.getDouble("price"), set.getString("description"), set.getInt("passengers"), fuelType, gearBox, set.getString("modelName"), set.getInt("modelYear"), vehicleBrand, set.getInt("suitcases"), carType, set.getBoolean("readyForRent"));
             List<VehicleOption> vehicleOptions = vehicleOptionDBHandler.readForVehicle(car);
             car.setVehicleOptions(vehicleOptions);
         } catch (Exception e) {
