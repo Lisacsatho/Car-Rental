@@ -18,7 +18,7 @@ public class DatabaseConnection implements Database {
     private final String ADDRESS = String.format("jdbc:mysql://%s/%s?user=%s&password=%s&serverTimezone=UTC",
                                                 IP, DATABASE, USERNAME, PASSWORD);
     private Queue<Connection> connections;
-    private final int INITIAL_CONNECTIONS = 8;
+    private final int INITIAL_CONNECTIONS = 6;
     private final int MAX_CONNECTIONS = 10;
     private List<Connection> connectionsInUse;
 

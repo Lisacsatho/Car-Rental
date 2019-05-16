@@ -125,10 +125,10 @@ public class AddVehicleController implements Initializable {
                 for (VehicleOption vehicleOption : chooseVehicleOptions) {
                     vehicleOptionDBHandler.insertVehicleRelation(car, vehicleOption);
                 }
-                alert("Car was added to the system.");
+                Dialogue.inform("Car was added to the system.");
 
             } catch (SQLException e) {
-                alert("There was a problem while inserting the car into the database, please try again later.");
+                Dialogue.alert("There was a problem while inserting the car into the database, please try again later.");
             } catch (Exception e) {
 
             }
@@ -137,39 +137,39 @@ public class AddVehicleController implements Initializable {
 
     private boolean validate() {
         if (comboFuelType.getSelectionModel().isEmpty()) {
-            alert("Please select a fuel type");
+            Dialogue.alert("Please select a fuel type");
             return false;
         }
         if (comboBrand.getSelectionModel().isEmpty()) {
-            alert("Please select a brand");
+            Dialogue.alert("Please select a brand");
             return false;
         }
         if (comboGearBox.getSelectionModel().isEmpty()) {
-            alert("Please select a gear box");
+            Dialogue.alert("Please select a gear box");
             return false;
         }
         if (comboPassengers.getSelectionModel().isEmpty()) {
-            alert("Please select amount of passengers");
+            Dialogue.alert("Please select amount of passengers");
             return false;
         }
         if (comboSuitcases.getSelectionModel().isEmpty()) {
-            alert("Please select amount of suitcases");
+            Dialogue.alert("Please select amount of suitcases");
             return false;
         }
         if (comboCarType.getSelectionModel().isEmpty()) {
-            alert("Please select a car type");
+            Dialogue.alert("Please select a car type");
             return false;
         }
         if (textModel.getText().isEmpty()) {
-            alert("Please specify a model");
+            Dialogue.alert("Please specify a model");
             return false;
         }
         if (textYear.getText().isEmpty()) {
-            alert("Please specify a model year");
+            Dialogue.alert("Please specify a model year");
             return false;
         }
         if (textPrice.getText().isEmpty()) {
-            alert("Please specify the price");
+            Dialogue.alert("Please specify the price");
             return false;
         }
         return true;
@@ -177,14 +177,7 @@ public class AddVehicleController implements Initializable {
 
     @FXML
     private void buttonExitPressed(ActionEvent ae) {
-        Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");
-    }
-
-    private void alert(String prompt) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Alert");
-        alert.setHeaderText(prompt);
-        alert.showAndWait();
+        Navigator.getInstance().navigateToPanel();
     }
 
     @FXML

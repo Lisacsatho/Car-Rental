@@ -47,7 +47,7 @@ public class MemberPanelController implements Initializable {
         try (BookingDBHandler bookingDBHandler = new BookingDBHandler()) {
             List<Booking> bookings = bookingDBHandler.readForMemberSimple((Member) UserSession.getInstance().getSessionObject());
             bookings.forEach((booking -> {
-                containerBookings.getChildren().add(buildBooking(booking));
+                containerBookings.getChildren().add(buildBookingGUI(booking));
             }));
             lblWelcomeMessage.setText("Welcome " + UserSession.getInstance().getSessionObject().getFirstName() + " " + UserSession.getInstance().getSessionObject().getLastName() + "!");
             lblSsn.setText(UserSession.getInstance().getSessionObject().getSocialSecurityNo());
@@ -62,7 +62,7 @@ public class MemberPanelController implements Initializable {
         }
     }
 
-    public HBox buildBooking(Booking booking) {
+    private HBox buildBookingGUI(Booking booking) {
         HBox container = new HBox();
         container.setAlignment(Pos.CENTER);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -73,7 +73,6 @@ public class MemberPanelController implements Initializable {
         endDate.setPadding(insets);
         Label id = new Label("Booking id: " + booking.getId());
         id.setPadding(insets);
-        System.out.println(booking.getId());
 
         container.getChildren().addAll(id, startDate, endDate);
         container.getStyleClass().add("highlighted-button");
