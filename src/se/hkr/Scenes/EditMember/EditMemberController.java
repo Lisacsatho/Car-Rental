@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 public class EditMemberController implements Initializable {
 
     @FXML
-    TextField txtFldFirstName,
+    private TextField txtFldFirstName,
             txtFldLastName,
             txtFldSsn,
             txtFldAddress,
@@ -32,16 +32,38 @@ public class EditMemberController implements Initializable {
             txtFldCity;
 
     @FXML
-    Button btnSave,
-            btnGoBack;
+    private Button
+            btnSave,
+            btnBack;
 
-    public void btnSavePressed(ActionEvent ae) {
+    public void btnSavePressed(ActionEvent event) {
+        if (event.getSource() == btnSave) {
+            try (MemberDBHandler memberDBHandler = new MemberDBHandler()) {
 
+                Member member = (Member) UserSession.getInstance().getSessionObject();
+                member.setFirstName(txtFldFirstName.getText());
+                member.setLastName(txtFldLastName.getText());
+                member.setEmail((txtFldEmail.getText()));
+                member.setSocialSecurityNo(txtFldSsn.getText());
+                member.setPhoneNumber(txtFldPhone.getText());
+                member.getAddress().setStreet(txtFldAddress.getText());
+                member.getAddress().setZip(txtFldZip.getText());
+                member.getAddress().setState(txtFldCity.getText());
+
+                memberDBHandler.update(member);
+
+            } catch (Exception e) {
+                Dialogue.alert(e.getMessage());
+            }
+
+        }
     }
 
-    public void btnGoBackPressed(ActionEvent ae) {
-        Navigator.getInstance().navigateTo("ViewBookings/ViewBookingsView.fxml");
 
+    public void btnGoBackPressed(ActionEvent event) {
+        if (event.getSource() == btnBack) {
+            Navigator.getInstance().navigateTo("MemberPanel/MemberPanelView.fxml");
+        }
     }
 
     @Override
@@ -63,5 +85,3 @@ public class EditMemberController implements Initializable {
         }
     }
 }
-
-

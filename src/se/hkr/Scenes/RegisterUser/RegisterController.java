@@ -33,6 +33,9 @@ public class RegisterController {
             txtFldState,
             txtFldDriversLicense;
 
+    @FXML
+    private Button btnJoin;
+
     public void registerUser() {
         try (MemberDBHandler memberDBHandler = new MemberDBHandler()) {
             // TODO: implement more input verification.
@@ -57,5 +60,13 @@ public class RegisterController {
 
     public void goBack (ActionEvent event) {
         Navigator.getInstance().goBack();
+    }
+
+    public void joinSystem (ActionEvent actionEvent) {
+
+        if (actionEvent.getSource() == btnJoin) {
+
+            Navigator.getInstance().navigateTo("MemberPanel/MemberPanelView.fxml");
+        }
     }
 }
