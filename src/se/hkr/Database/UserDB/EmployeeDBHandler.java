@@ -49,7 +49,7 @@ public class EmployeeDBHandler extends UserDBHandler<Employee> {
     }
 
     @Override
-    protected Employee readByEmail(String email) throws SQLException {
+    public Employee readByEmail(String email) throws SQLException {
         String query = "SELECT * FROM User JOIN Employee ON user.socialSecurityNo=employee.socialSecurityNo WHERE email=? LIMIT 1";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, email);
