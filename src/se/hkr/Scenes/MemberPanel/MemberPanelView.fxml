@@ -6,8 +6,6 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.effect.Bloom?>
-<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -74,15 +72,6 @@
             <Font size="14.0" />
          </font></Label>
       <Button fx:id="btnEditMember" layoutX="230.0" layoutY="171.0" mnemonicParsing="false" onAction="#editMemberInformation" prefHeight="27.0" prefWidth="117.0" text="Edit information" />
-      <AnchorPane layoutX="399.0" layoutY="52.0" opacity="0.16" prefHeight="94.0" prefWidth="187.0" styleClass="dark-panel">
-         <effect>
-            <Bloom threshold="0.0">
-               <input>
-                  <ColorAdjust brightness="-1.0" contrast="-1.0" />
-               </input>
-            </Bloom>
-         </effect>
-      </AnchorPane>
       <Label layoutX="19.0" layoutY="67.0" prefHeight="18.0" prefWidth="93.0" text="Cruise dates:" textFill="WHITE">
          <font>
             <Font size="14.0" />
