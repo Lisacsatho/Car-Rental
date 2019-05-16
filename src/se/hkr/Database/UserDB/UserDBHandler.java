@@ -51,9 +51,22 @@ public abstract class UserDBHandler <U extends User> extends ModelDBHandler<U> {
         return false;
     }
 
+    public void updatePassword(String key, String password) throws SQLException {
+        String query = "UPDATE user SET password=? WHERE email=?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, password);
+            statement.setString(2, key);
+            if (statement.executeUpdate() != 1) {
+                throw new SQLException("No user found with that email.");
+            }
+        } catch (Exception e) {
+
+        }
+    }
+
     protected abstract boolean authenticateUser(String email, String hashedPassword);
 
-    protected abstract U readByEmail(String email) throws SQLException;
+    public abstract U readByEmail(String email) throws SQLException;
 
     @Override
     public void insert(U model) throws SQLException {

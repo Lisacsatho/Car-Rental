@@ -178,6 +178,24 @@ public class BookingDBHandler extends ModelDBHandler<Booking> {
         }
     }
 
+    public List<Booking> readBookingsStartingToday() throws SQLException {
+        String query = "SELECT * FROM booking WHERE startDate = DATE(NOW())";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            return buildSimpleModels(statement.executeQuery());
+        } catch (Exception e) {
+            throw new SQLException("", e);
+        }
+    }
+
+    public List<Booking> readBookingsEndingToday() throws SQLException {
+        String query = "SELECT * FROM booking WHERE endDate = DATE(NOW())";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            return buildSimpleModels(statement.executeQuery());
+        } catch (Exception e) {
+            throw new SQLException("", e);
+        }
+    }
+
     @Override
     public List<Booking> buildModels(ResultSet set) throws SQLException {
         List<Booking> bookings = new ArrayList<>();

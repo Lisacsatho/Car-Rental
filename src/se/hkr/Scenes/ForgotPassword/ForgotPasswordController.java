@@ -1,58 +1,93 @@
 package se.hkr.Scenes.ForgotPassword;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import se.hkr.Database.UserDB.EmployeeDBHandler;
 import se.hkr.Database.UserDB.MemberDBHandler;
 import se.hkr.Dialogue;
 import se.hkr.Email.Email;
 import se.hkr.HashUtils;
 import se.hkr.Model.User.Address;
+import se.hkr.Model.User.Employee;
 import se.hkr.Model.User.Member;
 import se.hkr.Navigator;
+import se.hkr.Scenes.ReadController;
 
 import java.net.URL;
+import java.security.SecureRandom;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 public class ForgotPasswordController implements Initializable {
 
-    @FXML
-    private TextField txtFieldMail;
 
     @FXML
-    private Button btnSend;
+    TextField txtFieldMail,
+            txtFieldCode,
+            txtFieldNewPassw,
+            txtFieldRePassw;
 
-    /*private void btnSendPressed(ActionEvent ae) {
+    @FXML
+    Button btnSend, btnSave;
+
+
+    private int code;
+
+    public void btnSendPressed(ActionEvent ae) {
 
         txtFieldMail.getText();
-
-        if(MemberDBHandler.verifyEmail(txtFieldMail))
-            try (MemberDBHandler memberDBHandler = new MemberDBHandler()) {
-
-                member.setVerificationCode(HashUtils.generateCode(member.getEmail()));
-            memberDBHandler.insert(member);
-            Email email = new Email(member.getEmail(), "Password reset | RentAll", "Please verify your email using the following code: " + member.getVerificationCode());
-            email.send();
-            Dialogue.alert("Please check your email for the reset code");
-            Navigator.getInstance().goBack();
-        } else{
-            Dialogue.alert("Your e-mail is not registered in our system. Try again och sign up to become a member.");
-        }
-        catch(Exception e){
+        try (MemberDBHandler memberDBHandler = new MemberDBHandler()) {
+            if (memberDBHandler.readByEmail(txtFieldMail.getText()) != null) {
+                SecureRandom random = new SecureRandom();
+                code = random.nextInt();
+                Email email = new Email(txtFieldMail.getText(), "Password reset | RentAll", "Please verify your email using the following code: " + code);
+                email.send();
+                Dialogue.alert("Please check your email for the reset code.");
+            } else {
+                Dialogue.alert("Your e-mail is not registered in our system. Try again or sign up to become a member.");
+            }
+        } catch (Exception e) {
             e.printStackTrace();
             Dialogue.alert("Database connection failed, please try again later.");
         }
 
+    }
 
-    }*/
+    @FXML
+    public void btnSavePressed(ActionEvent ae) {
+        if (ae.getSource() == btnSave) {
+
+            if (txtFieldCode.getText().equals(Integer.toString(code))) {
+                txtFieldNewPassw.getText();
+                if (txtFieldRePassw.getText().equals(txtFieldNewPassw.getText())) {
+
+                    String password = HashUtils.hashPassword(txtFieldRePassw.getText());
+
+                    try (MemberDBHandler memberDBHandler = new MemberDBHandler()) {
+                        memberDBHandler.updatePassword(txtFieldMail.getText(), password);
+                        Dialogue.inform("Your password was updated.");
+                    } catch (Exception e) {
+                        Dialogue.alert("Could not connect to database." + e.getMessage());
+                    }
+                } else {
+                    Dialogue.alert("Please enter the received reset code and a new password in both password columns.");
+                }
 
 
+            }
+
+        }
+
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
 }
+

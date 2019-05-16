@@ -73,7 +73,7 @@ public class MemberDBHandler extends UserDBHandler<Member> {
     }
 
     @Override
-    protected Member readByEmail(String email) throws SQLException {
+    public Member readByEmail(String email) throws SQLException {
         String query = "SELECT * FROM User JOIN Member ON user.socialSecurityNo=member.socialSecurityNo WHERE email=? LIMIT 1";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, email);

@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import se.hkr.BookingSession;
+import se.hkr.Database.BookingDBHandler;
 import se.hkr.Database.UserDB.MemberDBHandler;
 import se.hkr.Dialogue;
 import se.hkr.Model.User.Member;
@@ -29,14 +31,17 @@ public class VerifyEmailController implements Initializable {
             lblEmail.setText(UserSession.getInstance().getSessionObject().getEmail());
         }
     }
-
     @FXML
     private void buttonConfirmPressed(ActionEvent event) {
         try (MemberDBHandler memberDBHandler = new MemberDBHandler()) {
             if (memberDBHandler.verifyEmail((Member) UserSession.getInstance().getSessionObject(), txtFldCode.getText().trim())) {
                 ((Member) UserSession.getInstance().getSessionObject()).setVerified(true);
                 Dialogue.alert("Email verified!");
-                Navigator.getInstance().goBack();
+                if (BookingSession.getInstance().getSessionObject() == null) {
+                    Navigator.getInstance().navigateToPanel();
+                } else {
+                    Navigator.getInstance().goBack();
+                }
             } else {
                 Dialogue.alert("Wrong code.");
             }

@@ -1,4 +1,4 @@
-package se.hkr.Scenes.AddCar;
+package se.hkr.Scenes.AddVehicle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -7,8 +7,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Pair;
-import se.hkr.BookingSession;
 import se.hkr.Database.VehicleDB.*;
 import se.hkr.Dialogue;
 import se.hkr.Model.Vehicle.*;
@@ -18,7 +16,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class AddCarController implements Initializable {
+public class AddVehicleController implements Initializable {
 
     @FXML
     private TextArea
