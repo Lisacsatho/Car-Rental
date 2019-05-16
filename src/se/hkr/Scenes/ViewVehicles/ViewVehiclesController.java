@@ -1,4 +1,4 @@
-package se.hkr.Scenes.ViewCars;
+package se.hkr.Scenes.ViewVehicles;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,22 +8,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import se.hkr.BookingSession;
 import se.hkr.ComboBoxButtonCell;
 import se.hkr.Database.VehicleDB.*;
 import se.hkr.Dialogue;
-import se.hkr.Model.Booking;
 import se.hkr.Model.Vehicle.*;
 import se.hkr.Scenes.ReadController;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 
-public class ViewCarsController implements ReadController<Vehicle>, Initializable {
+public class ViewVehiclesController implements ReadController<Vehicle>, Initializable {
     @FXML
     private ComboBox comboFuelType,
                      comboGearBox,

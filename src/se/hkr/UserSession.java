@@ -1,6 +1,7 @@
 package se.hkr;
 
 import se.hkr.Model.User.Employee;
+import se.hkr.Model.User.Manager;
 import se.hkr.Model.User.Member;
 import se.hkr.Model.User.User;
 
@@ -38,6 +39,13 @@ public class UserSession extends Session<User> {
     public boolean isEmployee() {
         if (isLoggedIn()) {
             return sessionObject instanceof Employee;
+        }
+        return false;
+    }
+
+    public boolean isManager() {
+        if (sessionObject != null) {
+            return sessionObject instanceof Manager;
         }
         return false;
     }
