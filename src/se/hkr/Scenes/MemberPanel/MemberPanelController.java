@@ -5,10 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuBar;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import se.hkr.BookingSession;
@@ -40,7 +37,7 @@ public class MemberPanelController implements Initializable {
     @FXML
     private Button btnEditMember, btnGo;
     @FXML
-    private MenuBar menuBarHelp, menuBarLogOut;
+    private MenuItem menuItemHelp, menuItemLogOut;
     @FXML
     private DatePicker datePickerStart, datePickerEnd;
 
@@ -86,7 +83,8 @@ public class MemberPanelController implements Initializable {
 
     public void logOutOption(ActionEvent actionEvent) {
 
-        if (actionEvent.getSource() == menuBarLogOut) {
+        if (actionEvent.getSource() == menuItemLogOut) {
+            UserSession.getInstance().resetSession();
 
             Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");
         }
@@ -94,7 +92,7 @@ public class MemberPanelController implements Initializable {
 
     public void helpMenu(ActionEvent actionEvent) {
 
-        if (actionEvent.getSource() == menuBarHelp) {
+        if (actionEvent.getSource() == menuItemHelp) {
 
             Navigator.getInstance().navigateTo("CustomerService/CustomerServiceView.fxml");
         }

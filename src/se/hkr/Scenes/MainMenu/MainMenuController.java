@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import se.hkr.BookingSession;
 import se.hkr.Database.UserDB.UserDBHandler;
@@ -27,9 +28,7 @@ public class MainMenuController implements Initializable {
                       txtFldPassword;
 
     @FXML
-    private Button btnSignUp,
-                   btnLogin,
-                   btnGo;
+    private MenuItem menuItemContact, menuItemAbout;
 
     @FXML
     private DatePicker datePicStart,
@@ -81,6 +80,21 @@ public class MainMenuController implements Initializable {
         } catch (Exception x) {
             x.printStackTrace();
             Dialogue.alert("Choose both starting date and returning date.");
+        }
+    }
+
+    public void contactUs (ActionEvent actionEvent) {
+
+        if (actionEvent.getSource() == menuItemContact) {
+
+            Navigator.getInstance().navigateTo("CustomerService/CustomerServiceView.fxml");
+        }
+    }
+
+    public void aboutUs (ActionEvent actionEvent) {
+
+        if (actionEvent.getSource() == menuItemAbout) {
+            Navigator.getInstance().navigateTo("CompanyInformation/CompanyInformationView.fxml");
         }
     }
 }
