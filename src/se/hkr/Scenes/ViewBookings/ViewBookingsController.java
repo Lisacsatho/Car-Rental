@@ -11,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Paint;
 import javafx.util.Callback;
 import javafx.util.Pair;
+import se.hkr.BookingSession;
 import se.hkr.Database.BookingDBHandler;
 import se.hkr.Dialogue;
 import se.hkr.Model.Booking;
@@ -111,6 +112,16 @@ public class ViewBookingsController implements ReadController<Booking>, Initiali
         });
         tblVehicles.setItems(currentVehicles);
         tblVehicleOptions.setItems(currentVehicleOptions);
+
+        Booking booking = BookingSession.getInstance().getSessionObject();
+        if (booking != null) {
+            try {
+                tblBookings.getSelectionModel().select(booking);
+                BookingSession.getInstance().resetSession();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void updateBookingList() {

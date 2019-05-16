@@ -27,5 +27,9 @@ public abstract class Session <T> {
         return sessionObject;
     }
 
+    public void setSessionObject(T sessionObject) {
+        this.sessionObject = sessionObject;
+    }
+
     public abstract void resetSession();
 }
