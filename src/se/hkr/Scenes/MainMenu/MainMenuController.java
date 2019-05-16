@@ -58,7 +58,7 @@ public class MainMenuController implements Initializable {
                 Dialogue.alert("No user found");
             }
         } catch (SQLException e) {
-            Dialogue.alert("No user found");
+            Dialogue.alert(e.getMessage());
         }
     }
 
