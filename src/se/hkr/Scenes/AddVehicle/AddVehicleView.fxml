@@ -3,6 +3,9 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
@@ -19,35 +22,45 @@
             <Image url="@../../Assets/Images/placeholder_background.png" />
          </image>
       </ImageView>
-      <Label layoutX="212.0" layoutY="3.0" text="Add a new car. Pick the correct information.">
+      <Label layoutX="213.0" layoutY="33.0" text="Add a new car. Pick the correct information.">
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Button fx:id="buttonSave" layoutX="102.0" layoutY="342.0" mnemonicParsing="false" onAction="#buttonSavePressed" prefHeight="27.0" prefWidth="84.0" styleClass="drop-shadow" text="Save" />
-      <TextField fx:id="textModel" layoutX="14.0" layoutY="47.0" prefHeight="27.0" prefWidth="148.0" promptText="Model" />
-      <TextField fx:id="textYear" layoutX="14.0" layoutY="115.0" prefHeight="27.0" prefWidth="148.0" promptText="Year" />
-      <ComboBox fx:id="comboBrand" layoutX="14.0" layoutY="14.0" prefHeight="27.0" prefWidth="148.0" promptText="Brand" />
-      <ComboBox fx:id="comboFuelType" layoutX="14.0" layoutY="181.0" prefHeight="27.0" prefWidth="148.0" promptText="FuelType" />
-      <ComboBox fx:id="comboGearBox" layoutX="14.0" layoutY="148.0" prefHeight="27.0" prefWidth="148.0" promptText="GearBox" />
-      <ComboBox fx:id="comboPassengers" layoutX="14.0" layoutY="247.0" prefHeight="27.0" prefWidth="148.0" promptText="Passengers" />
-      <ComboBox fx:id="comboCarType" layoutX="14.0" layoutY="81.0" prefHeight="27.0" prefWidth="148.0" promptText="CarType" />
-      <ComboBox fx:id="comboSuitcases" layoutX="14.0" layoutY="215.0" prefHeight="27.0" prefWidth="148.0" promptText="Suitcases" />
-      <Button fx:id="buttonExit" layoutX="14.0" layoutY="342.0" mnemonicParsing="false" onAction="#buttonExitPressed" prefHeight="27.0" prefWidth="84.0" styleClass="drop-shadow" text="Exit" />
-      <TextField fx:id="textPrice" layoutX="14.0" layoutY="280.0" prefHeight="27.0" prefWidth="148.0" promptText="Price" />
-      <TextArea fx:id="textDescription" layoutX="186.0" layoutY="27.0" prefHeight="110.0" prefWidth="404.0" />
-      <TableView fx:id="tableViewChoose" layoutX="388.0" layoutY="142.0" prefHeight="192.0" prefWidth="200.0">
+      <Button fx:id="buttonSave" layoutX="515.0" layoutY="374.0" mnemonicParsing="false" onAction="#buttonSavePressed" prefHeight="25.0" prefWidth="73.0" styleClass="drop-shadow" text="Save" />
+      <TextField fx:id="textModel" layoutX="14.0" layoutY="95.0" prefHeight="27.0" prefWidth="148.0" promptText="Model" />
+      <TextField fx:id="textYear" layoutX="14.0" layoutY="165.0" prefHeight="27.0" prefWidth="148.0" promptText="Year" />
+      <ComboBox fx:id="comboBrand" layoutX="14.0" layoutY="57.0" prefHeight="27.0" prefWidth="148.0" promptText="Brand" />
+      <ComboBox fx:id="comboFuelType" layoutX="14.0" layoutY="241.0" prefHeight="27.0" prefWidth="148.0" promptText="FuelType" />
+      <ComboBox fx:id="comboGearBox" layoutX="14.0" layoutY="201.0" prefHeight="27.0" prefWidth="148.0" promptText="GearBox" />
+      <ComboBox fx:id="comboPassengers" layoutX="14.0" layoutY="315.0" prefHeight="27.0" prefWidth="148.0" promptText="Passengers" />
+      <ComboBox fx:id="comboCarType" layoutX="14.0" layoutY="130.0" prefHeight="27.0" prefWidth="148.0" promptText="CarType" />
+      <ComboBox fx:id="comboSuitcases" layoutX="14.0" layoutY="278.0" prefHeight="27.0" prefWidth="148.0" promptText="Suitcases" />
+      <TextField fx:id="textPrice" layoutX="14.0" layoutY="350.0" prefHeight="27.0" prefWidth="148.0" promptText="Price" />
+      <TextArea fx:id="textDescription" layoutX="186.0" layoutY="62.0" prefHeight="110.0" prefWidth="404.0" />
+      <TableView fx:id="tableViewChoose" layoutX="388.0" layoutY="174.0" prefHeight="192.0" prefWidth="200.0">
         <columns>
           <TableColumn fx:id="colChooseId" prefWidth="30.0" text="ID" />
           <TableColumn fx:id="colChooseName" prefWidth="169.0" text="Name" />
         </columns>
       </TableView>
-      <TableView fx:id="tableViewPick" layoutX="186.0" layoutY="142.0" prefHeight="192.0" prefWidth="200.0">
+      <TableView fx:id="tableViewPick" layoutX="186.0" layoutY="174.0" prefHeight="192.0" prefWidth="200.0">
          <columns>
             <TableColumn fx:id="colIID" prefWidth="31.0" text="ID" />
             <TableColumn fx:id="colName" prefWidth="168.0" text="Name" />
          </columns>
       </TableView>
-      <Button fx:id="buttonRemove" layoutX="505.0" layoutY="342.0" mnemonicParsing="false" onAction="#buttonRemovePressed" prefHeight="27.0" prefWidth="84.0" text="REMOVE" />
-      <Button fx:id="buttonAdd" layoutX="452.0" layoutY="342.0" mnemonicParsing="false" onAction="#buttonAddPressed" text="ADD" />
+      <Button fx:id="buttonRemove" layoutX="252.0" layoutY="374.0" mnemonicParsing="false" onAction="#buttonRemovePressed" prefHeight="25.0" prefWidth="88.0" text="Remove car" />
+      <Button fx:id="buttonAdd" layoutX="186.0" layoutY="374.0" mnemonicParsing="false" onAction="#buttonAddPressed" text="Add car" />
+      <MenuBar prefHeight="25.0" prefWidth="610.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Navigate">
+            <items>
+              <MenuItem fx:id="menuItemBack" mnemonicParsing="false" onAction="#menuItemBackPressed" text="Back" />
+                  <MenuItem fx:id="menuItemCancel" mnemonicParsing="false" onAction="#menuItemCancelPressed" text="Cancel" />
+                  <MenuItem fx:id="menuItemQuit" mnemonicParsing="false" onAction="#menuItemQuitPressed" text="Quit" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
    </children>
 </AnchorPane>

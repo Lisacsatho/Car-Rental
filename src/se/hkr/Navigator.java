@@ -35,7 +35,7 @@ public class Navigator {
             } else {
                 navigateTo(MEMBER_PANEL);
             }
-        } else if (UserSession.getInstance().isEmployee()) {
+        } else if (UserSession.getInstance().isEmployee() || UserSession.getInstance().isManager()) {
             navigateTo(EMPLOYEE_PANEL);
         } else {
             navigateTo("MainMenu/MainMenuView.fxml");

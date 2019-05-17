@@ -82,6 +82,7 @@ public class ViewBookingsController implements ReadController<Booking>, Initiali
         colBookingStartDate.setCellValueFactory(new PropertyValueFactory<Booking, Date>("startDate"));
         colBookingEndDate.setCellValueFactory(new PropertyValueFactory<Booking, Date>("endDate"));
         colBookingTotalPrice.setCellValueFactory(new PropertyValueFactory<Booking, Double>("totalPrice"));
+
         updateBookingList();
         tblBookings.setItems(matchingBookings);
 
@@ -116,6 +117,8 @@ public class ViewBookingsController implements ReadController<Booking>, Initiali
         Booking booking = BookingSession.getInstance().getSessionObject();
         if (booking != null) {
             try {
+                checkBoxShowReturned.setSelected(booking.isReturned());
+                search();
                 tblBookings.getSelectionModel().select(booking);
                 BookingSession.getInstance().resetSession();
             } catch (Exception e) {
@@ -354,7 +357,7 @@ public class ViewBookingsController implements ReadController<Booking>, Initiali
             if (datePicFilterFrom.getValue() != null && datePicFilterTo.getValue() == null) {
                 Date filterStartDate = extractDate(datePicFilterFrom);
                 if (booking.getStartDate().after(filterStartDate)) {
-                    if (checkBoxShowReturned.isSelected() && booking.isReturned()) {
+                    if (checkBoxShowReturned.isSelected()) {
                         matchingBookings.add(booking);
                     } else if (!checkBoxShowReturned.isSelected() && !booking.isReturned()) {
                         matchingBookings.add(booking);
@@ -364,14 +367,14 @@ public class ViewBookingsController implements ReadController<Booking>, Initiali
                 Date filterStartDate = extractDate(datePicFilterFrom);
                 Date filterEndDate = extractDate(datePicFilterTo);
                 if (booking.getStartDate().after(filterStartDate) && booking.getStartDate().before(filterEndDate)) {
-                    if (checkBoxShowReturned.isSelected() && booking.isReturned()) {
+                    if (checkBoxShowReturned.isSelected()) {
                         matchingBookings.add(booking);
                     } else if (!checkBoxShowReturned.isSelected() && !booking.isReturned()) {
                         matchingBookings.add(booking);
                     }
                 }
             } else {
-                if (checkBoxShowReturned.isSelected() && booking.isReturned()) {
+                if (checkBoxShowReturned.isSelected()) {
                     matchingBookings.add(booking);
                 } else if (!checkBoxShowReturned.isSelected() && !booking.isReturned()) {
                     matchingBookings.add(booking);
@@ -385,7 +388,7 @@ public class ViewBookingsController implements ReadController<Booking>, Initiali
             if (datePicFilterFrom.getValue() != null && datePicFilterTo == null) {
                 Date filterStartDate = extractDate(datePicFilterFrom);
                 if (booking.matches(key) && (booking.getStartDate().after(filterStartDate))) {
-                    if (checkBoxShowReturned.isSelected() && booking.isReturned()) {
+                    if (checkBoxShowReturned.isSelected()) {
                         matchingBookings.add(booking);
                     } else if (!checkBoxShowReturned.isSelected() && !booking.isReturned()) {
                         matchingBookings.add(booking);
@@ -395,7 +398,7 @@ public class ViewBookingsController implements ReadController<Booking>, Initiali
                 Date filterStartDate = extractDate(datePicFilterFrom);
                 Date filterEndDate = extractDate(datePicFilterTo);
                 if (booking.matches(key) && (booking.getStartDate().after(filterStartDate) && booking.getStartDate().before(filterEndDate))) {
-                    if (checkBoxShowReturned.isSelected() && booking.isReturned()) {
+                    if (checkBoxShowReturned.isSelected()) {
                         matchingBookings.add(booking);
                     } else if (!checkBoxShowReturned.isSelected() && !booking.isReturned()) {
                         matchingBookings.add(booking);
@@ -403,7 +406,7 @@ public class ViewBookingsController implements ReadController<Booking>, Initiali
                 }
             } else {
                 if (booking.matches(key)) {
-                    if (checkBoxShowReturned.isSelected() && booking.isReturned()) {
+                    if (checkBoxShowReturned.isSelected()) {
                         matchingBookings.add(booking);
                     } else if (!checkBoxShowReturned.isSelected() && !booking.isReturned()) {
                         matchingBookings.add(booking);

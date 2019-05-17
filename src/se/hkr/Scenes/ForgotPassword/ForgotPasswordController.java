@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import se.hkr.Database.UserDB.EmployeeDBHandler;
 import se.hkr.Database.UserDB.MemberDBHandler;
@@ -17,6 +18,7 @@ import se.hkr.Model.User.Employee;
 import se.hkr.Model.User.Member;
 import se.hkr.Navigator;
 import se.hkr.Scenes.ReadController;
+import se.hkr.UserSession;
 
 import java.net.URL;
 import java.security.SecureRandom;
@@ -27,13 +29,25 @@ public class ForgotPasswordController implements Initializable {
 
 
     @FXML
-    TextField txtFieldMail,
+    private TextField
+            txtFieldMail,
             txtFieldCode,
             txtFieldNewPassw,
             txtFieldRePassw;
 
     @FXML
-    Button btnSend, btnSave;
+    private Button
+            btnSend,
+            btnSave;
+
+    @FXML
+    private MenuItem
+            menuItemBack,
+            menuItemCancel,
+            menuItemLogOut,
+            menuItemContact,
+            menuItemAbout,
+            menuItemQuit;
 
 
     private int code;
@@ -83,6 +97,50 @@ public class ForgotPasswordController implements Initializable {
 
         }
 
+    }
+
+    @FXML
+    public void menuItemBackPressed(ActionEvent ae) {
+        Navigator.getInstance().goBack();
+    }
+
+    @FXML
+    private void menuItemCancelPressed(ActionEvent ae) {
+        Navigator.getInstance().navigateToPanel();
+    }
+
+    @FXML
+    private void menuItemQuitPressed(ActionEvent ae) {
+        System.exit(0);
+    }
+
+    @FXML
+    public void menuItemLogOutPressed(ActionEvent actionEvent) {
+
+        if (actionEvent.getSource() == menuItemLogOut) {
+            UserSession.getInstance().resetSession();
+
+            Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");
+        }
+    }
+
+    @FXML
+    public void menuItemContactPressed(ActionEvent actionEvent) {
+
+        if (actionEvent.getSource() == menuItemContact) {
+
+            Navigator.getInstance().navigateTo("CustomerService/CustomerServiceView.fxml");
+        }
+    }
+
+    @FXML
+    public void menuItemAboutPressed(ActionEvent actionEvent) {
+
+        if (actionEvent.getSource() == menuItemAbout) {
+
+            Navigator.getInstance().navigateTo("CustomerService/CustomerServiceView.fxml");
+
+        }
     }
 
     @Override
