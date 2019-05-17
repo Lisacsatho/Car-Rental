@@ -78,7 +78,7 @@ public class EditMemberController implements Initializable {
             txtFldEmail.setText(user.getEmail());
             txtFldPhone.setText(user.getPhoneNumber());
 
-            Dialogue.alert("Your input was incorrect. Check your information.\nSsn should be in format: YYMMDD-XXXX");
+
         }
         else {
             Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");
