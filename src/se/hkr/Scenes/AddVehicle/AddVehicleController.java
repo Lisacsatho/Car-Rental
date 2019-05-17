@@ -50,6 +50,12 @@ public class AddVehicleController implements Initializable {
             tableViewChoose;
 
     @FXML
+    private MenuItem
+            menuItemBack,
+            menuItemCancel,
+            menuItemQuit;
+
+    @FXML
     private TableColumn
             colChooseName,
             colChooseId,
@@ -176,9 +182,16 @@ public class AddVehicleController implements Initializable {
     }
 
     @FXML
-    private void buttonExitPressed(ActionEvent ae) {
+    private void menuItemCancelPressed(ActionEvent ae) {
         Navigator.getInstance().navigateToPanel();
     }
+
+    @FXML
+    private void menuItemBackPressed(ActionEvent ae) { Navigator.getInstance().goBack(); }
+
+    @FXML
+    private void menuItemQuitPressed(ActionEvent ae) { System.exit(0);}
+
 
     @FXML
     private void buttonAddPressed(ActionEvent ae) {

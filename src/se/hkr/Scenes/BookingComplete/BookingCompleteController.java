@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import se.hkr.Database.BookingDBHandler;
 import se.hkr.Model.Booking;
@@ -21,7 +22,10 @@ public class BookingCompleteController implements Initializable {
     private TextArea txtAreaBookingDetails;
 
     @FXML
-    Button btnGoMainMenu, btnGoMyPages;
+     private MenuItem
+            menuItemBack,
+            menuItemLogOut,
+            menuItemQuit;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -37,14 +41,18 @@ public class BookingCompleteController implements Initializable {
 
     }
     @FXML
-    public void btnGoMainMenuPressed (ActionEvent ae){
-        Navigator.getInstance().navigateTo("MainMenu/MainMenuViewView.fxml");
+    public void menuItemBackPressed (ActionEvent ae) { Navigator.getInstance().goBack(); }
 
-    }
 
     @FXML
-    public void btnGoMyPagesPressed (ActionEvent ae){
-        Navigator.getInstance().navigateTo("MemberPanel/MemberPanelView.fxml");
+    public void menuItemLogOutPressed (ActionEvent actionEvent) {
+
+        if (actionEvent.getSource() == menuItemLogOut) {
+            UserSession.getInstance().resetSession();
+            Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");
+        }
 
     }
+    @FXML
+    public void menuItemQuitPressed (ActionEvent ae) { System.exit(0);}
 }

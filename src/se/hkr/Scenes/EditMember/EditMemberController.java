@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import se.hkr.Database.UserDB.MemberDBHandler;
 import se.hkr.Dialogue;
@@ -33,8 +34,16 @@ public class EditMemberController implements Initializable {
 
     @FXML
     private Button
-            btnSave,
-            btnBack;
+            btnSave;
+
+    @FXML
+    private MenuItem
+            menuItemBack,
+            menuItemCancel,
+            menuItemLogOut,
+            menuItemContact,
+            menuItemAbout,
+            menuItemQuit;
 
     public void btnSavePressed(ActionEvent event) {
         if (event.getSource() == btnSave) {
@@ -60,9 +69,42 @@ public class EditMemberController implements Initializable {
     }
 
 
-    public void btnGoBackPressed(ActionEvent event) {
-        if (event.getSource() == btnBack) {
-            Navigator.getInstance().navigateTo("MemberPanel/MemberPanelView.fxml");
+    public void menuItemBackPressed(ActionEvent ae) { Navigator.getInstance().goBack(); }
+
+    @FXML
+    private void menuItemQuitPressed(ActionEvent ae) { System.exit(0);}
+
+    @FXML
+    private void menuItemCancelPressed(ActionEvent ae) {
+        Navigator.getInstance().navigateToPanel();
+    }
+
+    @FXML
+    public void menuItemLogOutPressed(ActionEvent actionEvent) {
+
+        if (actionEvent.getSource() == menuItemLogOut) {
+            UserSession.getInstance().resetSession();
+
+            Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");
+        }
+    }
+
+    @FXML
+    public void menuItemContactPressed(ActionEvent actionEvent) {
+
+        if (actionEvent.getSource() == menuItemContact) {
+
+            Navigator.getInstance().navigateTo("CustomerService/CustomerServiceView.fxml");
+        }
+    }
+
+    @FXML
+    public void menuItemAboutPressed(ActionEvent actionEvent){
+
+        if (actionEvent.getSource() == menuItemAbout){
+
+            Navigator.getInstance().navigateTo("CustomerService/CustomerServiceView.fxml");
+
         }
     }
 
@@ -77,6 +119,9 @@ public class EditMemberController implements Initializable {
             txtFldLastName.setText(user.getLastName());
             txtFldEmail.setText(user.getEmail());
             txtFldPhone.setText(user.getPhoneNumber());
+            txtFldAddress.setText(user.getAddress().getStreet());
+            txtFldZip.setText(user.getAddress().getZip());
+            txtFldCity.setText(user.getAddress().getState());
 
             Dialogue.alert("Your input was incorrect. Check your information.\nSsn should be in format: YYMMDD-XXXX");
         }
