@@ -57,7 +57,7 @@ public class ViewEmployeesController implements ReadController<Employee>, Initia
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        colSocialSecurityNo.setCellValueFactory(new PropertyValueFactory<Member, String>("socialSecurityNo"));
+        colSocialSecurityNo.setCellValueFactory(new PropertyValueFactory<Employee, String>("socialSecurityNo"));
         colName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
 
             @Override

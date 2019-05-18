@@ -9,6 +9,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="452.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ViewEmployees.ViewEmployeesController">
    <children>
@@ -21,7 +22,6 @@
       </TableView>
       <TextField fx:id="txtFldSearch" layoutX="24.0" layoutY="32.0" prefHeight="27.0" prefWidth="305.0" promptText="Search employee" />
       <Button fx:id="btnSearch" layoutX="338.0" layoutY="31.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="70.0" text="Search" />
-      <TextField fx:id="lblSocialSecurityNo" layoutX="427.0" layoutY="32.0" prefHeight="27.0" prefWidth="269.0" promptText="SSN" />
       <Label layoutX="430.0" layoutY="71.0" text="First name" />
       <Label layoutX="568.0" layoutY="71.0" text="Last name" />
       <TextField fx:id="txtFldFirstName" layoutX="430.0" layoutY="88.0" prefHeight="27.0" prefWidth="128.0" />
@@ -60,5 +60,10 @@
       </MenuBar>
       <TextField fx:id="txtFldSalary" layoutX="427.0" layoutY="367.0" prefHeight="27.0" prefWidth="112.0" />
       <Label layoutX="428.0" layoutY="350.0" text="Salary" />
+      <Label fx:id="lblSocialSecurityNo" layoutX="430.0" layoutY="34.0" text="Social Security Number">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
