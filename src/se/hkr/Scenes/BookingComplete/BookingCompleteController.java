@@ -21,6 +21,7 @@ public class BookingCompleteController implements Initializable {
     @FXML
     private TextArea txtAreaBookingDetails;
 
+
     @FXML
      private MenuItem
             menuItemBack,
@@ -55,4 +56,5 @@ public class BookingCompleteController implements Initializable {
     }
     @FXML
     public void menuItemQuitPressed (ActionEvent ae) { System.exit(0);}
+
 }
