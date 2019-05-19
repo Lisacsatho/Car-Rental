@@ -39,8 +39,13 @@ public class EmployeeDBHandler extends UserDBHandler<Employee> {
     }
 
     @Override
-    public List<Employee> readAll() {
-        return null;
+    public List<Employee> readAll() throws SQLException {
+        String query = "SELECT * FROM employee JOIN user ON user.socialSecurityNo=employee.socialSecurityNo";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+             return buildModels(statement.executeQuery());
+        } catch (Exception e) {
+            throw new SQLException("Problem reading employees: " + e.getMessage(), e);
+        }
     }
 
     @Override

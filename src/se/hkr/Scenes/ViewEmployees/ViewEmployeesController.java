@@ -13,6 +13,7 @@ import se.hkr.Database.UserDB.EmployeeDBHandler;
 import se.hkr.Database.UserDB.MemberDBHandler;
 import se.hkr.Dialogue;
 import se.hkr.Model.User.Employee;
+import se.hkr.Model.User.Manager;
 import se.hkr.Model.User.Member;
 import se.hkr.Scenes.ReadController;
 import se.hkr.UserSession;
@@ -28,31 +29,30 @@ public class ViewEmployeesController implements ReadController<Employee>, Initia
     private ObservableList<Employee> matchingEmployees;
 
     @FXML
-    Button btnSearch,
-            btnSaveEmployee;
+    private Button btnSearch,
+                   btnSaveEmployee;
 
     @FXML
-    TableColumn colSocialSecurityNo,
-            colName,
-            colRole;
+    private TableColumn colSocialSecurityNo,
+                        colName,
+                        colRole;
 
     @FXML
-    Label lblSocialSecurityNo;
+    private Label lblSocialSecurityNo;
 
     @FXML
-    TextField txtFldSearch,
-            txtFldFirstName,
-            txtFldLastName,
-            txtFldPhoneNo,
-            txtFldDriversLicenseNo,
-            txtFldEmail,
-            txtFldAddress,
-            txtFldCity,
-            txtFldZip,
-            txtFldSalary;
+    private TextField txtFldSearch,
+                      txtFldFirstName,
+                      txtFldLastName,
+                      txtFldPhoneNo,
+                      txtFldEmail,
+                      txtFldAddress,
+                      txtFldCity,
+                      txtFldZip,
+                      txtFldSalary;
 
     @FXML
-    TableView<Employee> tblEmployees;
+    private TableView<Employee> tblEmployees;
 
 
     @Override
@@ -65,7 +65,18 @@ public class ViewEmployeesController implements ReadController<Employee>, Initia
                 return new SimpleStringProperty(((Employee) param.getValue()).getFullName());
             }
         });
-        colRole.setCellValueFactory(new PropertyValueFactory<Employee, String>("role"));
+        colRole.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
+            @Override
+            public ObservableValue call(TableColumn.CellDataFeatures param) {
+                SimpleStringProperty role = new SimpleStringProperty();
+                if (param.getValue() instanceof Manager) {
+                    role.set("Manager");
+                } else {
+                    role.set("Employee");
+                }
+                return role;
+            }
+        });
 
         updateEmployeeList();
         tblEmployees.setItems(matchingEmployees);
@@ -152,7 +163,6 @@ public class ViewEmployeesController implements ReadController<Employee>, Initia
         txtFldLastName.clear();
         txtFldEmail.clear();
         txtFldPhoneNo.clear();
-        txtFldDriversLicenseNo.clear();
         txtFldAddress.clear();
         txtFldCity.clear();
         txtFldZip.clear();
