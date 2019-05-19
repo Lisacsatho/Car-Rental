@@ -35,11 +35,18 @@ public class MemberPanelController implements Initializable {
             lblPhoneNumber,
             lbleMail;
     @FXML
-    private Button btnEditMember, btnGo;
+    private Button
+            btnEditMember,
+            btnGo;
     @FXML
-    private MenuItem menuItemHelp, menuItemLogOut;
+    private MenuItem
+            menuItemHelp,
+            menuItemLogOut,
+            menuItemBack;
     @FXML
-    private DatePicker datePickerStart, datePickerEnd;
+    private DatePicker
+            datePickerStart,
+            datePickerEnd;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
