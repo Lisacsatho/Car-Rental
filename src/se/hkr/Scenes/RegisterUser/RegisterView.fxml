@@ -2,35 +2,58 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.RegisterUser.RegisterController">
+<AnchorPane prefHeight="308.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.RegisterUser.RegisterController">
    <children>
-      <ImageView fitHeight="409.0" fitWidth="608.0" layoutX="-1.0" layoutY="-1.0">
+      <ImageView fitHeight="400.0" fitWidth="339.0" layoutX="-83.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../Assets/Images/placeholder_background.png" />
+            <Image url="@../../Assets/Images/splash.jpg" />
          </image>
       </ImageView>
-      <TextField fx:id="txtFldFirstName" layoutX="214.0" layoutY="51.0" onAction="#registerUser" promptText="First name" styleClass="drop-shadow" />
-      <TextField fx:id="txtFldEmail" layoutX="214.0" layoutY="85.0" onAction="#registerUser" promptText="Email" styleClass="drop-shadow" />
-      <TextField fx:id="txtFldLastName" layoutX="390.0" layoutY="51.0" onAction="#registerUser" promptText="Last name" styleClass="drop-shadow" />
-      <TextField fx:id="txtFldPassword" layoutX="390.0" layoutY="125.0" onAction="#registerUser" promptText="Password" styleClass="drop-shadow" />
-      <TextField fx:id="txtFldSsn" layoutX="214.0" layoutY="125.0" onAction="#registerUser" promptText="Social security number" styleClass="drop-shadow" />
-      <TextField fx:id="txtFldPhone" layoutX="390.0" layoutY="85.0" onAction="#registerUser" promptText="Phone number" styleClass="drop-shadow" />
-      <TextField fx:id="txtFldStreet" layoutX="214.0" layoutY="164.0" onAction="#registerUser" prefHeight="27.0" prefWidth="339.0" promptText="Address" styleClass="drop-shadow" />
-      <TextField fx:id="txtFldState" layoutX="390.0" layoutY="204.0" onAction="#registerUser" promptText="State" styleClass="drop-shadow" />
-      <TextField fx:id="txtFldZip" layoutX="214.0" layoutY="204.0" onAction="#registerUser" promptText="Zip" styleClass="drop-shadow" />
-      <TextField fx:id="txtFldDriversLicense" layoutX="214.0" layoutY="246.0" onAction="#registerUser" promptText="Driverlicense number" styleClass="drop-shadow" />
-      <Button fx:id="btnJoin" layoutX="318.0" layoutY="283.0" mnemonicParsing="false" onAction="#joinSystem" prefHeight="27.0" prefWidth="84.0" styleClass="drop-shadow" text="Join" />
-      <Label layoutX="254.0" layoutY="14.0" prefHeight="23.0" prefWidth="268.0" text="Fill in your information below:">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Button fx:id="btnGoBack" layoutX="214.0" layoutY="283.0" mnemonicParsing="false" onAction="#goBack" prefHeight="27.0" prefWidth="93.0" text="Back" />
+      <MenuBar prefHeight="29.0" prefWidth="600.0" styleClass="dark-menu-bar">
+        <menus>
+          <Menu mnemonicParsing="false" text="Navigate">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#goBack" text="Back" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Polygon fill="WHITE" layoutX="131.0" layoutY="144.0" points="40.0, -144.0, 79.17724609375, 256.0, 79.17724609375, -144.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="drop-shadow" />
+      <AnchorPane layoutX="210.0" layoutY="-1.0" prefHeight="400.0" prefWidth="390.0" style="-fx-background-color: #fff;">
+         <children>
+            <TextField fx:id="txtFldFirstName" layoutX="25.0" layoutY="122.0" onAction="#registerUser" prefHeight="26.0" prefWidth="159.0" promptText="First name" />
+            <TextField fx:id="txtFldEmail" layoutX="191.0" layoutY="87.0" onAction="#registerUser" promptText="Email" />
+            <TextField fx:id="txtFldLastName" layoutX="192.0" layoutY="122.0" onAction="#registerUser" promptText="Last name" />
+            <TextField fx:id="txtFldPassword" layoutX="192.0" layoutY="158.0" onAction="#registerUser" promptText="Confirm password" />
+            <TextField fx:id="txtFldSsn" layoutX="25.0" layoutY="87.0" onAction="#registerUser" prefHeight="26.0" prefWidth="159.0" promptText="Social security number" />
+            <TextField fx:id="txtFldPhone" layoutX="25.0" layoutY="192.0" onAction="#registerUser" prefHeight="26.0" prefWidth="159.0" promptText="Phone number" />
+            <TextField fx:id="txtFldStreet" layoutX="24.0" layoutY="227.0" onAction="#registerUser" prefHeight="27.0" prefWidth="339.0" promptText="Address" />
+            <TextField fx:id="txtFldState" layoutX="24.0" layoutY="262.0" onAction="#registerUser" prefHeight="28.0" prefWidth="159.0" promptText="State" />
+            <TextField fx:id="txtFldZip" layoutX="192.0" layoutY="262.0" onAction="#registerUser" prefHeight="28.0" prefWidth="173.0" promptText="Zip" />
+            <TextField fx:id="txtFldDriversLicense" layoutX="192.0" layoutY="192.0" onAction="#registerUser" promptText="Driverlicense number" />
+            <Button fx:id="btnJoin" layoutX="280.0" layoutY="298.0" mnemonicParsing="false" onAction="#registerUser" prefHeight="27.0" prefWidth="84.0" styleClass="highlighted-button" text="Join" />
+            <Label layoutX="27.0" layoutY="36.0" prefHeight="23.0" prefWidth="268.0" text="Fill in your information below:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtFldPassword1" layoutX="26.0" layoutY="158.0" onAction="#registerUser" prefHeight="26.0" prefWidth="159.0" promptText="Password" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

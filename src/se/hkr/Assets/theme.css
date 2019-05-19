@@ -104,13 +104,13 @@
 }
 
 .dark-menu-bar .menu-item {
-    -fx-border-color: green;
-    -fx-background-color: green;
+    -fx-border-color: rgba(14, 27, 32, 0.9);
+    -fx-background-color: rgba(14, 27, 32, 0.9);
 }
 
 .dark-menu-bar .menu-item:focused, .dark-menu-bar .menu-item:showing {
-    -fx-border-color: purple;
-    -fx-background-color: purple;
+    -fx-border-color: rgba(14, 27, 32, 0.9);
+    -fx-background-color: rgba(14, 27, 32, 0.9);
 }
 
 .date-picker-display-node {

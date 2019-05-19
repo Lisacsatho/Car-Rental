@@ -1,10 +1,6 @@
 package se.hkr.Scenes.RegisterUser;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import se.hkr.Database.UserDB.MemberDBHandler;
 import se.hkr.Dialogue;
 import se.hkr.Email.Email;
@@ -12,34 +8,28 @@ import se.hkr.HashUtils;
 import se.hkr.Model.User.Address;
 import se.hkr.Model.User.Member;
 import se.hkr.Navigator;
-import se.hkr.UserSession;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 public class RegisterController {
 
     @FXML
-    private TextField
-            txtFldFirstName,
-            txtFldLastName,
-            txtFldSsn,
-            txtFldStreet,
-            txtFldZip,
-            txtFldEmail,
-            txtFldPassword,
-            txtFldPhone,
-            txtFldState,
-            txtFldDriversLicense;
+    private TextField txtFldFirstName,
+                      txtFldLastName,
+                      txtFldSsn,
+                      txtFldStreet,
+                      txtFldZip,
+                      txtFldEmail,
+                      txtFldPassword,
+                      txtFldPhone,
+                      txtFldState,
+                      txtFldDriversLicense;
 
     @FXML
-    private Button btnJoin;
-
-    public void registerUser() {
+    private void registerUser() {
         try (MemberDBHandler memberDBHandler = new MemberDBHandler()) {
             // TODO: implement more input verification.
-            if (Pattern.matches("[0-9][0-9][0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]", txtFldSsn.getText())) {
+            if (validateInformation()) {
                 Member member = new Member(txtFldSsn.getText(), txtFldFirstName.getText(), txtFldLastName.getText(), txtFldEmail.getText(),
                         txtFldPhone.getText(), new Address(txtFldStreet.getText(), txtFldZip.getText(), txtFldState.getText()),
                         HashUtils.hashPassword(txtFldPassword.getText()), txtFldDriversLicense.getText(), false);
@@ -49,24 +39,40 @@ public class RegisterController {
                 email.send();
                 Dialogue.alert("User registered! Please check your email for the confirmation email.");
                 Navigator.getInstance().goBack();
-            } else {
-                Dialogue.alert("Your input was incorrect. Check your information.\nSsn should be in format: YYMMDD-XXXX");
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            Dialogue.alert("Database connection failed, please try again later.");
+            Dialogue.alert("Database connection failed, please try again later. " + e.getMessage());
         }
     }
 
-    public void goBack (ActionEvent event) {
+    private boolean validateInformation() {
+        try (MemberDBHandler memberDBHandler = new MemberDBHandler()) {
+            if (!Pattern.matches("[0-9][0-9][0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]", txtFldSsn.getText())) {
+                Dialogue.alert("Please enter correct social security no. format YYMMDD-XXXX.");
+                return false;
+            } else if (!Pattern.matches("[1-9][1-9][1-9] [1-9][1-9]", txtFldZip.getText())) {
+                Dialogue.alert("Please enter zip code in XXX XX format.");
+                return false;
+            } else if (!Pattern.matches(".*[@].*[.].*", txtFldEmail.getText())) {
+                Dialogue.alert("Invalid email address.");
+                return false;
+            } else if (memberDBHandler.readByPrimaryKey(txtFldSsn.getText()) != null) {
+                Dialogue.alert("Member already exists with that social security no.");
+                return false;
+            } else if (memberDBHandler.readByEmail(txtFldEmail.getText()) != null) {
+                Dialogue.alert("Member already exists with that email.");
+                return false;
+            } else {
+                return true;
+            }
+        } catch (Exception e) {
+            Dialogue.alert(e.getMessage());
+        }
+        return false;
+    }
+
+    @FXML
+    private void goBack () {
         Navigator.getInstance().goBack();
-    }
-
-    public void joinSystem (ActionEvent actionEvent) {
-
-        if (actionEvent.getSource() == btnJoin) {
-
-            Navigator.getInstance().navigateTo("MemberPanel/MemberPanelView.fxml");
-        }
     }
 }

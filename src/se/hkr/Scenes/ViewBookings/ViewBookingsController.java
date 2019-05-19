@@ -17,9 +17,11 @@ import se.hkr.Dialogue;
 import se.hkr.Model.Booking;
 import se.hkr.Model.Vehicle.Vehicle;
 import se.hkr.Model.Vehicle.VehicleOption;
+import se.hkr.Navigator;
 import se.hkr.Scenes.ReadController;
 
 import java.net.URL;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -197,11 +199,16 @@ public class ViewBookingsController implements ReadController<Booking>, Initiali
     }
 
     private long calculateLateBooking(Booking booking) {
-        Date today = new Date();
-        Date endDate = booking.getEndDate();
-        long diff = today.getTime() - endDate.getTime();
-        long days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-
+        long days = 0;
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date today = simpleDateFormat.parse(simpleDateFormat.format(new Date()));
+            Date endDate = booking.getEndDate();
+            long diff = today.getTime() - endDate.getTime();
+            days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+        } catch (ParseException e) {
+            Dialogue.alert("Could not parse date: " + e.getMessage());
+        }
         return days;
     }
 
@@ -324,6 +331,11 @@ public class ViewBookingsController implements ReadController<Booking>, Initiali
         } catch (Exception e) {
             Dialogue.alert("Something went wrong when deleting booking: " + e.getMessage());
         }
+    }
+
+    @FXML
+    private void goBack() {
+        Navigator.getInstance().goBack();
     }
 
     @Override

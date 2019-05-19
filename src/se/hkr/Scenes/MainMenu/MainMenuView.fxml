@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.MainMenu.MainMenuController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.MainMenu.MainMenuController">
    <children>
       <ImageView fitHeight="407.0" fitWidth="344.0" layoutX="271.0">
          <image>
@@ -59,7 +59,7 @@
          </font>
       </Label>
       <Button fx:id="btnGo" layoutX="478.0" layoutY="278.0" mnemonicParsing="false" onAction="#btnGoPressed" prefHeight="37.0" prefWidth="61.0" styleClass="drop-shadow" text="Go!" />
-      <MenuBar prefHeight="29.0" prefWidth="615.0">
+      <MenuBar prefHeight="31.0" prefWidth="615.0">
         <menus>
           <Menu mnemonicParsing="false" text="Help">
             <items>
@@ -68,6 +68,10 @@
             </items>
           </Menu>
         </menus>
+         <styleClass>
+            <String fx:value="dark-menu-bar" />
+            <String fx:value="drop-shadow" />
+         </styleClass>
       </MenuBar>
    </children>
 </AnchorPane>
