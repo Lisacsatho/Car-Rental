@@ -133,8 +133,8 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
                             vehicleOptionsToRemove.add(pair);
                         }
                     }
+                    BookingSession.getInstance().getSessionObject().getVehicleOptions().removeAll(vehicleOptionsToRemove);
                 }
-                BookingSession.getInstance().getSessionObject().getVehicleOptions().removeAll(vehicleOptionsToRemove);
                 txtFldTotalPrice.setText("$" + calculateTotalPrice());
             }
         } catch (Exception x) {

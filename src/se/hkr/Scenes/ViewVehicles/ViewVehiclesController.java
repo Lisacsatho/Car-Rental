@@ -40,9 +40,6 @@ public class ViewVehiclesController implements ReadController<Vehicle>, Initiali
     @FXML
     private TextField txtFldSearch;
 
-  /* @FXML
-    private Button btnInspectNeed;*/
-
     @FXML
     private Label lblVehicleName,
                   lblFuelType,
@@ -57,7 +54,6 @@ public class ViewVehiclesController implements ReadController<Vehicle>, Initiali
 
     private ObservableList<Vehicle> matchingVehicles;
     private List<Vehicle> allVehicles;
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

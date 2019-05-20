@@ -68,6 +68,20 @@ public abstract class UserDBHandler <U extends User> extends ModelDBHandler<U> {
 
     public abstract U readByEmail(String email) throws SQLException;
 
+    public static User readAbstractByEmail(String email) throws SQLException {
+        User userFound;
+        try (MemberDBHandler memberDBHandler = new MemberDBHandler();
+            EmployeeDBHandler employeeDBHandler = new EmployeeDBHandler()) {
+             userFound = memberDBHandler.readByEmail(email);
+            if (userFound == null) {
+                userFound = employeeDBHandler.readByEmail(email);
+            }
+        } catch (Exception e) {
+            throw new SQLException(e);
+        }
+        return userFound;
+    }
+
     @Override
     public void insert(U model) throws SQLException {
         try (AddressDBHandler addressDB = new AddressDBHandler();

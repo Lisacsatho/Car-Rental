@@ -11,7 +11,7 @@ import java.util.Properties;
 public class Email {
 
     private final String FROM = "rentall.hkr@gmail.com";
-    private final String PASSWORD = "projekt2";
+    private final String PASSWORD = "projektkurs2";
     private String to;
     private String subject;
     private String content;
@@ -31,7 +31,6 @@ public class Email {
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", "465");
 
-        //get Session
         session = Session.getDefaultInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
@@ -49,7 +48,7 @@ public class Email {
            Transport.send(message);
 
        }catch (MessagingException e) {
-           Dialogue.alert("OHNOOOO");
+           Dialogue.alert("Email could not be sent." + e.getMessage());
        }
 
     }

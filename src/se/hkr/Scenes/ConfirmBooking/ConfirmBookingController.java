@@ -140,7 +140,7 @@ public class ConfirmBookingController implements Initializable, SessionListener<
         String password = txtFldPassword.getText();
         try {
             User user = UserDBHandler.authenticate(email, password);
-            if (user != null) {
+            if (user != null && user instanceof Member) {
                 UserSession.getInstance().logIn(user);
                 if (((Member) user).isVerified()) {
                     btnConfirmBooking.setDisable(false);

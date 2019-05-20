@@ -29,8 +29,21 @@ public class EmployeeDBHandler extends UserDBHandler<Employee> {
     }
 
     @Override
-    public void update(Employee model) {
-        System.out.println("Updated employee!");
+    public void update(Employee model) throws SQLException {
+        super.update(model);
+        String query = "UPDATE employee SET salary=?, role=? WHERE socialSecurityNo=?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setDouble(1, model.getSalary());
+            if (model instanceof Manager) {
+                statement.setString(2, "MANAGER");
+            } else {
+                statement.setString(2, "EMPLOYEE");
+            }
+            statement.setString(3, model.getSocialSecurityNo());
+            statement.executeUpdate();
+        } catch (Exception e) {
+            throw new SQLException("Could not update employee table.", e);
+        }
     }
 
     @Override
@@ -39,8 +52,13 @@ public class EmployeeDBHandler extends UserDBHandler<Employee> {
     }
 
     @Override
-    public List<Employee> readAll() {
-        return null;
+    public List<Employee> readAll() throws SQLException {
+        String query = "SELECT * FROM employee JOIN user ON user.socialSecurityNo=employee.socialSecurityNo";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+             return buildModels(statement.executeQuery());
+        } catch (Exception e) {
+            throw new SQLException("Problem reading employees: " + e.getMessage(), e);
+        }
     }
 
     @Override

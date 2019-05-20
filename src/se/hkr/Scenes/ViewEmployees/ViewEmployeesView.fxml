@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -9,8 +10,9 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="452.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ViewEmployees.ViewEmployeesController">
+<AnchorPane prefHeight="452.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ViewEmployees.ViewEmployeesController">
    <children>
       <TableView fx:id="tblEmployees" layoutX="24.0" layoutY="65.0" prefHeight="322.0" prefWidth="384.0">
         <columns>
@@ -20,8 +22,7 @@
         </columns>
       </TableView>
       <TextField fx:id="txtFldSearch" layoutX="24.0" layoutY="32.0" prefHeight="27.0" prefWidth="305.0" promptText="Search employee" />
-      <Button fx:id="btnSearch" layoutX="338.0" layoutY="31.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="70.0" text="Search" />
-      <TextField fx:id="lblSocialSecurityNo" layoutX="427.0" layoutY="32.0" prefHeight="27.0" prefWidth="269.0" promptText="SSN" />
+      <Button fx:id="btnSearch" layoutX="338.0" layoutY="31.0" mnemonicParsing="false" onAction="#search" prefHeight="27.0" prefWidth="70.0" text="Search" />
       <Label layoutX="430.0" layoutY="71.0" text="First name" />
       <Label layoutX="568.0" layoutY="71.0" text="Last name" />
       <TextField fx:id="txtFldFirstName" layoutX="430.0" layoutY="88.0" prefHeight="27.0" prefWidth="128.0" />
@@ -30,15 +31,13 @@
       <Label layoutX="429.0" layoutY="115.0" text="Phone number" />
       <Label layoutX="432.0" layoutY="159.0" text="Email" />
       <TextField fx:id="txtFldEmail" layoutX="428.0" layoutY="176.0" prefHeight="27.0" prefWidth="269.0" />
-      <Label layoutX="427.0" layoutY="205.0" text="Driver license number" />
-      <TextField fx:id="txtFldDriversLicenseNo" layoutX="428.0" layoutY="226.0" prefHeight="27.0" prefWidth="269.0" />
-      <Label layoutX="428.0" layoutY="260.0" text="Address" />
-      <TextField fx:id="txtFldAddress" layoutX="427.0" layoutY="277.0" prefHeight="27.0" prefWidth="269.0" />
-      <Label layoutX="430.0" layoutY="304.0" text="Zip" />
-      <TextField fx:id="txtFldZip" layoutX="429.0" layoutY="321.0" prefHeight="27.0" prefWidth="112.0" />
-      <Label layoutX="548.0" layoutY="304.0" text="City" />
-      <TextField fx:id="txtFldCity" layoutX="547.0" layoutY="321.0" />
-      <Button fx:id="btnSaveEmployee" layoutX="454.0" layoutY="402.0" mnemonicParsing="false" onAction="#btnSaveEmployeePressed" text="Save new employee information" />
+      <Label layoutX="428.0" layoutY="208.0" text="Address" />
+      <TextField fx:id="txtFldAddress" layoutX="427.0" layoutY="227.0" prefHeight="27.0" prefWidth="269.0" />
+      <Label layoutX="431.0" layoutY="256.0" text="Zip" />
+      <TextField fx:id="txtFldZip" layoutX="429.0" layoutY="277.0" prefHeight="27.0" prefWidth="112.0" />
+      <Label layoutX="548.0" layoutY="257.0" text="City" />
+      <TextField fx:id="txtFldCity" layoutX="547.0" layoutY="277.0" prefHeight="26.0" prefWidth="148.0" />
+      <Button fx:id="btnSaveEmployee" layoutX="547.0" layoutY="361.0" mnemonicParsing="false" onAction="#btnSaveEmployeePressed" prefHeight="26.0" prefWidth="148.0" styleClass="highlighted-button" text="Update employee" />
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="708.0">
         <menus>
           <Menu mnemonicParsing="false" text="Navigate">
@@ -58,7 +57,13 @@
           </Menu>
         </menus>
       </MenuBar>
-      <TextField fx:id="txtFldSalary" layoutX="427.0" layoutY="367.0" prefHeight="27.0" prefWidth="112.0" />
-      <Label layoutX="428.0" layoutY="350.0" text="Salary" />
+      <TextField fx:id="txtFldSalary" layoutX="427.0" layoutY="324.0" prefHeight="27.0" prefWidth="112.0" />
+      <Label layoutX="428.0" layoutY="306.0" text="Salary" />
+      <Label fx:id="lblSocialSecurityNo" layoutX="430.0" layoutY="34.0" text="Social Security Number">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <CheckBox fx:id="checkBoxIsManager" layoutX="548.0" layoutY="329.0" mnemonicParsing="false" text="Is manager" />
    </children>
 </AnchorPane>

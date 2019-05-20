@@ -41,48 +41,29 @@
       <TextField fx:id="txtFldEmail" layoutX="241.0" layoutY="112.0" prefHeight="27.0" prefWidth="313.0" promptText="Email" styleClass="drop-shadow" />
       <TextField fx:id="txtFldPassword" layoutX="402.0" layoutY="147.0" prefHeight="28.0" prefWidth="153.0" promptText="Old password" styleClass="drop-shadow" />
       <Label layoutX="375.0" layoutY="27.0" />
-      <TextField fx:id="txtFldZip" layoutX="241.0" layoutY="282.0" prefHeight="27.0" prefWidth="154.0" promptText="Zip" styleClass="drop-shadow" />
-      <TextField fx:id="txtFldCity" layoutX="403.0" layoutY="282.0" prefHeight="27.0" prefWidth="153.0" promptText="City" styleClass="drop-shadow" />
-      <Label layoutX="251.0" layoutY="32.0" text="Edit / update your information." textFill="#111111">
+      <Label layoutX="239.0" layoutY="29.0" text="Edit / update your information." textFill="#111111">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="btnSave" layoutX="338.0" layoutY="356.0" mnemonicParsing="false" onAction="#btnSavePressed" prefHeight="27.0" prefWidth="125.0" text="Save">
-         <styleClass>
-            <String fx:value="drop-shadow" />
-            <String fx:value="highlighted-button" />
-         </styleClass></Button>
-      <TextField layoutX="241.0" layoutY="182.0" promptText="New password" styleClass="drop-shadow">
-         <font>
-            <Font name="System Italic" size="12.0" />
-         </font>
-      </TextField>
-      <TextField layoutX="402.0" layoutY="182.0" prefHeight="27.0" prefWidth="153.0" promptText="Repeat new password" styleClass="drop-shadow" />
-      <MenuBar prefHeight="25.0" prefWidth="610.0">
+      <Button fx:id="btnSave" layoutX="521.0" layoutY="322.0" mnemonicParsing="false" onAction="#btnSavePressed" prefHeight="27.0" prefWidth="72.0" styleClass="highlighted-button" text="Save" />
+      <MenuBar prefHeight="25.0" prefWidth="623.0">
         <menus>
           <Menu mnemonicParsing="false" text="Navigate">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="User">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+              <MenuItem mnemonicParsing="false" onAction="#menuItemBackPressed" text="Back" />
+                  <MenuItem fx:id="menuItemCancel" mnemonicParsing="false" onAction="#menuItemCancelPressed" text="Cancel" />
+              <MenuItem fx:id="menuItemLogOut" mnemonicParsing="false" onAction="#menuItemLogOutPressed" text="Log out" />
+                  <MenuItem fx:id="menuItemQuit" mnemonicParsing="false" onAction="#menuItemQuitPressed" text="Quit" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem fx:id="menuItemContact" mnemonicParsing="false" onAction="#menuItemContactPressed" text="Contact us" />
+                  <MenuItem fx:id="menuItemAbout" mnemonicParsing="false" onAction="#menuItemAboutPressed" text="About" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
-      <Button fx:id="btnBack" layoutX="471.0" layoutY="356.0" mnemonicParsing="false" onAction="#btnGoBackPressed" prefHeight="27.0" prefWidth="109.0" text="Back">
-         <styleClass>
-            <String fx:value="drop-shadow" />
-            <String fx:value="highlighted-button" />
-         </styleClass>
-      </Button>
    </children>
 </AnchorPane>
