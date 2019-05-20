@@ -35,8 +35,8 @@
           </Menu>
         </menus>
       </MenuBar>
-      <DatePicker fx:id="datePickerStart" layoutX="14.0" layoutY="66.0" promptText="Start date" />
-      <DatePicker fx:id="datePickerEnd" layoutX="14.0" layoutY="106.0" promptText="Return date" />
+      <DatePicker fx:id="datePickerStart" layoutX="14.0" layoutY="66.0" prefHeight="29.0" prefWidth="177.0" promptText="Start date" />
+      <DatePicker fx:id="datePickerEnd" layoutX="14.0" layoutY="106.0" prefHeight="29.0" prefWidth="177.0" promptText="Return date" />
       <Button fx:id="btnGo" layoutX="139.0" layoutY="148.0" mnemonicParsing="false" onAction="#pressedGo" prefHeight="29.0" prefWidth="49.0" text="Go!" />
       <AnchorPane layoutX="386.0" layoutY="32.0" prefHeight="374.0" prefWidth="214.0" style="-fx-background-color: #FFFF;">
          <children>
@@ -74,20 +74,20 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Button fx:id="btnEditMember" layoutX="140.0" layoutY="163.0" mnemonicParsing="false" onAction="#editMemberInformation" styleClass="drop-shadow" text="Edit info" />
+            <Button fx:id="btnEditMember" layoutX="78.0" layoutY="196.0" mnemonicParsing="false" onAction="#editMemberInformation" prefHeight="29.0" prefWidth="110.0" styleClass="drop-shadow" text="Edit info" />
          </children>
       </AnchorPane>
-      <Label layoutX="16.0" layoutY="40.0" prefHeight="18.0" prefWidth="93.0" text="Cruise dates:" textFill="WHITE">
+      <Label layoutX="16.0" layoutY="40.0" prefHeight="19.0" prefWidth="165.0" text="Cruise dates:" textFill="WHITE">
 
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label fx:id="lblWelcomeMessage" layoutX="212.0" layoutY="39.0" prefHeight="23.0" prefWidth="265.0" text="Welcome Message">
+      <Label fx:id="lblWelcomeMessage" layoutX="212.0" layoutY="39.0" prefHeight="24.0" prefWidth="377.0" text="Welcome Message">
          <font>
             <Font size="19.0" />
          </font>
       </Label>
-      <VBox fx:id="containerBookings" layoutX="139.0" layoutY="229.0" prefHeight="155.0" prefWidth="440.0" spacing="10.0" styleClass="high" />
+      <VBox fx:id="containerBookings" layoutX="14.0" layoutY="240.0" prefHeight="155.0" prefWidth="440.0" spacing="10.0" styleClass="high" />
    </children>
 </AnchorPane>
