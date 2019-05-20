@@ -10,6 +10,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import se.hkr.Database.UserDB.EmployeeDBHandler;
 import se.hkr.Database.UserDB.MemberDBHandler;
+import se.hkr.Database.UserDB.UserDBHandler;
 import se.hkr.Dialogue;
 import se.hkr.Email.Email;
 import se.hkr.HashUtils;
@@ -53,10 +54,9 @@ public class ForgotPasswordController implements Initializable {
     private int code;
 
     public void btnSendPressed(ActionEvent ae) {
-
         txtFieldMail.getText();
-        try (MemberDBHandler memberDBHandler = new MemberDBHandler()) {
-            if (memberDBHandler.readByEmail(txtFieldMail.getText()) != null) {
+        try {
+            if (UserDBHandler.readAbstractByEmail(txtFieldMail.getText()) != null) {
                 SecureRandom random = new SecureRandom();
                 code = random.nextInt();
                 Email email = new Email(txtFieldMail.getText(), "Password reset | RentAll", "Please verify your email using the following code: " + code);

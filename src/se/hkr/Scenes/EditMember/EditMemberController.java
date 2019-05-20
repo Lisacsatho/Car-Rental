@@ -60,10 +60,8 @@ public class EditMemberController implements Initializable {
             } catch (Exception e) {
                 Dialogue.alert(e.getMessage());
             }
-
         }
     }
-
 
     @FXML
     public void menuItemBackPressed(ActionEvent ae) { Navigator.getInstance().goBack(); }
@@ -119,8 +117,6 @@ public class EditMemberController implements Initializable {
             txtFldAddress.setText(user.getAddress().getStreet());
             txtFldZip.setText(user.getAddress().getZip());
             txtFldCity.setText(user.getAddress().getState());
-
-
         }
         else {
             Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");
