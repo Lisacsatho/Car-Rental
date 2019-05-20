@@ -40,13 +40,8 @@ public class ForgotPasswordController implements Initializable {
                    btnSave;
 
     @FXML
-    private MenuItem menuItemBack,
-                     menuItemCancel,
-                     menuItemLogOut,
-                     menuItemContact,
-                     menuItemAbout,
-                     menuItemQuit;
-
+    private MenuItem menuItemContact,
+                     menuItemAbout;
 
     private int code;
 
