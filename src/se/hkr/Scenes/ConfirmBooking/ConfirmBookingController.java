@@ -166,6 +166,7 @@ public class ConfirmBookingController implements Initializable, SessionListener<
                 Dialogue.alert("Your booking is made! Thank you for renting from RentAll.");
                 sendConfirmationMail();
                 BookingSession.getInstance().resetSession();
+                Navigator.getInstance().navigateToPanel();
             } else {
                 Dialogue.alert("It seems some of your vehicles was booked while you were booking. Please try again.");
             }
