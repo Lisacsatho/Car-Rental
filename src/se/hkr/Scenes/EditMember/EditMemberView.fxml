@@ -20,7 +20,7 @@
             <Image url="@../../Assets/Images/lamb3.png" />
          </image>
       </ImageView>
-      <Polygon fill="#fbfdff" layoutX="262.0" layoutY="85.0" points="-8.0, 324.0, -81.0, -60.0, 0.0, -60.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" />
+      <Polygon fill="#ffc32b" layoutX="262.0" layoutY="85.0" points="-8.0, 324.0, -81.0, -60.0, 0.0, -60.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" />
       <TextField fx:id="txtFldFirstName" layoutX="241.0" layoutY="79.0" promptText="First name" styleClass="drop-shadow">
          <font>
             <Font name="System Italic" size="12.0" />

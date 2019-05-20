@@ -58,8 +58,6 @@ public class EditMemberController implements Initializable {
 
         }
     }
-
-
     public void btnGoBackPressed(ActionEvent event) {
         if (event.getSource() == btnBack) {
             Navigator.getInstance().navigateTo("MemberPanel/MemberPanelView.fxml");
