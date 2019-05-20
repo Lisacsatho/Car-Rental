@@ -6,14 +6,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import se.hkr.*;
 import se.hkr.Database.UserDB.MemberDBHandler;
-import se.hkr.Dialogue;
-import se.hkr.HashUtils;
 import se.hkr.Model.User.Address;
 import se.hkr.Model.User.Member;
 import se.hkr.Model.User.User;
-import se.hkr.Navigator;
-import se.hkr.UserSession;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -48,7 +45,6 @@ public class EditMemberController implements Initializable {
     public void btnSavePressed(ActionEvent event) {
         if (event.getSource() == btnSave) {
             try (MemberDBHandler memberDBHandler = new MemberDBHandler()) {
-
                 Member member = (Member) UserSession.getInstance().getSessionObject();
                 member.setFirstName(txtFldFirstName.getText());
                 member.setLastName(txtFldLastName.getText());

@@ -111,6 +111,16 @@ public class EmployeePanelController implements Initializable {
     }
 
     @FXML
+    private void buttonManageEmployeesPressed() {
+        Navigator.getInstance().navigateTo("ViewEmployees/ViewEmployeesView.fxml");
+    }
+
+    @FXML
+    private void buttonAddEmployeePressed() {
+        Navigator.getInstance().navigateTo("");
+    }
+
+    @FXML
     private void buttonInspectStartingBookingPressed() {
         Booking booking = tblBookingsStarting.getSelectionModel().getSelectedItem();
         if (booking != null) {

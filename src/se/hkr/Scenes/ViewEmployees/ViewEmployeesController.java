@@ -54,6 +54,9 @@ public class ViewEmployeesController implements ReadController<Employee>, Initia
     @FXML
     private TableView<Employee> tblEmployees;
 
+    @FXML
+    private CheckBox checkBoxIsManager;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -102,7 +105,6 @@ public class ViewEmployeesController implements ReadController<Employee>, Initia
     }
 
     private void displayEmployee(Employee employee) {
-
         try {
             lblSocialSecurityNo.setText(employee.getSocialSecurityNo());
             txtFldFirstName.setText(employee.getFirstName());
@@ -113,7 +115,7 @@ public class ViewEmployeesController implements ReadController<Employee>, Initia
             txtFldAddress.setText(employee.getAddress().getStreet());
             txtFldZip.setText(employee.getAddress().getZip());
             txtFldSalary.setText(String.valueOf(employee.getSalary()));
-
+            checkBoxIsManager.setSelected(employee instanceof Manager);
         } catch (NullPointerException e) {
             resetDisplay();
         }
@@ -133,6 +135,13 @@ public class ViewEmployeesController implements ReadController<Employee>, Initia
             employee.getAddress().setState(txtFldCity.getText());
             employee.getAddress().setStreet(txtFldAddress.getText());
             employee.getAddress().setZip(txtFldZip.getText());
+            employee.setSalary(Double.parseDouble(txtFldSalary.getText()));
+
+            if (checkBoxIsManager.isSelected() && !(employee instanceof Manager)) {
+                employee = new Manager(employee.getSocialSecurityNo(), employee.getFirstName(), employee.getLastName(), employee.getEmail(), employee.getPhoneNumber(), employee.getAddress(), employee.getSalary());
+            } else if (!checkBoxIsManager.isSelected() && employee instanceof Manager) {
+                employee = new Employee(employee.getSocialSecurityNo(), employee.getFirstName(), employee.getLastName(), employee.getEmail(), employee.getPhoneNumber(), employee.getAddress(), employee.getSalary());
+            }
 
             try (EmployeeDBHandler employeeDBHandler = new EmployeeDBHandler()) {
                 employeeDBHandler.update(employee);

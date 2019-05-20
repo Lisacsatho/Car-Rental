@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -11,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="452.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ViewEmployees.ViewEmployeesController">
+<AnchorPane prefHeight="452.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ViewEmployees.ViewEmployeesController">
    <children>
       <TableView fx:id="tblEmployees" layoutX="24.0" layoutY="65.0" prefHeight="322.0" prefWidth="384.0">
         <columns>
@@ -35,8 +36,8 @@
       <Label layoutX="431.0" layoutY="256.0" text="Zip" />
       <TextField fx:id="txtFldZip" layoutX="429.0" layoutY="277.0" prefHeight="27.0" prefWidth="112.0" />
       <Label layoutX="548.0" layoutY="257.0" text="City" />
-      <TextField fx:id="txtFldCity" layoutX="547.0" layoutY="277.0" />
-      <Button fx:id="btnSaveEmployee" layoutX="454.0" layoutY="378.0" mnemonicParsing="false" onAction="#btnSaveEmployeePressed" styleClass="highlighted-button" text="Save new employee information" />
+      <TextField fx:id="txtFldCity" layoutX="547.0" layoutY="277.0" prefHeight="26.0" prefWidth="148.0" />
+      <Button fx:id="btnSaveEmployee" layoutX="547.0" layoutY="361.0" mnemonicParsing="false" onAction="#btnSaveEmployeePressed" prefHeight="26.0" prefWidth="148.0" styleClass="highlighted-button" text="Update employee" />
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="708.0">
         <menus>
           <Menu mnemonicParsing="false" text="Navigate">
@@ -63,5 +64,6 @@
             <Font size="20.0" />
          </font>
       </Label>
+      <CheckBox fx:id="checkBoxIsManager" layoutX="548.0" layoutY="329.0" mnemonicParsing="false" text="Is manager" />
    </children>
 </AnchorPane>
