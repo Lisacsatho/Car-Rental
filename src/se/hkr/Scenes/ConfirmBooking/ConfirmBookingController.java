@@ -54,6 +54,11 @@ public class ConfirmBookingController implements Initializable, SessionListener<
 
     @FXML
     private Button btnConfirmBooking;
+
+    @FXML
+    private MenuItem
+            menuItemContact,
+            menuItemAbout;
     @FXML
     private TextField txtFldEmail,
                       txtFldPassword;
@@ -223,5 +228,23 @@ public class ConfirmBookingController implements Initializable, SessionListener<
         message.append(String.format("%nTotal: $%.2f", booking.getTotalPrice()));
         Email email = new Email(UserSession.getInstance().getSessionObject().getEmail(), subject, message.toString());
         email.send();
+    }
+    @FXML
+    public void menuItemContactPressed(ActionEvent actionEvent) {
+
+        if (actionEvent.getSource() == menuItemContact) {
+
+            Navigator.getInstance().navigateTo("CustomerService/CustomerServiceView.fxml");
+        }
+    }
+
+    @FXML
+    public void menuItemAboutPressed(ActionEvent actionEvent) {
+
+        if (actionEvent.getSource() == menuItemAbout) {
+
+            Navigator.getInstance().navigateTo("CompanyInformation/CompanyInformationView.fxml");
+
+        }
     }
 }

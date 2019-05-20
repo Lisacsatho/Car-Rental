@@ -20,9 +20,28 @@
             <Image url="@../../Assets/Images/lamb3.png" />
          </image>
       </ImageView>
+      <MenuBar prefHeight="25.0" prefWidth="579.0" style="-fx-background-color: #ddd;">
+        <menus>
+          <Menu mnemonicParsing="false" text="Navigate">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#menuItemBackPressed" text="Back" />
+                  <MenuItem fx:id="menuItemCancel" mnemonicParsing="false" onAction="#menuItemCancelPressed" text="Cancel" />
+              <MenuItem fx:id="menuItemLogOut" mnemonicParsing="false" onAction="#menuItemLogOutPressed" text="Log out" />
+                  <MenuItem fx:id="menuItemQuit" mnemonicParsing="false" onAction="#menuItemQuitPressed" text="Quit" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem fx:id="menuItemContact" mnemonicParsing="false" onAction="#menuItemContactPressed" text="Contact us" />
+                  <MenuItem fx:id="menuItemAbout" mnemonicParsing="false" onAction="#menuItemAboutPressed" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
 
-      <Polygon fill="#fbfdff" layoutX="262.0" layoutY="85.0" points="-8.0, 324.0, -81.0, -60.0, 0.0, -60.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="drop-shadow" />
-      <Polygon fill="WHITE" layoutX="245.0" layoutY="83.0" points="10.0, 326.0, 74.0, -58.0, -6.0, -58.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+      <Polygon fill="#fbfdff" layoutX="262.0" layoutY="85.0" points="-8.0, 324.0, -120.0, -85.0, 361.0, -85.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="drop-shadow" />
+      <Polygon fill="WHITE" layoutX="245.0" layoutY="83.0" points="10.0, 326.0, 378.0, 326.0, 163.0, 123.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+      <Polygon fill="#fcfcfc" layoutX="489.0" layoutY="69.0" points="134.0, 148.0, 134.0, -69.0, -3.0, -69.0" stroke="TRANSPARENT" strokeType="INSIDE" />
       <AnchorPane layoutX="159.0" layoutY="67.0" prefHeight="240.0" prefWidth="464.0">
          <styleClass>
             <String fx:value="dark-panel" />
@@ -59,29 +78,11 @@
          </children>
       </AnchorPane>
       <Label layoutX="375.0" layoutY="27.0" />
-      <Label layoutX="239.0" layoutY="29.0" text="Edit / update your information." textFill="#111111">
+      <Label layoutX="255.0" layoutY="19.0" text="Edit / update your information." textFill="#111111">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
       <Button fx:id="btnSave" layoutX="521.0" layoutY="322.0" mnemonicParsing="false" onAction="#btnSavePressed" prefHeight="27.0" prefWidth="72.0" styleClass="highlighted-button" text="Save" />
-      <MenuBar prefHeight="25.0" prefWidth="623.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="Navigate">
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#menuItemBackPressed" text="Back" />
-                  <MenuItem fx:id="menuItemCancel" mnemonicParsing="false" onAction="#menuItemCancelPressed" text="Cancel" />
-              <MenuItem fx:id="menuItemLogOut" mnemonicParsing="false" onAction="#menuItemLogOutPressed" text="Log out" />
-                  <MenuItem fx:id="menuItemQuit" mnemonicParsing="false" onAction="#menuItemQuitPressed" text="Quit" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem fx:id="menuItemContact" mnemonicParsing="false" onAction="#menuItemContactPressed" text="Contact us" />
-                  <MenuItem fx:id="menuItemAbout" mnemonicParsing="false" onAction="#menuItemAboutPressed" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
    </children>
 </AnchorPane>

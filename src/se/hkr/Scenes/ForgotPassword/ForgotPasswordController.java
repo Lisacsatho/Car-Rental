@@ -120,7 +120,7 @@ public class ForgotPasswordController implements Initializable {
 
         if (actionEvent.getSource() == menuItemAbout) {
 
-            Navigator.getInstance().navigateTo("CustomerService/CustomerServiceView.fxml");
+            Navigator.getInstance().navigateTo("CompanyInformation/CompanyInformationView.fxml");
 
         }
     }

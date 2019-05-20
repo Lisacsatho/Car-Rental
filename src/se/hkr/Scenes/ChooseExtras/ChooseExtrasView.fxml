@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="414.0" prefWidth="447.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ChooseExtras.ChooseExtrasController">
+<AnchorPane prefHeight="414.0" prefWidth="447.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ChooseExtras.ChooseExtrasController">
    <children>
       <AnchorPane layoutX="539.0" prefHeight="414.0" prefWidth="127.0" styleClass="dark-panel">
          <children>
@@ -52,7 +52,7 @@
             <Image url="@../../Assets/Images/splash.jpg" />
          </image>
       </ImageView>
-      <MenuBar prefHeight="29.0" prefWidth="531.0">
+      <MenuBar prefHeight="29.0" prefWidth="531.0" style="-fx-background-color: #ddd;">
         <menus>
           <Menu mnemonicParsing="false" text="Booking">
             <items>
@@ -62,7 +62,8 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="Guide me" />
+              <MenuItem fx:id="menuItemContact" mnemonicParsing="false" onAction="#menuItemContactPressed" text="Contact us" />
+                  <MenuItem fx:id="menuItemAbout" mnemonicParsing="false" onAction="#menuItemAboutPressed" text="About" />
             </items>
           </Menu>
         </menus>
