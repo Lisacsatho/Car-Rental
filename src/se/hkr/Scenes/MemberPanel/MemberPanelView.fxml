@@ -20,8 +20,7 @@
             <Image url="@../../Assets/Images/lambo4.png" />
          </image>
       </ImageView>
-      <Polygon fill="WHITE" layoutX="199.0" layoutY="113.0" points="50.0, 296.0, 50.0, -85.0, -6.0, -85.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-      <VBox fx:id="containerBookings" layoutX="10.0" layoutY="254.0" prefHeight="155.0" prefWidth="440.0" spacing="10.0" styleClass="high" />
+      <Polygon fill="WHITE" layoutX="199.0" layoutY="113.0" points="50.0, 296.0, 50.0, -85.0, -10.0, -85.0" stroke="TRANSPARENT" strokeType="INSIDE" />
       <MenuBar fx:id="menuBarLogOut" prefHeight="29.0" prefWidth="600.0">
         <menus>
           <Menu mnemonicParsing="false" onAction="#helpMenu" text="Help">
@@ -36,66 +35,59 @@
           </Menu>
         </menus>
       </MenuBar>
-      <DatePicker fx:id="datePickerStart" layoutX="6.0" layoutY="96.0" promptText="Start date" />
-      <DatePicker fx:id="datePickerEnd" layoutX="7.0" layoutY="145.0" promptText="Return date" />
-      <Button fx:id="btnGo" layoutX="81.0" layoutY="189.0" mnemonicParsing="false" onAction="#pressedGo" prefHeight="29.0" prefWidth="49.0" text="Go!" />
+      <DatePicker fx:id="datePickerStart" layoutX="14.0" layoutY="66.0" promptText="Start date" />
+      <DatePicker fx:id="datePickerEnd" layoutX="14.0" layoutY="106.0" promptText="Return date" />
+      <Button fx:id="btnGo" layoutX="139.0" layoutY="148.0" mnemonicParsing="false" onAction="#pressedGo" prefHeight="29.0" prefWidth="49.0" text="Go!" />
       <AnchorPane layoutX="386.0" layoutY="32.0" prefHeight="374.0" prefWidth="214.0" style="-fx-background-color: #FFFF;">
          <children>
-            <AnchorPane layoutX="-147.0" layoutY="89.0" prefHeight="127.0" prefWidth="281.0" style="-fx-background-color: #606060#606060;">
+            <AnchorPane layoutX="-147.0" layoutY="49.0" prefHeight="127.0" prefWidth="281.0" style="-fx-background-color: #606060#606060;" styleClass="drop-shadow">
                <children>
-                  <Label fx:id="lblZip" layoutX="14.0" layoutY="56.0" prefHeight="20.0" prefWidth="68.0" text="Zip" textAlignment="CENTER" textFill="#dfdfe5">
+                  <Label fx:id="lblZip" layoutX="14.0" layoutY="52.0" prefHeight="20.0" prefWidth="68.0" text="Zip" textAlignment="CENTER" textFill="#dfdfe5">
                      <font>
-                        <Font size="15.0" />
+                        <Font name="System Bold Italic" size="15.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblCity" layoutX="89.0" layoutY="57.0" prefHeight="19.0" prefWidth="184.0" text="City" textAlignment="CENTER" textFill="#dfdfe5">
+                  <Label fx:id="lblCity" layoutX="151.0" layoutY="54.0" prefHeight="19.0" prefWidth="184.0" text="City" textAlignment="CENTER" textFill="#dfdfe5">
                      <font>
-                        <Font size="15.0" />
+                        <Font name="System Bold Italic" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblStreet" layoutX="14.0" layoutY="27.0" prefHeight="19.0" prefWidth="245.0" text="Street" textAlignment="CENTER" textFill="#dfdfe5">
+                     <font>
+                        <Font name="System Bold Italic" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblPhoneNumber" layoutX="12.0" layoutY="77.0" prefHeight="19.0" prefWidth="245.0" text="Phonenumber" textAlignment="CENTER" textFill="#dfdfe5">
+                     <font>
+                        <Font name="System Bold Italic" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbleMail" layoutX="12.0" layoutY="100.0" prefHeight="20.0" prefWidth="245.0" text="Email" textAlignment="CENTER" textFill="#dfdfe5">
+                     <font>
+                        <Font name="System Bold Italic" size="15.0" />
                      </font>
                   </Label>
                </children>
             </AnchorPane>
-      
-            <Button fx:id="btnEditMember" layoutX="73.0" layoutY="273.0" mnemonicParsing="false" onAction="#editMemberInformation" prefHeight="29.0" prefWidth="127.0" text="Edit information">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
-            <Label fx:id="lblSsn" layoutX="-132.0" layoutY="97.0" prefHeight="27.0" prefWidth="245.0" text="Ssn" textAlignment="CENTER" textFill="#dfdfe5">
+            <Label fx:id="lblSsn" layoutX="-132.0" layoutY="51.0" prefHeight="27.0" prefWidth="245.0" text="Ssn" textAlignment="CENTER" textFill="#dfdfe5">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label fx:id="lbleMail" layoutX="-132.0" layoutY="187.0" prefHeight="20.0" prefWidth="245.0" text="Email" textAlignment="CENTER" textFill="#dfdfe5">
-               <font>
-                  <Font name="System Bold Italic" size="15.0" />
-               </font>
-            </Label>
+            <Button fx:id="btnEditMember" layoutX="140.0" layoutY="163.0" mnemonicParsing="false" onAction="#editMemberInformation" styleClass="drop-shadow" text="Edit info" />
          </children>
       </AnchorPane>
-      <Label layoutX="19.0" layoutY="67.0" prefHeight="18.0" prefWidth="93.0" text="Cruise dates:" textFill="WHITE">
+      <Label layoutX="16.0" layoutY="40.0" prefHeight="18.0" prefWidth="93.0" text="Cruise dates:" textFill="WHITE">
 
          <font>
-            <Font size="14.0" />
+            <Font size="15.0" />
          </font>
       </Label>
-      <AnchorPane layoutX="242.0" layoutY="65.0" prefHeight="41.0" prefWidth="245.0" style="-fx-background-color: #606060#606060;">
-         <children>
-            <Label fx:id="lblWelcomeMessage" layoutX="16.0" layoutY="9.0" prefHeight="23.0" prefWidth="265.0" text="Welcome Message" textFill="#dfdfe5">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
-      <Label fx:id="lblStreet" layoutX="253.0" layoutY="155.0" prefHeight="19.0" prefWidth="245.0" text="Street" textAlignment="CENTER" textFill="#dfdfe5">
+      <Label fx:id="lblWelcomeMessage" layoutX="212.0" layoutY="39.0" prefHeight="23.0" prefWidth="265.0" text="Welcome Message">
          <font>
-            <Font name="System Bold Italic" size="15.0" />
+            <Font size="19.0" />
          </font>
       </Label>
-      <Label fx:id="lblPhoneNumber" layoutX="252.0" layoutY="201.0" prefHeight="19.0" prefWidth="245.0" text="Phonenumber" textAlignment="CENTER" textFill="#dfdfe5">
-         <font>
-            <Font name="System Bold Italic" size="15.0" />
-         </font>
-      </Label>
+      <VBox fx:id="containerBookings" layoutX="139.0" layoutY="229.0" prefHeight="155.0" prefWidth="440.0" spacing="10.0" styleClass="high" />
    </children>
 </AnchorPane>

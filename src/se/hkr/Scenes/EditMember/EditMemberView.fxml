@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
@@ -19,42 +20,51 @@
             <Image url="@../../Assets/Images/lamb3.png" />
          </image>
       </ImageView>
-      <Polygon fill="#fbfdff" layoutX="262.0" layoutY="85.0" points="-8.0, 324.0, -81.0, -60.0, 0.0, -60.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" />
-      <TextField fx:id="txtFldFirstName" layoutX="241.0" layoutY="79.0" prefHeight="27.0" prefWidth="150.0" promptText="First name" styleClass="drop-shadow">
-         <font>
-            <Font name="System Italic" size="12.0" />
-         </font>
-      </TextField>
-      <TextField fx:id="txtFldLastName" layoutX="401.0" layoutY="77.0" prefHeight="27.0" prefWidth="150.0" promptText="Last name" styleClass="drop-shadow" />
-      <TextField fx:id="txtFldSsn" layoutX="241.0" layoutY="112.0" prefHeight="28.0" prefWidth="150.0" promptText="Social security number" styleClass="drop-shadow">
-         <font>
-            <Font name="System Italic" size="12.0" />
-         </font>
-      </TextField>
-      <TextField fx:id="txtFldPhone" layoutX="241.0" layoutY="148.0" prefHeight="27.0" prefWidth="150.0" promptText="Phone number" styleClass="drop-shadow" />
-      <TextField fx:id="txtFldAddress" layoutX="242.0" layoutY="217.0" prefHeight="27.0" prefWidth="311.0" promptText="Address" styleClass="drop-shadow">
-         <font>
-            <Font name="System Italic" size="12.0" />
-         </font>
-      </TextField>
-      <TextField fx:id="txtFldEmail" layoutX="403.0" layoutY="112.0" prefHeight="27.0" prefWidth="150.0" promptText="Email" styleClass="drop-shadow" />
-      <TextField fx:id="txtFldPassword" layoutX="402.0" layoutY="147.0" prefHeight="28.0" prefWidth="150.0" promptText="Old password" styleClass="drop-shadow" />
+      <Polygon fill="#fbfdff" layoutX="262.0" layoutY="85.0" points="-8.0, 324.0, -81.0, -60.0, 0.0, -60.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="drop-shadow" />
+      <Polygon fill="WHITE" layoutX="245.0" layoutY="83.0" points="10.0, 326.0, 74.0, -58.0, -6.0, -58.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+      <AnchorPane layoutX="159.0" layoutY="67.0" prefHeight="240.0" prefWidth="464.0">
+         <styleClass>
+            <String fx:value="dark-panel" />
+            <String fx:value="drop-shadow" />
+         </styleClass>
+         <children>
+            <TextField fx:id="txtFldCity" layoutX="262.0" layoutY="193.0" prefHeight="27.0" prefWidth="164.0" promptText="City" />
+            <TextField fx:id="txtFldZip" layoutX="40.0" layoutY="193.0" prefHeight="27.0" prefWidth="164.0" promptText="Zip" />
+            <TextField fx:id="txtFldLastName" layoutX="261.0" layoutY="14.0" prefHeight="27.0" prefWidth="164.0" promptText="Last name" />
+            <TextField fx:id="txtFldFirstName" layoutX="40.0" layoutY="14.0" prefHeight="27.0" prefWidth="164.0" promptText="First name">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="txtFldSsn" layoutX="40.0" layoutY="50.0" prefHeight="28.0" prefWidth="164.0" promptText="Social security number">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="txtFldPhone" layoutX="40.0" layoutY="86.0" prefHeight="27.0" prefWidth="164.0" promptText="Phone number" />
+            <TextField fx:id="txtFldAddress" layoutX="40.0" layoutY="157.0" prefHeight="27.0" prefWidth="386.0" promptText="Address">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </TextField>
+            <TextField layoutX="40.0" layoutY="121.0" prefHeight="27.0" prefWidth="164.0" promptText="New password">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </TextField>
+            <TextField layoutX="261.0" layoutY="121.0" prefHeight="27.0" prefWidth="164.0" promptText="Repeat new password" />
+            <TextField fx:id="txtFldPassword" layoutX="261.0" layoutY="86.0" prefHeight="28.0" prefWidth="164.0" promptText="Old password" />
+            <TextField fx:id="txtFldEmail" layoutX="261.0" layoutY="51.0" prefHeight="27.0" prefWidth="164.0" promptText="Email" />
+         </children>
+      </AnchorPane>
       <Label layoutX="375.0" layoutY="27.0" />
-      <TextField fx:id="txtFldZip" layoutX="243.0" layoutY="253.0" prefHeight="27.0" prefWidth="150.0" promptText="Zip" styleClass="drop-shadow" />
-      <TextField fx:id="txtFldCity" layoutX="403.0" layoutY="253.0" prefHeight="27.0" prefWidth="150.0" promptText="City" styleClass="drop-shadow" />
-      <Label layoutX="251.0" layoutY="32.0" text="Edit / update your information." textFill="#111111">
+      <Label layoutX="239.0" layoutY="29.0" text="Edit / update your information." textFill="#111111">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="btnSave" layoutX="478.0" layoutY="355.0" mnemonicParsing="false" onAction="#btnSavePressed" prefHeight="27.0" prefWidth="72.0" styleClass="highlighted-button" text="Save" />
-      <TextField layoutX="241.0" layoutY="182.0" promptText="New password" styleClass="drop-shadow">
-         <font>
-            <Font name="System Italic" size="12.0" />
-         </font>
-      </TextField>
-      <TextField layoutX="402.0" layoutY="182.0" prefHeight="27.0" prefWidth="150.0" promptText="Repeat new password" styleClass="drop-shadow" />
-      <MenuBar prefHeight="25.0" prefWidth="610.0">
+      <Button fx:id="btnSave" layoutX="521.0" layoutY="322.0" mnemonicParsing="false" onAction="#btnSavePressed" prefHeight="27.0" prefWidth="72.0" styleClass="highlighted-button" text="Save" />
+      <MenuBar prefHeight="25.0" prefWidth="623.0">
         <menus>
           <Menu mnemonicParsing="false" text="Navigate">
             <items>

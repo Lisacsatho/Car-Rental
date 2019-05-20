@@ -69,6 +69,7 @@ public class EditMemberController implements Initializable {
     }
 
 
+    @FXML
     public void menuItemBackPressed(ActionEvent ae) { Navigator.getInstance().goBack(); }
 
     @FXML

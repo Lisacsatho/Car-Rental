@@ -114,15 +114,6 @@ public class ForgotPasswordController implements Initializable {
         System.exit(0);
     }
 
-    @FXML
-    public void menuItemLogOutPressed(ActionEvent actionEvent) {
-
-        if (actionEvent.getSource() == menuItemLogOut) {
-            UserSession.getInstance().resetSession();
-
-            Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");
-        }
-    }
 
     @FXML
     public void menuItemContactPressed(ActionEvent actionEvent) {

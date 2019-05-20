@@ -4,17 +4,16 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import se.hkr.Database.UserDB.MemberDBHandler;
 import se.hkr.Dialogue;
 import se.hkr.Model.User.Member;
+import se.hkr.Navigator;
 import se.hkr.Scenes.ReadController;
 
 import java.net.URL;
@@ -42,6 +41,12 @@ public class ViewMembersController implements ReadController<Member>, Initializa
                       txtFldZip;
     @FXML
     private Label lblSocialSecurityNo;
+
+    @FXML
+    private MenuItem
+            menuItemHelp,
+            menuItemLogOut,
+            menuItemBack;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -142,6 +147,12 @@ public class ViewMembersController implements ReadController<Member>, Initializa
         txtFldStreet.clear();
         txtFldZip.clear();
     }
+
+    @FXML
+    public void menuItemBackPressed(ActionEvent ae) { Navigator.getInstance().goBack(); }
+
+    @FXML
+    private void menuItemQuitPressed(ActionEvent ae) { System.exit(0);}
 
     @Override
     public boolean filter(Member model) {

@@ -13,20 +13,22 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.AddVehicle.AddVehicleController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="dark-panel" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.AddVehicle.AddVehicleController">
    <children>
-      <ImageView fitHeight="418.0" fitWidth="617.0" layoutX="-8.0" layoutY="-8.0">
+      <ImageView fitHeight="411.0" fitWidth="295.0" layoutX="-1.0" layoutY="-5.0">
          <image>
-            <Image url="@../../Assets/Images/placeholder_background.png" />
+            <Image url="@../../Assets/Images/splash.jpg" />
          </image>
       </ImageView>
-      <Label layoutX="213.0" layoutY="33.0" text="Add a new car. Pick the correct information.">
+      <Polygon fill="#1c282d" layoutX="154.0" layoutY="82.0" points="146.0, 340.0, 146.0, -60.0, -41.0, -60.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="dark-panel" />
+      <Label layoutX="213.0" layoutY="27.0" text="Add a new car. Pick the correct information." textFill="#f8f6f6">
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Button fx:id="buttonSave" layoutX="515.0" layoutY="374.0" mnemonicParsing="false" onAction="#buttonSavePressed" prefHeight="25.0" prefWidth="73.0" styleClass="drop-shadow" text="Save" />
+      <Button fx:id="buttonSave" layoutX="515.0" layoutY="368.0" mnemonicParsing="false" onAction="#buttonSavePressed" prefHeight="25.0" prefWidth="73.0" styleClass="drop-shadow" text="Save" />
       <TextField fx:id="textModel" layoutX="14.0" layoutY="95.0" prefHeight="27.0" prefWidth="148.0" promptText="Model" />
       <TextField fx:id="textYear" layoutX="14.0" layoutY="165.0" prefHeight="27.0" prefWidth="148.0" promptText="Year" />
       <ComboBox fx:id="comboBrand" layoutX="14.0" layoutY="57.0" prefHeight="27.0" prefWidth="148.0" promptText="Brand" />
@@ -36,21 +38,21 @@
       <ComboBox fx:id="comboCarType" layoutX="14.0" layoutY="130.0" prefHeight="27.0" prefWidth="148.0" promptText="CarType" />
       <ComboBox fx:id="comboSuitcases" layoutX="14.0" layoutY="278.0" prefHeight="27.0" prefWidth="148.0" promptText="Suitcases" />
       <TextField fx:id="textPrice" layoutX="14.0" layoutY="350.0" prefHeight="27.0" prefWidth="148.0" promptText="Price" />
-      <TextArea fx:id="textDescription" layoutX="186.0" layoutY="62.0" prefHeight="110.0" prefWidth="404.0" />
-      <TableView fx:id="tableViewChoose" layoutX="388.0" layoutY="174.0" prefHeight="192.0" prefWidth="200.0">
+      <TextArea fx:id="textDescription" layoutX="186.0" layoutY="58.0" prefHeight="110.0" prefWidth="404.0" />
+      <TableView fx:id="tableViewChoose" layoutX="388.0" layoutY="171.0" prefHeight="192.0" prefWidth="200.0">
         <columns>
           <TableColumn fx:id="colChooseId" prefWidth="30.0" text="ID" />
           <TableColumn fx:id="colChooseName" prefWidth="169.0" text="Name" />
         </columns>
       </TableView>
-      <TableView fx:id="tableViewPick" layoutX="186.0" layoutY="174.0" prefHeight="192.0" prefWidth="200.0">
+      <TableView fx:id="tableViewPick" layoutX="186.0" layoutY="171.0" prefHeight="192.0" prefWidth="200.0">
          <columns>
             <TableColumn fx:id="colIID" prefWidth="31.0" text="ID" />
             <TableColumn fx:id="colName" prefWidth="168.0" text="Name" />
          </columns>
       </TableView>
-      <Button fx:id="buttonRemove" layoutX="252.0" layoutY="374.0" mnemonicParsing="false" onAction="#buttonRemovePressed" prefHeight="25.0" prefWidth="88.0" text="Remove car" />
-      <Button fx:id="buttonAdd" layoutX="186.0" layoutY="374.0" mnemonicParsing="false" onAction="#buttonAddPressed" text="Add car" />
+      <Button fx:id="buttonRemove" layoutX="252.0" layoutY="368.0" mnemonicParsing="false" onAction="#buttonRemovePressed" prefHeight="25.0" prefWidth="88.0" text="Remove car" />
+      <Button fx:id="buttonAdd" layoutX="186.0" layoutY="368.0" mnemonicParsing="false" onAction="#buttonAddPressed" text="Add car" />
       <MenuBar prefHeight="25.0" prefWidth="610.0">
         <menus>
           <Menu mnemonicParsing="false" text="Navigate">

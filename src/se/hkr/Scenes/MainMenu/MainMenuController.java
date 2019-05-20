@@ -45,6 +45,10 @@ public class MainMenuController implements Initializable {
         Navigator.getInstance().navigateTo("RegisterUser/RegisterView.fxml");
     }
 
+    public void btnForgotPasswPressed(ActionEvent ae) {
+        Navigator.getInstance().navigateTo("ForgotPassword/ForgotPasswordView.fxml");
+    }
+
     public void btnLoginPressed(ActionEvent ae) {
         String email = txtFldUsername.getText();
         String password = txtFldPassword.getText();
