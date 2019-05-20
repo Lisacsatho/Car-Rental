@@ -79,7 +79,6 @@ public class ViewMembersController implements ReadController<Member>, Initializa
 
     @FXML
     private void btnSavePressed() {
-        // Ask user if they are sure first.
         if (tblMembers.getSelectionModel().getSelectedItem() != null) {
             if (Dialogue.alertOk("Are you sure?")) {
                 updateMember(tblMembers.getSelectionModel().getSelectedItem());

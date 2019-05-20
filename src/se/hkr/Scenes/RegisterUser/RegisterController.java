@@ -28,7 +28,6 @@ public class RegisterController {
     @FXML
     private void registerUser() {
         try (MemberDBHandler memberDBHandler = new MemberDBHandler()) {
-            // TODO: implement more input verification.
             if (validateInformation()) {
                 Member member = new Member(txtFldSsn.getText(), txtFldFirstName.getText(), txtFldLastName.getText(), txtFldEmail.getText(),
                         txtFldPhone.getText(), new Address(txtFldStreet.getText(), txtFldZip.getText(), txtFldState.getText()),
@@ -37,7 +36,7 @@ public class RegisterController {
                 memberDBHandler.insert(member);
                 Email email = new Email(member.getEmail(), "Email confirmation | RentAll", "Please verify your email using the following code: " + member.getVerificationCode());
                 email.send();
-                Dialogue.alert("User registered! Please check your email for the confirmation email.");
+                Dialogue.alert("User registered! Please check your email for the confirmation mail.");
                 Navigator.getInstance().goBack();
             }
         } catch (Exception e) {
