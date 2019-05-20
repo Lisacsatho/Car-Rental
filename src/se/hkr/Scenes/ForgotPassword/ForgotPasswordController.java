@@ -30,25 +30,22 @@ public class ForgotPasswordController implements Initializable {
 
 
     @FXML
-    private TextField
-            txtFieldMail,
-            txtFieldCode,
-            txtFieldNewPassw,
-            txtFieldRePassw;
+    private TextField txtFieldMail,
+                      txtFieldCode,
+                      txtFieldNewPassw,
+                      txtFieldRePassw;
 
     @FXML
-    private Button
-            btnSend,
-            btnSave;
+    private Button btnSend,
+                   btnSave;
 
     @FXML
-    private MenuItem
-            menuItemBack,
-            menuItemCancel,
-            menuItemLogOut,
-            menuItemContact,
-            menuItemAbout,
-            menuItemQuit;
+    private MenuItem menuItemBack,
+                     menuItemCancel,
+                     menuItemLogOut,
+                     menuItemContact,
+                     menuItemAbout,
+                     menuItemQuit;
 
 
     private int code;
@@ -69,7 +66,6 @@ public class ForgotPasswordController implements Initializable {
             e.printStackTrace();
             Dialogue.alert("Database connection failed, please try again later.");
         }
-
     }
 
     @FXML

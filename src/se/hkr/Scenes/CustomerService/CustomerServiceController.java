@@ -30,10 +30,9 @@ public class CustomerServiceController {
             txtFldEmailAddress.getText();
             txtFldEmailAddress.getText();
 
-            Email email = new Email("info@rasmusnilsson.se", txtFldEmailAddress.getText(), txtAreaDescription.getText());
+            Email email = new Email("rentall.hkr@gmail.com", txtFldEmailAddress.getText(), txtAreaDescription.getText());
             email.send();
             lblContactSupport.setText("Email sent. We will contact you!");
-
         }
     }
 

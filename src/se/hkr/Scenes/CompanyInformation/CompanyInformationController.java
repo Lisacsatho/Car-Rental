@@ -18,9 +18,9 @@ public class CompanyInformationController implements Initializable {
     private Label lblAreaInfo;
     @FXML
     private MenuItem menuItemBack, menuItemLogOut, menuItemContact;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         lblAreaInfo.setText("This is a student project developed by\n four students at Kristianstad Univsersity.\n\nLisa Johansson\nHåkan Reinholdsson\nTobias Andersson\nRasmus Nilsson\n\nContact us at info@rasmusnilsson.se");
 
     }
@@ -35,7 +35,6 @@ public class CompanyInformationController implements Initializable {
     public void logOut (ActionEvent actionEvent) {
 
         if (actionEvent.getSource() == menuItemLogOut) {
-
             UserSession.getInstance().resetSession();
             Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");
         }
@@ -43,7 +42,6 @@ public class CompanyInformationController implements Initializable {
 
     public void contactUs (ActionEvent actionEvent) {
         if (actionEvent.getSource() == menuItemContact) {
-
             Navigator.getInstance().navigateTo("CustomerService/CustomerServiceView.fxml");
         }
     }
