@@ -117,7 +117,7 @@ public class EmployeePanelController implements Initializable {
 
     @FXML
     private void buttonAddEmployeePressed() {
-        Navigator.getInstance().navigateTo("");
+        Navigator.getInstance().navigateTo("AddEmployee/AddEmployeeView.fxml");
     }
 
     @FXML
