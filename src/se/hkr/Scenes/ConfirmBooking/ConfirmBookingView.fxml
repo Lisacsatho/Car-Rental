@@ -15,14 +15,14 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="287.0" prefWidth="808.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ConfirmBooking.ConfirmBookingController">
+<AnchorPane prefHeight="287.0" prefWidth="808.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ConfirmBooking.ConfirmBookingController">
    <children>
       <ImageView fitHeight="325.0" fitWidth="272.0" layoutX="-12.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../Assets/Images/splash.jpg" />
          </image>
       </ImageView>
-      <MenuBar prefHeight="29.0" prefWidth="623.0">
+      <MenuBar prefHeight="29.0" prefWidth="623.0" style="-fx-background-color: #ddd;">
         <menus>
           <Menu mnemonicParsing="false" text="Booking">
             <items>
@@ -32,7 +32,8 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="What is this?" />
+              <MenuItem fx:id="menuItemContact" mnemonicParsing="false" onAction="#menuItemContactPressed" text="Contact us" />
+                  <MenuItem fx:id="menuItemAbout" mnemonicParsing="false" onAction="#menuItemAboutPressed" text="About" />
             </items>
           </Menu>
         </menus>

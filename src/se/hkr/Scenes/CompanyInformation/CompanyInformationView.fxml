@@ -10,7 +10,6 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFFF;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.CompanyInformation.CompanyInformationController">
    <children>
       <ImageView fitHeight="400.0" fitWidth="432.0">
@@ -18,8 +17,7 @@
             <Image url="@../../Assets/Images/lambo4.png" />
          </image>
       </ImageView>
-      <Polygon fill="WHITE" layoutX="383.0" layoutY="177.0" points="-109.0, 223.0, -109.0, -148.0, -236.0, -148.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-      <MenuBar prefHeight="29.0" prefWidth="600.0">
+      <MenuBar prefHeight="29.0" prefWidth="600.0" style="-fx-background-color: #ddd;">
         <menus>
           <Menu mnemonicParsing="false" text="Navigator">
             <items>
@@ -34,6 +32,8 @@
           </Menu>
         </menus>
       </MenuBar>
+      <Polygon fill="WHITE" layoutX="383.0" layoutY="177.0" points="-109.0, 223.0, -109.0, -177.0, -251.0, -177.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="drop-shadow" />
+      <Polygon fill="WHITE" layoutX="310.0" layoutY="60.0" points="-36.0, 340.0, 318.0, -60.0, -50.0, -60.0" stroke="TRANSPARENT" strokeType="INSIDE" />
       <AnchorPane layoutX="433.0" layoutY="29.0" prefHeight="371.0" prefWidth="167.0" style="-fx-background-color: #FFFF;" />
       <Label fx:id="lblAreaInfo" layoutX="260.0" layoutY="73.0" text="Info" textAlignment="CENTER">
          <font>

@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -44,6 +45,11 @@ public class ChooseExtrasController implements ReadController<VehicleOption>, In
             colBookingCar;
     @FXML
     private TextField txtFldPrice;
+
+    @FXML
+    private MenuItem
+            menuItemAbout,
+            menuItemContact;
 
     private ObservableList<Pair<Vehicle, VehicleOption>> vehicleOptions;
     private ObservableList<Pair<Vehicle, VehicleOption>> bookedVehicleOptions;
@@ -164,6 +170,25 @@ public class ChooseExtrasController implements ReadController<VehicleOption>, In
     private void buttonCancelPressed() {
         BookingSession.getInstance().resetSession();
         Navigator.getInstance().navigateToPanel();
+    }
+
+    @FXML
+    public void menuItemContactPressed(ActionEvent actionEvent) {
+
+        if (actionEvent.getSource() == menuItemContact) {
+
+            Navigator.getInstance().navigateTo("CustomerService/CustomerServiceView.fxml");
+        }
+    }
+
+    @FXML
+    public void menuItemAboutPressed(ActionEvent actionEvent) {
+
+        if (actionEvent.getSource() == menuItemAbout) {
+
+            Navigator.getInstance().navigateTo("CompanyInformation/CompanyInformationView.fxml");
+
+        }
     }
 
     @Override

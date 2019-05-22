@@ -43,13 +43,15 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
             tblBookedVehicles;
 
     @FXML
-    private TableColumn colBrand,
+    private TableColumn
+            colBrand,
             colModel,
             colPrice,
             colBookingBrand,
             colBookingModel;
     @FXML
-    private TextField txtFldTotalPrice;
+    private TextField
+            txtFldTotalPrice;
 
     @FXML
     private ComboBox
@@ -60,14 +62,21 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
 
     @FXML
 
-    private Label lblGearBox,
+    private Label
+            lblGearBox,
             lblFuelType,
             lblPassengers,
             lblSuitcases,
             lblDescription,
             lblCarName;
     @FXML
-    private Button btnResetFilter;
+    private Button
+             btnResetFilter;
+
+    @FXML
+    private MenuItem
+            menuItemContact,
+            menuItemAbout;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -246,6 +255,25 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
             } catch (Exception e) {
                 Dialogue.alert("Cannot reconnect to server...");
             }
+        }
+    }
+
+    @FXML
+    public void menuItemAboutPressed(ActionEvent actionEvent) {
+
+        if (actionEvent.getSource() == menuItemAbout) {
+
+            Navigator.getInstance().navigateTo("CompanyInformation/CompanyInformationView.fxml");
+
+        }
+    }
+
+    @FXML
+    public void menuItemContactPressed(ActionEvent actionEvent) {
+
+        if (actionEvent.getSource() == menuItemContact) {
+
+            Navigator.getInstance().navigateTo("CustomerService/CustomerServiceView.fxml");
         }
     }
 

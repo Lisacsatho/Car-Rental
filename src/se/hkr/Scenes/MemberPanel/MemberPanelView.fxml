@@ -20,8 +20,7 @@
             <Image url="@../../Assets/Images/lambo4.png" />
          </image>
       </ImageView>
-      <Polygon fill="WHITE" layoutX="199.0" layoutY="113.0" points="50.0, 296.0, 50.0, -85.0, -10.0, -85.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-      <MenuBar fx:id="menuBarLogOut" prefHeight="29.0" prefWidth="600.0">
+      <MenuBar fx:id="menuBarLogOut" prefHeight="29.0" prefWidth="569.0">
         <menus>
           <Menu mnemonicParsing="false" onAction="#helpMenu" text="Help">
             <items>
@@ -35,8 +34,15 @@
           </Menu>
         </menus>
       </MenuBar>
+<<<<<<< HEAD
       <DatePicker fx:id="datePickerStart" layoutX="14.0" layoutY="66.0" prefHeight="29.0" prefWidth="177.0" promptText="Start date" />
       <DatePicker fx:id="datePickerEnd" layoutX="14.0" layoutY="106.0" prefHeight="29.0" prefWidth="177.0" promptText="Return date" />
+=======
+      <Polygon fill="WHITE" layoutX="199.0" layoutY="113.0" points="50.0, 296.0, 60.0, -123.0, -14.0, -123.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="drop-shadow" />
+      <Polygon fill="WHITE" layoutX="286.0" layoutY="63.0" points="-38.0, 342.0, 314.0, -63.0, -38.0, -63.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+      <DatePicker fx:id="datePickerStart" layoutX="14.0" layoutY="66.0" promptText="Start date" />
+      <DatePicker fx:id="datePickerEnd" layoutX="14.0" layoutY="106.0" promptText="Return date" />
+>>>>>>> 59603a6a7edad006f2318dd1e2dd5357ee5c1b49
       <Button fx:id="btnGo" layoutX="139.0" layoutY="148.0" mnemonicParsing="false" onAction="#pressedGo" prefHeight="29.0" prefWidth="49.0" text="Go!" />
       <AnchorPane layoutX="386.0" layoutY="32.0" prefHeight="374.0" prefWidth="214.0" style="-fx-background-color: #FFFF;">
          <children>
@@ -74,7 +80,16 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
+<<<<<<< HEAD
             <Button fx:id="btnEditMember" layoutX="78.0" layoutY="196.0" mnemonicParsing="false" onAction="#editMemberInformation" prefHeight="29.0" prefWidth="110.0" styleClass="drop-shadow" text="Edit info" />
+=======
+            <Button fx:id="btnEditMember" layoutX="140.0" layoutY="163.0" mnemonicParsing="false" onAction="#editMemberInformation" styleClass="drop-shadow" text="Edit info" />
+            <Label fx:id="lblWelcomeMessage" layoutX="-133.0" prefHeight="28.0" prefWidth="323.0" text="Welcome Message">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+>>>>>>> 59603a6a7edad006f2318dd1e2dd5357ee5c1b49
          </children>
       </AnchorPane>
       <Label layoutX="16.0" layoutY="40.0" prefHeight="19.0" prefWidth="165.0" text="Cruise dates:" textFill="WHITE">
@@ -83,11 +98,15 @@
             <Font size="15.0" />
          </font>
       </Label>
+<<<<<<< HEAD
       <Label fx:id="lblWelcomeMessage" layoutX="212.0" layoutY="39.0" prefHeight="24.0" prefWidth="377.0" text="Welcome Message">
          <font>
             <Font size="19.0" />
          </font>
       </Label>
       <VBox fx:id="containerBookings" layoutX="14.0" layoutY="240.0" prefHeight="155.0" prefWidth="440.0" spacing="10.0" styleClass="high" />
+=======
+      <VBox fx:id="containerBookings" layoutX="139.0" layoutY="229.0" prefHeight="155.0" prefWidth="440.0" spacing="10.0" styleClass="high" />
+>>>>>>> 59603a6a7edad006f2318dd1e2dd5357ee5c1b49
    </children>
 </AnchorPane>

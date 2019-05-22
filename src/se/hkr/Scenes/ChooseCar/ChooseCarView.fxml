@@ -1,147 +1,137 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Polygon?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<AnchorPane prefHeight="408.0" prefWidth="717.0" xmlns="http://javafx.com/javafx/10.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ChooseCar.ChooseCarController">
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="408.0" prefWidth="717.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ChooseCar.ChooseCarController">
     <children>
         <ImageView fitHeight="359.0" fitWidth="302.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../Assets/Images/splash.jpg"/>
+                <Image url="@../../Assets/Images/splash.jpg" />
             </image>
         </ImageView>
-        <Polygon fill="WHITE" layoutX="64.0" layoutY="248.0" points="227.0, -248.0, 226.0, 160.0, -144.5, -301.0"
-                 stroke="TRANSPARENT" strokeType="INSIDE" styleClass="drop-shadow"/>
+        <Polygon fill="WHITE" layoutX="64.0" layoutY="248.0" points="227.0, -248.0, 226.0, 160.0, -144.5, -301.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="drop-shadow" />
         <AnchorPane layoutX="290.0" prefHeight="408.0" prefWidth="461.0" style="-fx-background-color: #fff;">
             <children>
-                <TableView fx:id="tblAvailableVehicles" layoutX="7.0" layoutY="104.0" prefHeight="255.0"
-                           prefWidth="243.0">
+                <TableView fx:id="tblAvailableVehicles" layoutX="7.0" layoutY="104.0" prefHeight="255.0" prefWidth="243.0">
                     <columns>
-                        <TableColumn fx:id="colBrand" prefWidth="75.0" text="Brand"/>
-                        <TableColumn fx:id="colModel" prefWidth="82.0" text="Model"/>
-                        <TableColumn fx:id="colPrice" prefWidth="85.0" text="Price from"/>
+                        <TableColumn fx:id="colBrand" prefWidth="75.0" text="Brand" />
+                        <TableColumn fx:id="colModel" prefWidth="82.0" text="Model" />
+                        <TableColumn fx:id="colPrice" prefWidth="85.0" text="Price from" />
                     </columns>
                 </TableView>
 
-                <ComboBox fx:id="comboBrand" layoutX="134.0" layoutY="36.0" prefHeight="27.0" prefWidth="116.0"
-                          promptText="Brand"/>
-                <ComboBox fx:id="comboCarType" layoutX="134.0" layoutY="71.0" prefHeight="27.0" prefWidth="116.0"
-                          promptText="Vehicle type"/>
-                <ComboBox fx:id="comboGearBox" layoutX="8.0" layoutY="36.0" prefHeight="27.0" prefWidth="116.0"
-                          promptText="Gearbox"/>
-                <ComboBox fx:id="comboPassengers" layoutX="8.0" layoutY="71.0" prefHeight="27.0" prefWidth="116.0"
-                          promptText="Passengers"/>
+                <ComboBox fx:id="comboBrand" layoutX="134.0" layoutY="36.0" prefHeight="27.0" prefWidth="116.0" promptText="Brand" />
+                <ComboBox fx:id="comboCarType" layoutX="134.0" layoutY="71.0" prefHeight="27.0" prefWidth="116.0" promptText="Vehicle type" />
+                <ComboBox fx:id="comboGearBox" layoutX="8.0" layoutY="36.0" prefHeight="27.0" prefWidth="116.0" promptText="Gearbox" />
+                <ComboBox fx:id="comboPassengers" layoutX="8.0" layoutY="71.0" prefHeight="27.0" prefWidth="116.0" promptText="Passengers" />
 
-                <Button fx:id="btnResetFilter" layoutX="14.0" layoutY="367.0" mnemonicParsing="false"
-                        onAction="#resetFilter" prefHeight="27.0" prefWidth="104.0" text="Reset Filter"/>
+                <Button fx:id="btnResetFilter" layoutX="14.0" layoutY="367.0" mnemonicParsing="false" onAction="#resetFilter" prefHeight="27.0" prefWidth="104.0" text="Reset Filter" />
 
             </children>
         </AnchorPane>
 
-        <Button fx:id="book" layoutX="423.0" layoutY="365.0" mnemonicParsing="false" onAction="#bookPressed"
-                prefHeight="29.0" prefWidth="116.0" styleClass="highlighted-button" text="Book"/>
-        <Label fx:id="lblCarName" layoutX="30.0" layoutY="38.0" prefHeight="23.0" prefWidth="150.0"
-               text="Car information" textFill="#141414">
+        <Button fx:id="book" layoutX="423.0" layoutY="365.0" mnemonicParsing="false" onAction="#bookPressed" prefHeight="29.0" prefWidth="116.0" styleClass="highlighted-button" text="Book" />
+        <Label fx:id="lblCarName" layoutX="30.0" layoutY="38.0" prefHeight="23.0" prefWidth="150.0" text="Car information" textFill="#141414">
             <font>
-                <Font size="18.0"/>
+                <Font size="18.0" />
             </font>
         </Label>
-        <Label fx:id="lblGearBox" layoutX="42.0" layoutY="65.0" prefHeight="23.0" prefWidth="150.0" text="Gear box:"
-               textFill="#141414">
+        <Label fx:id="lblGearBox" layoutX="42.0" layoutY="65.0" prefHeight="23.0" prefWidth="150.0" text="Gear box:" textFill="#141414">
             <font>
-                <Font size="14.0"/>
+                <Font size="14.0" />
             </font>
         </Label>
-        <Label fx:id="lblFuelType" layoutX="62.0" layoutY="90.0" prefHeight="23.0" prefWidth="150.0" text="Fuel type: "
-               textFill="#141414">
+        <Label fx:id="lblFuelType" layoutX="62.0" layoutY="90.0" prefHeight="23.0" prefWidth="150.0" text="Fuel type: " textFill="#141414">
             <font>
-                <Font size="14.0"/>
+                <Font size="14.0" />
             </font>
         </Label>
-        <Label fx:id="lblPassengers" layoutX="84.0" layoutY="116.0" prefHeight="23.0" prefWidth="150.0"
-               text="Passenger seats:" textFill="#141414">
+        <Label fx:id="lblPassengers" layoutX="84.0" layoutY="116.0" prefHeight="23.0" prefWidth="150.0" text="Passenger seats:" textFill="#141414">
             <font>
-                <Font size="14.0"/>
+                <Font size="14.0" />
             </font>
         </Label>
-        <Label fx:id="lblSuitcases" layoutX="104.0" layoutY="142.0" prefHeight="23.0" prefWidth="150.0"
-               text="Suitcases:" textFill="#141414">
+        <Label fx:id="lblSuitcases" layoutX="104.0" layoutY="142.0" prefHeight="23.0" prefWidth="150.0" text="Suitcases:" textFill="#141414">
             <font>
-                <Font size="14.0"/>
+                <Font size="14.0" />
             </font>
         </Label>
         <AnchorPane layoutX="39.0" layoutY="178.0" prefHeight="199.0" prefWidth="222.0">
             <styleClass>
-                <String fx:value="dark-panel"/>
-                <String fx:value="drop-shadow"/>
+                <String fx:value="dark-panel" />
+                <String fx:value="drop-shadow" />
             </styleClass>
             <children>
-                <Label fx:id="lblDescription" alignment="TOP_LEFT" layoutX="11.0" layoutY="11.0" prefHeight="176.0"
-                       prefWidth="200.0" textFill="#dddddd" wrapText="true"/>
+                <Label fx:id="lblDescription" alignment="TOP_LEFT" layoutX="11.0" layoutY="11.0" prefHeight="176.0" prefWidth="200.0" textFill="#dddddd" wrapText="true" />
             </children>
         </AnchorPane>
         <MenuBar prefHeight="29.0" prefWidth="751.0" style="-fx-background-color: #ddd;">
             <menus>
                 <Menu mnemonicParsing="false" text="Booking">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#buttonCancelBookingPressed" text="Cancel booking"/>
+                        <MenuItem mnemonicParsing="false" onAction="#buttonCancelBookingPressed" text="Cancel booking" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="What is this?"/>
+                        <MenuItem fx:id="menuItemContact" mnemonicParsing="false" onAction="#menuItemContactPressed" text="Contact us" />
+                  <MenuItem fx:id="menuItemAbout" mnemonicParsing="false" onAction="#menuItemAboutPressed" text="About" />
                     </items>
                 </Menu>
             </menus>
         </MenuBar>
         <AnchorPane layoutX="550.0" prefHeight="400.0" prefWidth="200.0">
             <styleClass>
-                <String fx:value="dark-panel"/>
-                <String fx:value="drop-shadow"/>
+                <String fx:value="dark-panel" />
+                <String fx:value="drop-shadow" />
             </styleClass>
             <children>
 
 
                 <TableView fx:id="tblBookedVehicles" layoutX="14.0" layoutY="42.0" prefHeight="183.0" prefWidth="172.0">
                     <columns>
-                        <TableColumn fx:id="colBookingBrand" prefWidth="85.0" text="Brand"/>
-                        <TableColumn fx:id="colBookingModel" prefWidth="86.0" text="Model"/>
+                        <TableColumn fx:id="colBookingBrand" prefWidth="85.0" text="Brand" />
+                        <TableColumn fx:id="colBookingModel" prefWidth="86.0" text="Model" />
                     </columns>
                 </TableView>
-                <Button fx:id="btnRemoveBkdCar" layoutX="116.0" layoutY="232.0" mnemonicParsing="false"
-                        onAction="#removeBookedCar" prefHeight="27.0" prefWidth="70.0" text="Remove">
+                <Button fx:id="btnRemoveBkdCar" layoutX="116.0" layoutY="232.0" mnemonicParsing="false" onAction="#removeBookedCar" prefHeight="27.0" prefWidth="70.0" text="Remove">
                     <styleClass>
-                        <String fx:value="danger-button"/>
-                        <String fx:value="drop-shadow"/>
+                        <String fx:value="danger-button" />
+                        <String fx:value="drop-shadow" />
                     </styleClass>
                 </Button>
                 <AnchorPane layoutY="280.0" prefHeight="128.0" prefWidth="200.0" styleClass="ultra-dark-panel">
                     <children>
-                        <Button fx:id="buttonNext" layoutX="128.0" layoutY="82.0" mnemonicParsing="false"
-                                onAction="#buttonNextPressed" styleClass="positive-button" text="Next"/>
-                        <Label layoutX="24.0" layoutY="18.0" prefHeight="23.0" prefWidth="104.0" text="Total price: "
-                               textFill="#dddddd">
+                        <Button fx:id="buttonNext" layoutX="128.0" layoutY="82.0" mnemonicParsing="false" onAction="#buttonNextPressed" styleClass="positive-button" text="Next" />
+                        <Label layoutX="24.0" layoutY="18.0" prefHeight="23.0" prefWidth="104.0" text="Total price: " textFill="#dddddd">
                             <font>
-                                <Font size="14.0"/>
+                                <Font size="14.0" />
                             </font>
                         </Label>
 
-                        <TextField fx:id="carPrices" layoutX="24.0" layoutY="44.0" prefHeight="27.0" prefWidth="150.0"/>
+                        <TextField fx:id="carPrices" layoutX="24.0" layoutY="44.0" prefHeight="27.0" prefWidth="150.0" />
 
-                        <TextField fx:id="txtFldTotalPrice" layoutX="24.0" layoutY="44.0" prefHeight="27.0"
-                                   prefWidth="150.0"/>
+                        <TextField fx:id="txtFldTotalPrice" layoutX="24.0" layoutY="44.0" prefHeight="27.0" prefWidth="150.0" />
 
                     </children>
                 </AnchorPane>
-                <Label layoutX="14.0" layoutY="14.0" prefHeight="23.0" prefWidth="150.0" text="Vehicles in booking:"
-                       textFill="#dddddd">
+                <Label layoutX="14.0" layoutY="14.0" prefHeight="23.0" prefWidth="150.0" text="Vehicles in booking:" textFill="#dddddd">
                     <font>
-                        <Font size="14.0"/>
+                        <Font size="14.0" />
                     </font>
                 </Label>
             </children>

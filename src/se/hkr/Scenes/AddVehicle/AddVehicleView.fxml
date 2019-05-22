@@ -28,7 +28,7 @@
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Button fx:id="buttonSave" layoutX="515.0" layoutY="368.0" mnemonicParsing="false" onAction="#buttonSavePressed" prefHeight="25.0" prefWidth="73.0" styleClass="drop-shadow" text="Save" />
+      <Button fx:id="buttonSave" layoutX="515.0" layoutY="368.0" mnemonicParsing="false" onAction="#buttonSavePressed" prefHeight="13.0" prefWidth="73.0" styleClass="drop-shadow" text="Save" />
       <TextField fx:id="textModel" layoutX="14.0" layoutY="95.0" prefHeight="27.0" prefWidth="148.0" promptText="Model" />
       <TextField fx:id="textYear" layoutX="14.0" layoutY="165.0" prefHeight="27.0" prefWidth="148.0" promptText="Year" />
       <ComboBox fx:id="comboBrand" layoutX="14.0" layoutY="57.0" prefHeight="27.0" prefWidth="148.0" promptText="Brand" />
@@ -53,7 +53,7 @@
       </TableView>
       <Button fx:id="buttonRemove" layoutX="252.0" layoutY="368.0" mnemonicParsing="false" onAction="#buttonRemovePressed" prefHeight="25.0" prefWidth="88.0" text="Remove car" />
       <Button fx:id="buttonAdd" layoutX="186.0" layoutY="368.0" mnemonicParsing="false" onAction="#buttonAddPressed" text="Add car" />
-      <MenuBar prefHeight="25.0" prefWidth="610.0">
+      <MenuBar prefHeight="25.0" prefWidth="610.0" style="-fx-background-color: #ddd;">
         <menus>
           <Menu mnemonicParsing="false" text="Navigate">
             <items>
