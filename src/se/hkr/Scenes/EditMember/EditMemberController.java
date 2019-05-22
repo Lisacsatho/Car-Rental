@@ -44,30 +44,65 @@ public class EditMemberController implements Initializable {
 
     public void btnSavePressed(ActionEvent event) {
         if (event.getSource() == btnSave) {
-            try (MemberDBHandler memberDBHandler = new MemberDBHandler()) {
-                Member member = (Member) UserSession.getInstance().getSessionObject();
-                member.setFirstName(txtFldFirstName.getText());
-                member.setLastName(txtFldLastName.getText());
-                member.setEmail((txtFldEmail.getText()));
-                member.setSocialSecurityNo(txtFldSsn.getText());
-                member.setPhoneNumber(txtFldPhone.getText());
-                member.getAddress().setStreet(txtFldAddress.getText());
-                member.getAddress().setZip(txtFldZip.getText());
-                member.getAddress().setState(txtFldCity.getText());
+            if (validateInformation()) {
+                try (MemberDBHandler memberDBHandler = new MemberDBHandler()) {
+                    Member member = (Member) UserSession.getInstance().getSessionObject();
+                    member.setFirstName(txtFldFirstName.getText());
+                    member.setLastName(txtFldLastName.getText());
+                    member.setEmail((txtFldEmail.getText()));
+                    member.setSocialSecurityNo(txtFldSsn.getText());
+                    member.setPhoneNumber(txtFldPhone.getText());
+                    member.getAddress().setStreet(txtFldAddress.getText());
+                    member.getAddress().setZip(txtFldZip.getText());
+                    member.getAddress().setState(txtFldCity.getText());
 
-                memberDBHandler.update(member);
+                    memberDBHandler.update(member);
 
-            } catch (Exception e) {
-                Dialogue.alert(e.getMessage());
+                } catch (Exception e) {
+                    Dialogue.alert(e.getMessage());
+                }
+
             }
         }
+        Dialogue.alertOk("Information updated!");
+    }
+
+    private boolean validateInformation() {
+
+        try (MemberDBHandler memberDBHandler = new MemberDBHandler()) {
+
+            if (!Pattern.matches("[0-9][0-9][0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]", txtFldSsn.getText())) {
+                Dialogue.alert("Please enter correct social security no. format YYMMDD-XXXX.");
+                return false;
+            } else if (!Pattern.matches("[1-9][1-9][1-9] [1-9][1-9]", txtFldZip.getText())) {
+                Dialogue.alert("Please enter zip code in XXX XX format.");
+                return false;
+            } else if (!Pattern.matches(".*[@].*[.].*", txtFldEmail.getText())) {
+                Dialogue.alert("Invalid email address.");
+                return false;
+            } else if (!Pattern.matches("[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]",
+                    txtFldPhone.getText())) {
+                Dialogue.alert("Please enter your phone number. Starting with 00 followed by country number. " +
+                        "No letters or symbols." + "");
+                return false;
+            } else {
+                return true;
+            }
+        } catch (Exception e) {
+            Dialogue.alert(e.getMessage());
+        }
+        return false;
     }
 
     @FXML
-    public void menuItemBackPressed(ActionEvent ae) { Navigator.getInstance().goBack(); }
+    public void menuItemBackPressed(ActionEvent ae) {
+        Navigator.getInstance().goBack();
+    }
 
     @FXML
-    private void menuItemQuitPressed(ActionEvent ae) { System.exit(0);}
+    private void menuItemQuitPressed(ActionEvent ae) {
+        System.exit(0);
+    }
 
     @FXML
     private void menuItemCancelPressed(ActionEvent ae) {
@@ -98,9 +133,9 @@ public class EditMemberController implements Initializable {
     }
 
     @FXML
-    public void menuItemAboutPressed(ActionEvent actionEvent){
+    public void menuItemAboutPressed(ActionEvent actionEvent) {
 
-        if (actionEvent.getSource() == menuItemAbout){
+        if (actionEvent.getSource() == menuItemAbout) {
 
             Navigator.getInstance().navigateTo("CustomerService/CustomerServiceView.fxml");
         }
@@ -120,8 +155,7 @@ public class EditMemberController implements Initializable {
             txtFldAddress.setText(user.getAddress().getStreet());
             txtFldZip.setText(user.getAddress().getZip());
             txtFldCity.setText(user.getAddress().getState());
-        }
-        else {
+        } else {
             Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");
         }
     }

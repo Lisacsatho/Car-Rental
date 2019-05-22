@@ -11,8 +11,20 @@ import java.util.List;
 
 public class EmployeeDBHandler extends UserDBHandler<Employee> {
     @Override
-    public void insert(Employee model) {
-        System.out.println("Inserted employee!");
+    public void insert(Employee model) throws SQLException {
+        super.insert(model);
+        String query = "INSERT INTO employee VALUES(?, ?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            String role = (model instanceof Manager) ? "MANAGER" : "EMPLOYEE";
+            statement.setDouble(1, model.getSalary());
+            statement.setString(2, role);
+            statement.setString(3, model.getSocialSecurityNo());
+            statement.executeUpdate();
+        } catch (Exception e) {
+            super.delete(model);
+            delete(model);
+            throw new SQLException("Could not insert into employee table: " + e.getMessage());
+        }
     }
 
     @Override
