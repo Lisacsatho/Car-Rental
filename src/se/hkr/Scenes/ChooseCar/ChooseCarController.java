@@ -26,6 +26,8 @@ import se.hkr.Scenes.SessionListener;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -155,10 +157,7 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
     private double calculateTotalPrice() {
         double startingPrice = 0.0;
         try {
-            Date startDate = BookingSession.getInstance().getSessionObject().getStartDate();
-            Date endDate = BookingSession.getInstance().getSessionObject().getEndDate();
-            long diff = endDate.getTime() - startDate.getTime();
-            long days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+            long days = calculateBookingLength();
             Booking booking = BookingSession.getInstance().getSessionObject();
             if (booking != null && booking.getVehicles() != null) {
                 for (Vehicle vehicle : booking.getVehicles()) {
@@ -175,6 +174,20 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
             Dialogue.alert("Something went wrong, please try again.");
         }
         return startingPrice;
+    }
+
+    private long calculateBookingLength() {
+        long days = 0;
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date startDate = dateFormat.parse(dateFormat.format(BookingSession.getInstance().getSessionObject().getStartDate()));
+            Date endDate = dateFormat.parse(dateFormat.format(BookingSession.getInstance().getSessionObject().getEndDate()));
+            long diff = endDate.getTime() - startDate.getTime();
+            days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+        } catch (ParseException e) {
+            Dialogue.alert("Could not parse dates, please cancel booking and try again.");
+        }
+        return days;
     }
 
     private void showCarInformation(Vehicle vehicle) {

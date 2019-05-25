@@ -24,6 +24,8 @@ import se.hkr.Scenes.ReadController;
 import se.hkr.Scenes.SessionListener;
 
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -135,10 +137,7 @@ public class ChooseExtrasController implements ReadController<VehicleOption>, In
     private double calculateTotalPrice() {
         double startingPrice = 0.0;
         try {
-            Date startDate = BookingSession.getInstance().getSessionObject().getStartDate();
-            Date endDate = BookingSession.getInstance().getSessionObject().getEndDate();
-            long diff = endDate.getTime() - startDate.getTime();
-            long days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+            long days = calculateBookingLength();
             for (Vehicle vehicle : BookingSession.getInstance().getSessionObject().getVehicles()) {
                 startingPrice += vehicle.getBasePrice() * days;
             }
@@ -149,6 +148,20 @@ public class ChooseExtrasController implements ReadController<VehicleOption>, In
             Dialogue.alert("Something went wrong, please try again.");
         }
         return startingPrice;
+    }
+
+    private long calculateBookingLength() {
+        long days = 0;
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date startDate = dateFormat.parse(dateFormat.format(BookingSession.getInstance().getSessionObject().getStartDate()));
+            Date endDate = dateFormat.parse(dateFormat.format(BookingSession.getInstance().getSessionObject().getEndDate()));
+            long diff = endDate.getTime() - startDate.getTime();
+            days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+        } catch (ParseException e) {
+            Dialogue.alert("Could not parse dates, please cancel booking and try again.");
+        }
+        return days;
     }
 
     @FXML

@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFFF;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.MemberPanel.MemberPanelController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.MemberPanel.MemberPanelController">
    <children>
       <ImageView fitHeight="409.0" fitWidth="395.0" layoutX="-2.0">
          <image>
@@ -90,5 +90,6 @@
          </font>
       </Label>
       <VBox fx:id="containerBookings" layoutX="139.0" layoutY="229.0" prefHeight="155.0" prefWidth="440.0" spacing="10.0" styleClass="high" />
+      <Button layoutX="16.0" layoutY="190.0" mnemonicParsing="false" onAction="#updatePassword" prefHeight="28.0" prefWidth="142.0" text="Update password" />
    </children>
 </AnchorPane>

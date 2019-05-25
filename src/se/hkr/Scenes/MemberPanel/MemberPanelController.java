@@ -117,6 +117,11 @@ public class MemberPanelController implements Initializable {
         }
     }
 
+    @FXML
+    private void updatePassword() {
+        Navigator.getInstance().navigateTo("UpdatePassword/UpdatePasswordView.fxml");
+    }
+
     public void pressedGo(ActionEvent actionEvent) {
         if (actionEvent.getSource() == btnGo) {
             try {

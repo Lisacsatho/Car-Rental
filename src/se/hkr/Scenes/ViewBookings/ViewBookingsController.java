@@ -204,7 +204,7 @@ public class ViewBookingsController implements ReadController<Booking>, Initiali
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date today = simpleDateFormat.parse(simpleDateFormat.format(new Date()));
-            Date endDate = booking.getEndDate();
+            Date endDate = simpleDateFormat.parse(simpleDateFormat.format(booking.getEndDate()));
             long diff = today.getTime() - endDate.getTime();
             days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
         } catch (ParseException e) {

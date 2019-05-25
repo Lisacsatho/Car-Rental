@@ -30,6 +30,7 @@ import se.hkr.UserSession;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -112,15 +113,31 @@ public class ConfirmBookingController implements Initializable, SessionListener<
     }
 
     private void initializeLabels() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date startDate = BookingSession.getInstance().getSessionObject().getStartDate();
-        Date endDate = BookingSession.getInstance().getSessionObject().getEndDate();
-        lblStartDate.setText(START_DATE_PREFIX + dateFormat.format(startDate));
-        lblEndDate.setText(END_DATE_PREFIX + dateFormat.format(endDate));
-        long diff = endDate.getTime() - startDate.getTime();
-        long days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-        lblDays.setText(AMOUNT_OF_DAYS_PREFIX + days);
-        lblTotalAmount.setText(TOTAL_PREFIX + BookingSession.getInstance().getSessionObject().getTotalPrice());
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date startDate = dateFormat.parse(dateFormat.format(BookingSession.getInstance().getSessionObject().getStartDate()));
+            Date endDate = dateFormat.parse(dateFormat.format(BookingSession.getInstance().getSessionObject().getEndDate()));
+            lblStartDate.setText(START_DATE_PREFIX + dateFormat.format(startDate));
+            lblEndDate.setText(END_DATE_PREFIX + dateFormat.format(endDate));
+            lblDays.setText(AMOUNT_OF_DAYS_PREFIX + calculateBookingLength());
+            lblTotalAmount.setText(TOTAL_PREFIX + BookingSession.getInstance().getSessionObject().getTotalPrice());
+        } catch (ParseException e) {
+            Dialogue.alert("Could not parse dates, please cancel booking and try again.");
+        }
+    }
+
+    private long calculateBookingLength() {
+        long days = 0;
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date startDate = dateFormat.parse(dateFormat.format(BookingSession.getInstance().getSessionObject().getStartDate()));
+            Date endDate = dateFormat.parse(dateFormat.format(BookingSession.getInstance().getSessionObject().getEndDate()));
+            long diff = endDate.getTime() - startDate.getTime();
+            days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+        } catch (ParseException e) {
+            Dialogue.alert("Could not parse dates, please cancel booking and try again.");
+        }
+        return days;
     }
 
     @FXML
