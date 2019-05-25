@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="388.0" prefWidth="862.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ViewMembers.ViewMembersController">
+<AnchorPane prefHeight="388.0" prefWidth="862.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ViewMembers.ViewMembersController">
    <children>
       <TableView fx:id="tblMembers" layoutX="23.0" layoutY="67.0" prefHeight="344.0" prefWidth="459.0">
         <columns>
@@ -58,7 +58,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="User">
             <items>
-              <MenuItem mnemonicParsing="false" text="Log out" />
+              <MenuItem mnemonicParsing="false" onAction="#buttonLogOutPressed" text="Log out" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Help">

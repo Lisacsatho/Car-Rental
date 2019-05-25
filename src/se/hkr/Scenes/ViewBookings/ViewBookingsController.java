@@ -19,6 +19,7 @@ import se.hkr.Model.Vehicle.Vehicle;
 import se.hkr.Model.Vehicle.VehicleOption;
 import se.hkr.Navigator;
 import se.hkr.Scenes.ReadController;
+import se.hkr.UserSession;
 
 import java.net.URL;
 import java.text.ParseException;
@@ -336,6 +337,12 @@ public class ViewBookingsController implements ReadController<Booking>, Initiali
     @FXML
     private void goBack() {
         Navigator.getInstance().goBack();
+    }
+
+    @FXML
+    private void buttonLogOutPressed() {
+        UserSession.getInstance().resetSession();
+        Navigator.getInstance().navigateToPanel();
     }
 
     @Override

@@ -13,6 +13,7 @@ import se.hkr.Model.User.Employee;
 import se.hkr.Model.User.Manager;
 import se.hkr.Model.User.User;
 import se.hkr.Navigator;
+import se.hkr.UserSession;
 
 import java.util.regex.Pattern;
 
@@ -96,5 +97,16 @@ public class AddEmployeeController {
             Dialogue.alert(e.getMessage());
         }
         return false;
+    }
+
+    @FXML
+    private void buttonGoBackPressed() {
+        Navigator.getInstance().goBack();
+    }
+
+    @FXML
+    private void buttonLogOutPressed() {
+        UserSession.getInstance().resetSession();
+        Navigator.getInstance().navigateToPanel();
     }
 }

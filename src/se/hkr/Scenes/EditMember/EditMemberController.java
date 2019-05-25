@@ -25,7 +25,6 @@ public class EditMemberController implements Initializable {
             txtFldAddress,
             txtFldZip,
             txtFldEmail,
-            txtFldPassword,
             txtFldPhone,
             txtFldCity;
 

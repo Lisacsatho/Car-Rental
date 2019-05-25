@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="402.0" prefWidth="604.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.EditMember.EditMemberController">
+<AnchorPane prefHeight="402.0" prefWidth="604.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.EditMember.EditMemberController">
    <children>
       <ImageView fitHeight="409.0" fitWidth="329.0" layoutX="-3.0">
          <image>
@@ -48,8 +48,8 @@
             <String fx:value="drop-shadow" />
          </styleClass>
          <children>
-            <TextField fx:id="txtFldCity" layoutX="262.0" layoutY="193.0" prefHeight="27.0" prefWidth="164.0" promptText="City" />
-            <TextField fx:id="txtFldZip" layoutX="40.0" layoutY="193.0" prefHeight="27.0" prefWidth="164.0" promptText="Zip" />
+            <TextField fx:id="txtFldCity" layoutX="261.0" layoutY="154.0" prefHeight="27.0" prefWidth="164.0" promptText="City" />
+            <TextField fx:id="txtFldZip" layoutX="40.0" layoutY="154.0" prefHeight="27.0" prefWidth="164.0" promptText="Zip" />
             <TextField fx:id="txtFldLastName" layoutX="261.0" layoutY="14.0" prefHeight="27.0" prefWidth="164.0" promptText="Last name" />
             <TextField fx:id="txtFldFirstName" layoutX="40.0" layoutY="14.0" prefHeight="27.0" prefWidth="164.0" promptText="First name">
                <font>
@@ -62,19 +62,13 @@
                </font>
             </TextField>
             <TextField fx:id="txtFldPhone" layoutX="40.0" layoutY="86.0" prefHeight="27.0" prefWidth="164.0" promptText="Phone number" />
-            <TextField fx:id="txtFldAddress" layoutX="40.0" layoutY="157.0" prefHeight="27.0" prefWidth="386.0" promptText="Address">
+            <TextField fx:id="txtFldAddress" layoutX="39.0" layoutY="120.0" prefHeight="27.0" prefWidth="386.0" promptText="Address">
                <font>
                   <Font name="System Italic" size="12.0" />
                </font>
             </TextField>
-            <TextField layoutX="40.0" layoutY="121.0" prefHeight="27.0" prefWidth="164.0" promptText="New password">
-               <font>
-                  <Font name="System Italic" size="12.0" />
-               </font>
-            </TextField>
-            <TextField layoutX="261.0" layoutY="121.0" prefHeight="27.0" prefWidth="164.0" promptText="Repeat new password" />
-            <TextField fx:id="txtFldPassword" layoutX="261.0" layoutY="86.0" prefHeight="28.0" prefWidth="164.0" promptText="Old password" />
             <TextField fx:id="txtFldEmail" layoutX="261.0" layoutY="51.0" prefHeight="27.0" prefWidth="164.0" promptText="Email" />
+            <Button fx:id="btnSave" layoutX="353.0" layoutY="189.0" mnemonicParsing="false" onAction="#btnSavePressed" prefHeight="27.0" prefWidth="72.0" styleClass="highlighted-button" text="Save" />
          </children>
       </AnchorPane>
       <Label layoutX="375.0" layoutY="27.0" />
@@ -83,6 +77,5 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="btnSave" layoutX="521.0" layoutY="322.0" mnemonicParsing="false" onAction="#btnSavePressed" prefHeight="27.0" prefWidth="72.0" styleClass="highlighted-button" text="Save" />
    </children>
 </AnchorPane>
