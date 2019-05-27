@@ -76,18 +76,15 @@ public class ForgotPasswordController implements Initializable {
                     try (MemberDBHandler memberDBHandler = new MemberDBHandler()) {
                         memberDBHandler.updatePassword(txtFieldMail.getText(), password);
                         Dialogue.inform("Your password was updated.");
+                        Navigator.getInstance().navigateToPanel();
                     } catch (Exception e) {
                         Dialogue.alert("Could not connect to database." + e.getMessage());
                     }
                 } else {
                     Dialogue.alert("Please enter the received reset code and a new password in both password columns.");
                 }
-
-
             }
-
         }
-
     }
 
     @FXML
@@ -108,7 +105,6 @@ public class ForgotPasswordController implements Initializable {
 
     @FXML
     public void menuItemContactPressed(ActionEvent actionEvent) {
-
         if (actionEvent.getSource() == menuItemContact) {
 
             Navigator.getInstance().navigateTo("CustomerService/CustomerServiceView.fxml");

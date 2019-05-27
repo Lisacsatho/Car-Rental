@@ -19,6 +19,7 @@ import se.hkr.Model.Vehicle.Vehicle;
 import se.hkr.Model.Vehicle.VehicleOption;
 import se.hkr.Navigator;
 import se.hkr.Scenes.ReadController;
+import se.hkr.UserSession;
 
 import java.net.URL;
 import java.text.ParseException;
@@ -203,7 +204,7 @@ public class ViewBookingsController implements ReadController<Booking>, Initiali
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date today = simpleDateFormat.parse(simpleDateFormat.format(new Date()));
-            Date endDate = booking.getEndDate();
+            Date endDate = simpleDateFormat.parse(simpleDateFormat.format(booking.getEndDate()));
             long diff = today.getTime() - endDate.getTime();
             days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
         } catch (ParseException e) {
@@ -336,6 +337,12 @@ public class ViewBookingsController implements ReadController<Booking>, Initiali
     @FXML
     private void goBack() {
         Navigator.getInstance().goBack();
+    }
+
+    @FXML
+    private void buttonLogOutPressed() {
+        UserSession.getInstance().resetSession();
+        Navigator.getInstance().navigateToPanel();
     }
 
     @Override

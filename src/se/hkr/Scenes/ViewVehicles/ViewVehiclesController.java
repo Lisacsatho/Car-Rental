@@ -12,7 +12,9 @@ import se.hkr.ComboBoxButtonCell;
 import se.hkr.Database.VehicleDB.*;
 import se.hkr.Dialogue;
 import se.hkr.Model.Vehicle.*;
+import se.hkr.Navigator;
 import se.hkr.Scenes.ReadController;
+import se.hkr.UserSession;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -228,6 +230,17 @@ public class ViewVehiclesController implements ReadController<Vehicle>, Initiali
         } else {
             Dialogue.alert("Please choose a vehicle to send to inspection.");
         }
+    }
+
+    @FXML
+    private void buttonGoBackPressed() {
+        Navigator.getInstance().goBack();
+    }
+
+    @FXML
+    private void buttonLogOutPressed() {
+        UserSession.getInstance().resetSession();
+        Navigator.getInstance().navigateToPanel();
     }
 
     @FXML

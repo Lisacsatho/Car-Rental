@@ -39,17 +39,17 @@ public class Email {
                 });
     }
 
-    public void send () {
-       try {
-           MimeMessage message = new MimeMessage(session);
-           message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-           message.setSubject(subject);
-           message.setText(content);
-           Transport.send(message);
+    public void send() {
+        try {
+            MimeMessage message = new MimeMessage(session);
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            message.setSubject(subject);
+            message.setText(content);
+            Transport.send(message);
 
-       }catch (MessagingException e) {
-           Dialogue.alert("Email could not be sent." + e.getMessage());
-       }
+        } catch (MessagingException e) {
+            Dialogue.alert("Email could not be sent." + e.getMessage());
+        }
 
     }
 }

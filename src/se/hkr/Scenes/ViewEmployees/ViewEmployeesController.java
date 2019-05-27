@@ -15,6 +15,7 @@ import se.hkr.Dialogue;
 import se.hkr.Model.User.Employee;
 import se.hkr.Model.User.Manager;
 import se.hkr.Model.User.Member;
+import se.hkr.Navigator;
 import se.hkr.Scenes.ReadController;
 import se.hkr.UserSession;
 
@@ -164,6 +165,17 @@ public class ViewEmployeesController implements ReadController<Employee>, Initia
         } else {
             Dialogue.alert("Please choose an employee to update.");
         }
+    }
+
+    @FXML
+    private void buttonGoBackPressed() {
+        Navigator.getInstance().goBack();
+    }
+
+    @FXML
+    private void buttonLogOutPressed() {
+        UserSession.getInstance().resetSession();
+        Navigator.getInstance().navigateToPanel();
     }
 
     private void resetDisplay() {

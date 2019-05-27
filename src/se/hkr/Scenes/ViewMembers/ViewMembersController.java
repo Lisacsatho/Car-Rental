@@ -15,6 +15,7 @@ import se.hkr.Dialogue;
 import se.hkr.Model.User.Member;
 import se.hkr.Navigator;
 import se.hkr.Scenes.ReadController;
+import se.hkr.UserSession;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -153,6 +154,12 @@ public class ViewMembersController implements ReadController<Member>, Initializa
 
     @FXML
     private void menuItemQuitPressed(ActionEvent ae) { System.exit(0);}
+
+    @FXML
+    private void buttonLogOutPressed() {
+        UserSession.getInstance().resetSession();
+        Navigator.getInstance().navigateToPanel();
+    }
 
     @Override
     public boolean filter(Member model) {

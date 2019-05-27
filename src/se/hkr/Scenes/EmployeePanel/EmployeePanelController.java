@@ -141,4 +141,10 @@ public class EmployeePanelController implements Initializable {
             Dialogue.alert("Please select a booking to inspect.");
         }
     }
+
+    @FXML
+    private void buttonLogOutPressed() {
+        UserSession.getInstance().resetSession();
+        Navigator.getInstance().navigateToPanel();
+    }
 }
