@@ -1,17 +1,17 @@
 package se.hkr.Scenes.AddEmployee;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import se.hkr.Database.UserDB.EmployeeDBHandler;
-import se.hkr.Database.UserDB.MemberDBHandler;
 import se.hkr.Database.UserDB.UserDBHandler;
 import se.hkr.Dialogue;
 import se.hkr.HashUtils;
 import se.hkr.Model.User.Address;
 import se.hkr.Model.User.Employee;
 import se.hkr.Model.User.Manager;
-import se.hkr.Model.User.User;
 import se.hkr.Navigator;
 import se.hkr.UserSession;
 
@@ -20,18 +20,21 @@ import java.util.regex.Pattern;
 public class AddEmployeeController {
     @FXML
     private TextField txtFldSocialSecurityNo,
-                      txtFldEmail,
-                      txtFldFirstName,
-                      txtFldLastName,
-                      txtFldPassword,
-                      txtFldConfirmPassword,
-                      txtFldPhoneNo,
-                      txtFldStreet,
-                      txtFldZip,
-                      txtFldState,
-                      txtFldSalary;
+            txtFldEmail,
+            txtFldFirstName,
+            txtFldLastName,
+            txtFldPassword,
+            txtFldConfirmPassword,
+            txtFldPhoneNo,
+            txtFldStreet,
+            txtFldZip,
+            txtFldState,
+            txtFldSalary;
     @FXML
     private CheckBox checkBoxIsManager;
+
+    @FXML
+    private MenuItem goBack, logOut, aboutCompany;
 
     @FXML
     private void buttonAddEmployeePressed() {
@@ -99,14 +102,28 @@ public class AddEmployeeController {
         return false;
     }
 
-    @FXML
-    private void buttonGoBackPressed() {
-        Navigator.getInstance().goBack();
+    public void goBack(ActionEvent actionEvent) {
+
+        if (actionEvent.getSource() == goBack) {
+
+            Navigator.getInstance().goBack();
+        }
     }
 
-    @FXML
-    private void buttonLogOutPressed() {
-        UserSession.getInstance().resetSession();
-        Navigator.getInstance().navigateToPanel();
+    public void logOut(ActionEvent actionEvent) {
+
+        if (actionEvent.getSource() == logOut) {
+
+            UserSession.getInstance().resetSession();
+            Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");
+        }
+    }
+
+    public void aboutCompany(ActionEvent actionEvent) {
+
+        if (actionEvent.getSource() == aboutCompany) {
+
+            Navigator.getInstance().navigateTo("CompanyInformation/CompanyInformationView.fxml");
+        }
     }
 }

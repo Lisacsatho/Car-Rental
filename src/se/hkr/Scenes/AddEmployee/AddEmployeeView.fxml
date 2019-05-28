@@ -14,7 +14,6 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.AddEmployee.AddEmployeeController">
    <children>
       <ImageView fitHeight="400.0" fitWidth="340.0" pickOnBounds="true" preserveRatio="true">
@@ -24,19 +23,15 @@
       </ImageView>
       <MenuBar prefHeight="29.0" prefWidth="600.0">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false" text="Navigate">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem fx:id="logOut" mnemonicParsing="false" onAction="#logOut" text="Log Out" />
+              <MenuItem fx:id="goBack" mnemonicParsing="false" onAction="#goBack" text="Back" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
+          <Menu mnemonicParsing="false" text="About">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem fx:id="aboutCompany" mnemonicParsing="false" onAction="#aboutCompany" text="About us" />
             </items>
           </Menu>
         </menus>

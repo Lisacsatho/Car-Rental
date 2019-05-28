@@ -4,23 +4,21 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import se.hkr.Database.UserDB.EmployeeDBHandler;
-import se.hkr.Database.UserDB.MemberDBHandler;
 import se.hkr.Dialogue;
 import se.hkr.Model.User.Employee;
 import se.hkr.Model.User.Manager;
-import se.hkr.Model.User.Member;
 import se.hkr.Navigator;
 import se.hkr.Scenes.ReadController;
 import se.hkr.UserSession;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
@@ -30,27 +28,26 @@ public class ViewEmployeesController implements ReadController<Employee>, Initia
     private ObservableList<Employee> matchingEmployees;
 
     @FXML
-    private Button btnSearch,
-                   btnSaveEmployee;
+    private MenuItem goBack, aboutCompany, logOut;
 
     @FXML
     private TableColumn colSocialSecurityNo,
-                        colName,
-                        colRole;
+            colName,
+            colRole;
 
     @FXML
     private Label lblSocialSecurityNo;
 
     @FXML
     private TextField txtFldSearch,
-                      txtFldFirstName,
-                      txtFldLastName,
-                      txtFldPhoneNo,
-                      txtFldEmail,
-                      txtFldAddress,
-                      txtFldCity,
-                      txtFldZip,
-                      txtFldSalary;
+            txtFldFirstName,
+            txtFldLastName,
+            txtFldPhoneNo,
+            txtFldEmail,
+            txtFldAddress,
+            txtFldCity,
+            txtFldZip,
+            txtFldSalary;
 
     @FXML
     private TableView<Employee> tblEmployees;
@@ -167,17 +164,6 @@ public class ViewEmployeesController implements ReadController<Employee>, Initia
         }
     }
 
-    @FXML
-    private void buttonGoBackPressed() {
-        Navigator.getInstance().goBack();
-    }
-
-    @FXML
-    private void buttonLogOutPressed() {
-        UserSession.getInstance().resetSession();
-        Navigator.getInstance().navigateToPanel();
-    }
-
     private void resetDisplay() {
         lblSocialSecurityNo.setText("Social security no.");
         txtFldFirstName.clear();
@@ -210,6 +196,33 @@ public class ViewEmployeesController implements ReadController<Employee>, Initia
         }
     }
 
+    public void goBack(ActionEvent actionEvent) {
+
+        if (actionEvent.getSource() == goBack) {
+
+            Navigator.getInstance().goBack();
+        }
+
+
+    }
+
+    public void aboutCompany(ActionEvent actionEvent) {
+
+        if (actionEvent.getSource() == aboutCompany) {
+
+            Navigator.getInstance().navigateTo("CompanyInformation/CompanyInformationView.FXML");
+        }
+    }
+
+    public void logOut(ActionEvent actionEvent) {
+
+        if (actionEvent.getSource() == logOut) {
+
+            UserSession.getInstance().resetSession();
+            Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");
+        }
+
+    }
 }
 
 

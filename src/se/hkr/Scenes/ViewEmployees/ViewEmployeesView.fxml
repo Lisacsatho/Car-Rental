@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="452.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ViewEmployees.ViewEmployeesController">
+<AnchorPane prefHeight="452.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.ViewEmployees.ViewEmployeesController">
    <children>
       <TableView fx:id="tblEmployees" layoutX="24.0" layoutY="65.0" prefHeight="322.0" prefWidth="384.0">
         <columns>
@@ -42,17 +42,13 @@
         <menus>
           <Menu mnemonicParsing="false" text="Navigate">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="User">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+                  <MenuItem fx:id="logOut" mnemonicParsing="false" onAction="#logOut" text="Log out" />
+              <MenuItem fx:id="goBack" mnemonicParsing="false" onAction="#goBack" text="Back" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem fx:id="aboutCompany" mnemonicParsing="false" onAction="#aboutCompany" text="About" />
             </items>
           </Menu>
         </menus>
