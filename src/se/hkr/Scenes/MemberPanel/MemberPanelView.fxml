@@ -13,40 +13,20 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.MemberPanel.MemberPanelController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFFF;" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.MemberPanel.MemberPanelController">
    <children>
       <ImageView fitHeight="409.0" fitWidth="395.0" layoutX="-2.0">
          <image>
             <Image url="@../../Assets/Images/lambo4.png" />
          </image>
       </ImageView>
-      <MenuBar fx:id="menuBarLogOut" prefHeight="29.0" prefWidth="569.0">
-        <menus>
-          <Menu mnemonicParsing="false" onAction="#helpMenu" text="Help">
-            <items>
-              <MenuItem fx:id="menuItemHelp" mnemonicParsing="false" onAction="#helpMenu" text="Help" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" onAction="#logOutOption" text="Log out">
-            <items>
-              <MenuItem fx:id="menuItemLogOut" mnemonicParsing="false" onAction="#logOutOption" text="LogOut" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-<<<<<<< HEAD
+      <Polygon fill="WHITE" layoutX="199.0" layoutY="113.0" points="50.0, 296.0, 60.0, -123.0, -14.0, -123.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="drop-shadow" />
       <DatePicker fx:id="datePickerStart" layoutX="14.0" layoutY="66.0" prefHeight="29.0" prefWidth="177.0" promptText="Start date" />
       <DatePicker fx:id="datePickerEnd" layoutX="14.0" layoutY="106.0" prefHeight="29.0" prefWidth="177.0" promptText="Return date" />
-=======
-      <Polygon fill="WHITE" layoutX="199.0" layoutY="113.0" points="50.0, 296.0, 60.0, -123.0, -14.0, -123.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="drop-shadow" />
-      <Polygon fill="WHITE" layoutX="286.0" layoutY="63.0" points="-38.0, 342.0, 314.0, -63.0, -38.0, -63.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-      <DatePicker fx:id="datePickerStart" layoutX="14.0" layoutY="66.0" promptText="Start date" />
-      <DatePicker fx:id="datePickerEnd" layoutX="14.0" layoutY="106.0" promptText="Return date" />
->>>>>>> 59603a6a7edad006f2318dd1e2dd5357ee5c1b49
       <Button fx:id="btnGo" layoutX="139.0" layoutY="148.0" mnemonicParsing="false" onAction="#pressedGo" prefHeight="29.0" prefWidth="49.0" text="Go!" />
       <AnchorPane layoutX="386.0" layoutY="32.0" prefHeight="374.0" prefWidth="214.0" style="-fx-background-color: #FFFF;">
          <children>
-            <AnchorPane layoutX="-147.0" layoutY="49.0" prefHeight="127.0" prefWidth="281.0" style="-fx-background-color: #606060#606060;" styleClass="drop-shadow">
+            <AnchorPane layoutX="-135.0" layoutY="39.0" prefHeight="127.0" prefWidth="316.0" style="-fx-background-color: #606060#606060;" styleClass="drop-shadow">
                <children>
                   <Label fx:id="lblZip" layoutX="14.0" layoutY="52.0" prefHeight="20.0" prefWidth="68.0" text="Zip" textAlignment="CENTER" textFill="#dfdfe5">
                      <font>
@@ -73,23 +53,14 @@
                         <Font name="System Bold Italic" size="15.0" />
                      </font>
                   </Label>
+                  <Label fx:id="lblSsn" layoutX="12.0" layoutY="1.0" prefHeight="27.0" prefWidth="245.0" text="Ssn" textAlignment="CENTER" textFill="#dfdfe5">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
-            <Label fx:id="lblSsn" layoutX="-132.0" layoutY="51.0" prefHeight="27.0" prefWidth="245.0" text="Ssn" textAlignment="CENTER" textFill="#dfdfe5">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Label>
-<<<<<<< HEAD
-            <Button fx:id="btnEditMember" layoutX="78.0" layoutY="196.0" mnemonicParsing="false" onAction="#editMemberInformation" prefHeight="29.0" prefWidth="110.0" styleClass="drop-shadow" text="Edit info" />
-=======
             <Button fx:id="btnEditMember" layoutX="140.0" layoutY="163.0" mnemonicParsing="false" onAction="#editMemberInformation" styleClass="drop-shadow" text="Edit info" />
-            <Label fx:id="lblWelcomeMessage" layoutX="-133.0" prefHeight="28.0" prefWidth="323.0" text="Welcome Message">
-               <font>
-                  <Font size="19.0" />
-               </font>
-            </Label>
->>>>>>> 59603a6a7edad006f2318dd1e2dd5357ee5c1b49
          </children>
       </AnchorPane>
       <Label layoutX="16.0" layoutY="40.0" prefHeight="19.0" prefWidth="165.0" text="Cruise dates:" textFill="WHITE">
@@ -98,19 +69,26 @@
             <Font size="15.0" />
          </font>
       </Label>
-<<<<<<< HEAD
-      <Label fx:id="lblWelcomeMessage" layoutX="212.0" layoutY="39.0" prefHeight="24.0" prefWidth="377.0" text="Welcome Message">
+      <VBox fx:id="containerBookings" layoutX="256.0" layoutY="229.0" prefHeight="155.0" prefWidth="323.0" spacing="10.0" styleClass="high" />
+      <Button layoutX="16.0" layoutY="190.0" mnemonicParsing="false" onAction="#updatePassword" prefHeight="28.0" prefWidth="142.0" text="Update password" />
+      <Label fx:id="lblWelcomeMessage" layoutX="252.0" layoutY="36.0" prefHeight="28.0" prefWidth="323.0" text="Welcome Message">
          <font>
             <Font size="19.0" />
          </font>
       </Label>
-      <VBox fx:id="containerBookings" layoutX="14.0" layoutY="240.0" prefHeight="155.0" prefWidth="440.0" spacing="10.0" styleClass="high" />
-=======
-      <VBox fx:id="containerBookings" layoutX="139.0" layoutY="229.0" prefHeight="155.0" prefWidth="440.0" spacing="10.0" styleClass="high" />
-<<<<<<< HEAD
->>>>>>> 59603a6a7edad006f2318dd1e2dd5357ee5c1b49
-=======
-      <Button layoutX="16.0" layoutY="190.0" mnemonicParsing="false" onAction="#updatePassword" prefHeight="28.0" prefWidth="142.0" text="Update password" />
->>>>>>> 23ff3ca4a5b24b1fc67f916f258ea5c39b6a97d0
+      <MenuBar fx:id="menuBarLogOut" prefHeight="29.0" prefWidth="600.0">
+        <menus>
+          <Menu mnemonicParsing="false" onAction="#helpMenu" text="Help">
+            <items>
+              <MenuItem fx:id="menuItemHelp" mnemonicParsing="false" onAction="#helpMenu" text="Help" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" onAction="#logOutOption" text="Log out">
+            <items>
+              <MenuItem fx:id="menuItemLogOut" mnemonicParsing="false" onAction="#logOutOption" text="LogOut" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
    </children>
 </AnchorPane>
