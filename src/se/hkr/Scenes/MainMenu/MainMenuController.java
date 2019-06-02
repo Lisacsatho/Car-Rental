@@ -58,7 +58,7 @@ public class MainMenuController implements Initializable {
                 UserSession.getInstance().logIn(user);
                 Navigator.getInstance().navigateToPanel();
             } else {
-                Dialogue.alert("No user found");
+                Dialogue.alert("No user found or incorrect password" );
             }
         } catch (SQLException e) {
             Dialogue.alert(e.getMessage());
