@@ -18,6 +18,7 @@ import se.hkr.UserSession;
 import java.util.regex.Pattern;
 
 public class AddEmployeeController {
+
     @FXML
     private TextField txtFldSocialSecurityNo,
             txtFldEmail,
