@@ -156,16 +156,16 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
 
     private double calculateTotalPrice() {
         double startingPrice = 0.0;
+        long days = calculateBookingLength();
         try {
-            long days = calculateBookingLength();
             Booking booking = BookingSession.getInstance().getSessionObject();
             if (booking != null && booking.getVehicles() != null) {
                 for (Vehicle vehicle : booking.getVehicles()) {
-                    startingPrice += vehicle.getBasePrice() * days;
+                    startingPrice += vehicle.getBasePrice();
                 }
                 if (booking.getVehicleOptions() != null) {
                     for (Pair<Vehicle, VehicleOption> vehicleOption : booking.getVehicleOptions()) {
-                        startingPrice += vehicleOption.getValue().getPrice() * days;
+                        startingPrice += vehicleOption.getValue().getPrice();
                     }
                 }
             }
@@ -173,7 +173,7 @@ public class ChooseCarController implements ReadController<Vehicle>, Initializab
             x.printStackTrace();
             Dialogue.alert("Something went wrong, please try again.");
         }
-        return startingPrice;
+        return startingPrice * days;
     }
 
     private long calculateBookingLength() {

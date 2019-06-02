@@ -136,18 +136,18 @@ public class ChooseExtrasController implements ReadController<VehicleOption>, In
 
     private double calculateTotalPrice() {
         double startingPrice = 0.0;
+        long days = calculateBookingLength();
         try {
-            long days = calculateBookingLength();
             for (Vehicle vehicle : BookingSession.getInstance().getSessionObject().getVehicles()) {
-                startingPrice += vehicle.getBasePrice() * days;
+                startingPrice += vehicle.getBasePrice();
             }
             for (Pair<Vehicle, VehicleOption> vehicleOption : bookedVehicleOptions) {
-                startingPrice += vehicleOption.getValue().getPrice() * days;
+                startingPrice += vehicleOption.getValue().getPrice();
             }
         } catch (Exception x) {
             Dialogue.alert("Something went wrong, please try again.");
         }
-        return startingPrice;
+        return startingPrice * days;
     }
 
     private long calculateBookingLength() {

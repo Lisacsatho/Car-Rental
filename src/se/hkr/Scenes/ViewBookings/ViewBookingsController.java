@@ -268,11 +268,12 @@ public class ViewBookingsController implements ReadController<Booking>, Initiali
             long diff = endDate.getTime() - startDate.getTime();
             long days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
             for (Vehicle vehicle : currentVehicles) {
-                price += vehicle.getBasePrice() * days;
+                price += vehicle.getBasePrice();
             }
             for (Pair<Vehicle, VehicleOption> pair : currentVehicleOptions) {
-                price += pair.getValue().getPrice() * days;
+                price += pair.getValue().getPrice();
             }
+            price *= days;
         }
         return price;
     }
@@ -283,7 +284,8 @@ public class ViewBookingsController implements ReadController<Booking>, Initiali
         if (booking != null) {
             try (BookingDBHandler bookingDBHandler = new BookingDBHandler()) {
                 Booking extendedBooking = bookingDBHandler.readByPrimaryKey(Integer.toString(booking.getId()));
-                double price = Double.parseDouble(txtFldTotalPrice.getText());
+                String priceTextFormat = txtFldTotalPrice.getText().replace(',', '.');
+                double price = Double.parseDouble(priceTextFormat);
                 if (checkBoxReturned.isSelected() && calculateLateBooking(extendedBooking) > 0) {
                     double penaltyFine = 0.0;
                     for (Vehicle vehicle : extendedBooking.getVehicles()) {
