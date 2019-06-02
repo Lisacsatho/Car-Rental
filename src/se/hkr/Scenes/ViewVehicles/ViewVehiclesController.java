@@ -51,7 +51,6 @@ public class ViewVehiclesController implements ReadController<Vehicle>, Initiali
 
     @FXML
     private CheckBox checkBoxShowInactive,
-                     checkBoxShowInspected,
                      checkBoxReadyRent;
 
     private ObservableList<Vehicle> matchingVehicles;
@@ -119,6 +118,8 @@ public class ViewVehiclesController implements ReadController<Vehicle>, Initiali
             sortedData.comparatorProperty().bind(tblVehicles.comparatorProperty());
             tblVehicles.setItems(sortedData);
 
+            checkBoxShowInactive.selectedProperty().addListener((observable, oldValue, newValue) -> updateList());
+
             tblVehicles.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> displayVehicle(newValue));
         } catch (Exception e) {
             e.printStackTrace();
@@ -127,7 +128,7 @@ public class ViewVehiclesController implements ReadController<Vehicle>, Initiali
 
     private void updateList() {
         try {
-            if (checkBoxShowInspected.isSelected()) {
+            if (checkBoxShowInactive.isSelected()) {
                 allVehicles = FXCollections.observableArrayList(VehicleDBHandler.readAbstractAllIncludingInactive());
             } else {
                 allVehicles = FXCollections.observableArrayList(VehicleDBHandler.readAbstractAll());}
@@ -208,27 +209,6 @@ public class ViewVehiclesController implements ReadController<Vehicle>, Initiali
             }
         } else {
             Dialogue.alert("Please choose a vehicle to inactivate.");
-        }
-    }
-
-    @FXML
-    private void btnInspectNeedPressed(){
-        Vehicle vehicle = tblVehicles.getSelectionModel().getSelectedItem();
-        if (vehicle != null) {
-            if (Dialogue.alertOk("Vehicle needed for inspection is " + vehicle.getModelName() + "?")) {
-                try (VehicleDBHandler vehicleDBHandler = VehicleDBHandler.getHandlerFor(vehicle)) {
-                    vehicleDBHandler.inactivate(vehicle);
-                    Dialogue.inform("Vehicle has been sent to inspection.");
-                    resetDisplay();
-                    updateList();
-                } catch (SQLException e) {
-                    Dialogue.alert(e.getMessage());
-                } catch (Exception e) {
-                    Dialogue.alert(e.getMessage());
-                }
-            }
-        } else {
-            Dialogue.alert("Please choose a vehicle to send to inspection.");
         }
     }
 

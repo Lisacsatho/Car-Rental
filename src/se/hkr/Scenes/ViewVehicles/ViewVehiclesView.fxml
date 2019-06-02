@@ -41,11 +41,6 @@
               <MenuItem mnemonicParsing="false" onAction="#buttonLogOutPressed" text="Log out" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
         </menus>
       </MenuBar>
       <Button layoutX="457.0" layoutY="40.0" mnemonicParsing="false" onAction="#btnResetFilterPressed" prefHeight="26.0" prefWidth="93.0" text="Reset" />
@@ -68,8 +63,6 @@
          </font>
       </Label>
       <CheckBox fx:id="checkBoxShowInactive" layoutX="14.0" layoutY="114.0" mnemonicParsing="false" text="Show inactive cars" />
-      <Button fx:id="btnInspectNeed" layoutX="561.0" layoutY="143.0" mnemonicParsing="false" onAction="#btnInspectNeedPressed" prefHeight="27.0" prefWidth="128.0" style="-fx-background-color: #4169E1;" text="Inspection needed" textFill="#fffdfd" />
-      <CheckBox fx:id="checkBoxShowInspected" layoutX="169.0" layoutY="115.0" mnemonicParsing="false" text="Show cars under inspection" />
-      <CheckBox fx:id="checkBoxReadyRent" layoutX="565.0" layoutY="185.0" mnemonicParsing="false" text="Make ready for rent" />
+      <CheckBox fx:id="checkBoxReadyRent" layoutX="567.0" layoutY="148.0" mnemonicParsing="false" text="Ready for rent" />
    </children>
 </AnchorPane>
