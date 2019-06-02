@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="157.0" prefWidth="497.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.VerifyEmail.VerifyEmailController">
+<AnchorPane prefHeight="157.0" prefWidth="497.0" xmlns="http://javafx.com/javafx/10.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.VerifyEmail.VerifyEmailController">
    <children>
       <TextField fx:id="txtFldCode" layoutX="163.0" layoutY="76.0" promptText="Code" />
       <Label layoutX="86.0" layoutY="24.0" text="Please input the code that was sent to your mail: " />

@@ -81,7 +81,6 @@ public class DatabaseConnection implements Database {
             connection = connections.poll();
         }
         connectionsInUse.add(connection);
-        System.out.println(connectionsInUse.size());
         return connection;
     }
 
@@ -90,6 +89,5 @@ public class DatabaseConnection implements Database {
             connections.add(connection);
         }
         connectionsInUse.remove(connection);
-        System.out.println(connectionsInUse.size());
     }
 }

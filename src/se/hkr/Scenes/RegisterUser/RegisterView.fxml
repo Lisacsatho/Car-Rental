@@ -12,14 +12,14 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="308.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.RegisterUser.RegisterController">
+<AnchorPane prefHeight="308.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.hkr.Scenes.RegisterUser.RegisterController">
    <children>
       <ImageView fitHeight="400.0" fitWidth="339.0" layoutX="-83.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../Assets/Images/splash.jpg" />
          </image>
       </ImageView>
-      <MenuBar prefHeight="29.0" prefWidth="600.0" style="-fx-background-color: #ddd;" styleClass="dark-menu-bar">
+      <MenuBar prefHeight="29.0" prefWidth="600.0">
         <menus>
           <Menu mnemonicParsing="false" text="Navigate">
             <items>
@@ -28,7 +28,8 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" onAction="#menuItemAboutPressed" text="About" />
+                  <MenuItem mnemonicParsing="false" onAction="#menuItemContactPressed" text="Contact" />
             </items>
           </Menu>
         </menus>
@@ -39,7 +40,7 @@
             <TextField fx:id="txtFldFirstName" layoutX="25.0" layoutY="122.0" onAction="#registerUser" prefHeight="26.0" prefWidth="159.0" promptText="First name" />
             <TextField fx:id="txtFldEmail" layoutX="191.0" layoutY="87.0" onAction="#registerUser" prefHeight="27.0" prefWidth="159.0" promptText="Email" />
             <TextField fx:id="txtFldLastName" layoutX="192.0" layoutY="122.0" onAction="#registerUser" prefHeight="27.0" prefWidth="159.0" promptText="Last name" />
-            <TextField fx:id="txtFldPassword" layoutX="192.0" layoutY="158.0" onAction="#registerUser" prefHeight="27.0" prefWidth="159.0" promptText="Confirm password" />
+            <TextField fx:id="txtFldConfirmPassword" layoutX="192.0" layoutY="158.0" onAction="#registerUser" prefHeight="27.0" prefWidth="159.0" promptText="Confirm password" />
             <TextField fx:id="txtFldSsn" layoutX="25.0" layoutY="87.0" onAction="#registerUser" prefHeight="26.0" prefWidth="159.0" promptText="Social security number" />
             <TextField fx:id="txtFldPhone" layoutX="25.0" layoutY="192.0" onAction="#registerUser" prefHeight="26.0" prefWidth="159.0" promptText="Phone number" />
             <TextField fx:id="txtFldStreet" layoutX="24.0" layoutY="227.0" onAction="#registerUser" prefHeight="27.0" prefWidth="326.0" promptText="Address" />
@@ -52,7 +53,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="txtFldPassword1" layoutX="26.0" layoutY="158.0" onAction="#registerUser" prefHeight="26.0" prefWidth="159.0" promptText="Password" />
+            <TextField fx:id="txtFldPassword" layoutX="26.0" layoutY="158.0" onAction="#registerUser" prefHeight="26.0" prefWidth="159.0" promptText="Password" />
          </children>
       </AnchorPane>
    </children>

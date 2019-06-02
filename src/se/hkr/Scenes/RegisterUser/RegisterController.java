@@ -1,4 +1,5 @@
 package se.hkr.Scenes.RegisterUser;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import se.hkr.Database.UserDB.MemberDBHandler;
@@ -21,6 +22,7 @@ public class RegisterController {
                       txtFldZip,
                       txtFldEmail,
                       txtFldPassword,
+                      txtFldConfirmPassword,
                       txtFldPhone,
                       txtFldState,
                       txtFldDriversLicense;
@@ -44,6 +46,16 @@ public class RegisterController {
         }
     }
 
+    @FXML
+    public void menuItemContactPressed(ActionEvent actionEvent) {
+        Navigator.getInstance().navigateTo("CustomerService/CustomerServiceView.fxml");
+    }
+
+    @FXML
+    public void menuItemAboutPressed(ActionEvent actionEvent) {
+        Navigator.getInstance().navigateTo("CompanyInformation/CompanyInformationView.fxml");
+    }
+
     private boolean validateInformation() {
         try (MemberDBHandler memberDBHandler = new MemberDBHandler()) {
             if (!Pattern.matches("[0-9][0-9][0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]", txtFldSsn.getText())) {
@@ -60,6 +72,9 @@ public class RegisterController {
                 return false;
             } else if (memberDBHandler.readByEmail(txtFldEmail.getText()) != null) {
                 Dialogue.alert("Member already exists with that email.");
+                return false;
+            } else if (!txtFldConfirmPassword.getText().equals(txtFldPassword.getText())) {
+                Dialogue.alert("Password and confirm password must be the same.");
                 return false;
             } else {
                 return true;

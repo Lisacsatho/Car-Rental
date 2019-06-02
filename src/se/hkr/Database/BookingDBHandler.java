@@ -171,7 +171,7 @@ public class BookingDBHandler extends ModelDBHandler<Booking> {
     }
 
     public List<Booking> readForMemberSimple(Member member) throws SQLException {
-        String query = "SELECT * FROM booking WHERE member=?";
+        String query = "SELECT * FROM booking WHERE member=? ORDER BY id DESC LIMIT 3";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, member.getSocialSecurityNo());
             return buildSimpleModels(statement.executeQuery());

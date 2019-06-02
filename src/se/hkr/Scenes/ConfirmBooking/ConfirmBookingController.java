@@ -148,7 +148,7 @@ public class ConfirmBookingController implements Initializable, SessionListener<
     @FXML
     private void cancelBooking(ActionEvent event) {
         BookingSession.getInstance().resetSession();
-        Navigator.getInstance().navigateTo("MainMenu/MainMenuView.fxml");
+        Navigator.getInstance().navigateToPanel();
     }
 
     @FXML
